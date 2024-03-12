@@ -1,0 +1,12 @@
+RewriteEngine On
+Options All -Indexes
+
+# Manejar las vistas
+RewriteRule ^([a-zA-Z0-9/ñÑ-]+)$ index.php?views=$1 [QSA,L]
+
+# Manejar los parámetros de búsqueda
+RewriteCond %{QUERY_STRING} ^(.*)busqueda=([^&]+)(.*)$ [NC]
+RewriteRule ^ - [E=BUSQUEDA:%2]
+
+# Agregar el parámetro de búsqueda a la variable de entorno
+RequestHeader set BUSQUEDA "%{BUSQUEDA}e"

@@ -1,0 +1,109 @@
+.quienessomos {
+	display: flex;
+	flex-wrap: wrap;
+	background: #065f2c !important;
+}
+
+.misionvision {
+	width: 90%;
+	margin: 20px auto;
+	padding: 20px;
+	border-radius: 8px;
+}
+
+.sectionmision{
+	margin-top: 2%;
+}
+
+#mision-container {
+	background-size: cover;
+	color: #000000;
+	width: 95%;
+	min-height: 250px;
+}
+#vision-container1 {
+	background-size: cover;
+	color: #000000; /* Color del texto para asegurar la legibilidad sobre la imagen de fondo */
+	width: 95%;
+	min-height: 250px;
+}
+
+.mision {
+	text-align: center;
+}
+
+p {
+	text-align: justify;
+	line-height: 1.6;
+}
+.objetivos {
+	text-align: center;
+	margin-top: 2%;
+	
+}
+.contenedorobjetivos{
+	display: grid;
+	grid-template-columns: repeat(2,1fr);
+	justify-content: space-around;
+	padding: 10px; 
+}
+
+
+.valores {
+	margin: auto;
+	text-align: center;
+	background: #f8ab14;
+	border-radius: 10px;
+	width: 35%;
+	box-shadow: 0 8px 6px -6px rgb(73, 73, 73);
+}
+
+.contenedor-padre {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	padding: 20px;
+}
+
+.contenedor-hijo {
+	width: 30%; /* Ancho del contenedor hijo */
+	margin: 10px;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 8px 6px -6px rgb(73, 73, 73);
+	box-sizing: border-box;
+	text-align: center;
+	background-color: #f8ab14;
+}
+
+.contenedor-hijo img {
+	max-width: 40%; /* Cambiado a 100% para ser responsivo */
+	border-radius: 50%;
+}
+
+.contenedor-hijo h3 {
+	font-size: 1.5em;
+	margin-top: 10px;
+	color: #000000;
+}
+
+.contenedor-hijo p {
+	margin-top: 10px;
+	color: #000000;
+}
+.separador {
+	width: 100%;
+	height: 1px;
+	background-color: #ccc;
+	margin-bottom: 5%;
+}
+
+@media (max-width: 768px) {
+	.contenedor-hijo {
+		width: 100%; /* Cambiado a 100% en pantallas más pequeñas */
+	}
+}
+
+.objetivos{
+    text-align: center;
+}
