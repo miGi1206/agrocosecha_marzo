@@ -91,7 +91,7 @@ $ins_sexo_usuario = new proveedorModelo();
                                     </div>
                                     
                                     <div class="form-group col-md-4 mt-3">
-                                        <label class="control-label">Teléfono<span style="color:red;">*</span></label>
+                                        <label class="control-label">Teléfon de conctato<span style="color:red;">*</span></label>
                                         <input class="form-control" maxlength="15" type="text" name="updateTelefonoContacto" id="tel_contacto"
                                             value="<?php echo $campos['tel_contacto']; ?>" pattern="[0-9]{1,15}" require>
                                     </div>
@@ -149,24 +149,27 @@ function isValidInputNombre(text) {
 
 <!-- //! Validacion para solo numeros en el campo del telefono -->
 <script>
-const telefono = document.getElementById('telefono');
+document.getElementById('telefono').addEventListener('input', function () {
+    // Filtra solo números
+    this.value = this.value.replace(/[^0-9]/g, '');
 
-let lastValidInputTelefono = ''; // Variable para almacenar la última entrada válida
-
-telefono.addEventListener('input', (event) => {
-    const textValue = event.currentTarget.value;
-
-    if (!isValidInputTelefono(textValue)) {
-        telefono.value = lastValidInputTelefono; // Restaurar el último valor válido
-    } else {
-        lastValidInputTelefono = textValue; // Actualizar la última entrada válida
+    // Limita la longitud a 10 caracteres
+    if (this.value.length > 10) {
+        this.value = this.value.slice(0, 10);
     }
 });
+</script>
 
-function isValidInputTelefono(text) {
-    // Verificar si la cadena solo contiene números
-    return /^[0-9]*$/.test(text);
-}
+<script>
+document.getElementById('tel_contacto').addEventListener('input', function () {
+    // Filtra solo números
+    this.value = this.value.replace(/[^0-9]/g, '');
+
+    // Limita la longitud a 10 caracteres
+    if (this.value.length > 10) {
+        this.value = this.value.slice(0, 10);
+    }
+});
 </script>
 
 <!-- //! vadidacion para bloquear la tecla espacio en el campo de correo -->
@@ -177,5 +180,13 @@ correo.addEventListener('keydown', (event) => {
     if (event.key === ' ') {
         event.preventDefault(); // Evitar que se escriba el espacio
     }
+});
+</script>
+
+<!-- validaicon persona de contacto  -->
+<script>
+document.getElementById('nom_per_contacto').addEventListener('input', function () {
+    // Filtra solo letras y espacios
+    this.value = this.value.replace(/[^A-Za-z\s]/g, '');
 });
 </script>
