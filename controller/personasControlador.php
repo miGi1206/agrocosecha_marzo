@@ -11,7 +11,9 @@ class personasControlador extends personasModelo
     /*------------- CONTROLADOR AGREGAR APRENDIZ -----------------------*/
     public function agregar_personas_controlador()
     {
-        $codigo_persona = uniqid(session_id(), true); // Combina uniqid() con session_id()
+        try{
+        
+        $codigo_persona = mt_rand(1, 999999999);
         $identificacion = mainModel::limpiar_cadena($_POST['txtDni_ins']);
         $nombre1 = mainModel::limpiar_cadena($_POST['txtNombre1_ins']);
         $nombre2 = mainModel::limpiar_cadena($_POST['txtNombre2_ins']);
@@ -192,15 +194,15 @@ class personasControlador extends personasModelo
         if ($agregar_personas->rowCount() == 1) {
             $alerta = [
                 "Alerta" => "limpiarTime",
-                "Titulo" => "Proveedor Registrado",
-                "Texto" => "El proveedor ha sido registrado exitosamente.",
+                "Titulo" => "Persona Registrado",
+                "Texto" => "La persona se ha sido registrado exitosamente.",
                 "Tipo" => "success"
             ];
-        } else {
+        }else {
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrió un error inesperado",
-                "Texto" => "No hemos podido registrar el proveedor.",
+                "Texto" => "No hemos podido registrar a la persona.",
                 "Tipo" => "error"
             ];
         }
@@ -212,7 +214,7 @@ class personasControlador extends personasModelo
                     "Texto" => "La persona ha sido registrado exitosamente.",
                     "Tipo" => "success"
                 ];
-            } else {
+            }else {
                 $alerta = [
                     "Alerta" => "simple",
                     "Titulo" => "Ocurrió un error inesperado",
@@ -222,6 +224,16 @@ class personasControlador extends personasModelo
             }
             echo json_encode($alerta);
             exit();
+        } catch (PDOException $e) {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Ocurrió un error inesperado",
+                "Texto" => "No pudimos registrarte intentalo mas tarde",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
     }/*------------- FIN AGREGAR PERSONAS -----------------------------*/
 
     /*--------------------- TABLA PAGINADOR ---------------------------*/
