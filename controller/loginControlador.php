@@ -55,6 +55,11 @@
                 $_SESSION['telefono_contacto_spm'] = $row['tel_contacto'];
                 $_SESSION['correo_contacto_spm'] = $row['correo_contacto'];
 
+                // TODO: datos del producto cuando se inicia secion
+                $_SESSION['nom_producto_spm'] = $row['nombre'];
+                $_SESSION['stock_producto_spm'] = $row['stock'];
+                $_SESSION['cod_prod_prov_spm'] = $row['codigo_producto'];
+
                 $_SESSION['token_spm'] = md5(uniqid(mt_rand(), true));
 
                 
