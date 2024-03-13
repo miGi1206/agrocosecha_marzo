@@ -1,9 +1,3 @@
-<?php
-include "./model/proveedorModelo.php";
-$ins_sexo_usuario = new proveedorModelo();
-$tipo_usuario = $ins_sexo_usuario->listar_tipo_usuario();
-
-?>
 <section class="tab-components">
     <div class="container-fluid">
         <div class="title-wrapper pt-30">
@@ -45,22 +39,22 @@ $tipo_usuario = $ins_sexo_usuario->listar_tipo_usuario();
                                 <div class="row mt-4">
                                 <div class="form-group col-md-4 mt-3">
                                     <label class="control-label">NIT <span style="color:red;">*</span></label>
-                                    <input class="form-control" maxlength="11" type="text" id="nit" name="txtNit_ins" pattern="[0-9-]{1,15}" required oninput="validateNit(this)">
+                                    <input class="form-control" maxlength="15" type="text" id="nit" name="txtNit_ins" pattern="[0-9-]{1,15}" required oninput="validateNit(this)">
                                 </div>
 
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Nombre Razon social<span style="color:red;">*</span></label>
-                                        <input class="form-control" maxlength="50" type="text" id="nombre_razonsocial"
+                                        <input class="form-control" maxlength="100" type="text" id="nombre_razonsocial"
                                             name="txtRazonSocial_ins" require>
                                     </div>
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Teléfono</label>
-                                        <input class="form-control" maxlength="10" type="text" id="telefono" name="txtTelefono_ins" required>
+                                        <input class="form-control" maxlength="15" type="text" id="telefono" name="txtTelefono_ins" required>
                                     </div>
 
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Email <span style="color:red;">*</span></label>
-                                        <input class="form-control" maxlength="30" type="text" id="correo"
+                                        <input class="form-control" maxlength="50" type="text" id="correo"
                                             name="txtEmail_ins" require>
                                     </div>
                                     
@@ -70,31 +64,20 @@ $tipo_usuario = $ins_sexo_usuario->listar_tipo_usuario();
                                     
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Persona contacto<span style="color:red;">*</span></label>
-                                        <input class="form-control" maxlength="50" type="text" id="personaContacto"
+                                        <input class="form-control" maxlength="30" type="text" id="personaContacto"
                                             name="txtPersonaContacto_ins" require>
                                     </div>
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Teléfono contacto</label>
-                                        <input class="form-control" maxlength="10" type="text" id="telefonoContacto" name="txtTelefonoContacto_ins" required>
+                                        <input class="form-control" maxlength="15" type="text" id="telefonoContacto" name="txtTelefonoContacto_ins" required>
                                     </div>
 
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Email contacto<span style="color:red;">*</span></label>
-                                        <input class="form-control" maxlength="30" type="text" id="EmailContacto"
+                                        <input class="form-control" maxlength="50" type="text" id="EmailContacto"
                                             name="txtEmailContacto_ins" require>
                                     </div>
                                     
-                                    <div class="form-group col-md-4 mt-3">
-                                        <label class="control-label">Tipo de usuario <span style="color:red;">*</span></label>
-                                        <select class="form-control" id="input-select-tipo-usuario"
-                                            name="txtTipo_usuario_ins">
-                                            <option></option>
-                                            <?php foreach ($tipo_usuario as $fila2) : ?>
-                                            <option value="<?php echo $fila2['codigo_tipo_usuario']; ?>">
-                                                <?php echo $fila2['tipo_usuario']; ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
                                 </div>
                                 <hr>
                                 <div class="row mt-4">
@@ -178,9 +161,6 @@ document.getElementById('personaContacto').addEventListener('input', function ()
     this.value = this.value.replace(/[^A-Za-z\s]/g, '');
 });
 </script>
-
-
-
 
 <!-- //! Validacion para solo numeros en el campo del telefono -->
 <script>

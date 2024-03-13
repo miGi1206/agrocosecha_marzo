@@ -57,14 +57,14 @@ class productoControlador extends productoModelo
             $alerta = [
                 "Alerta" => "limpiarTime",
                 "Titulo" => "Mesas registradas",
-                "Texto" => " La mesa se ha registrado",
+                "Texto" => " El producto se ha registrado exitosamente",
                 "Tipo" => "success"
             ];
         } else {
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrió un error inesperado",
-                "Texto" => "No hemos podido registrar la mesa.",
+                "Texto" => "No hemos podido registrar el producto.",
                 "Tipo" => "error"
             ];
         }
@@ -88,7 +88,7 @@ class productoControlador extends productoModelo
         $inicio = ($pagina > 0) ? (($pagina * $registros) - $registros) : 0;
         
         if (isset($busqueda) && $busqueda != "") {
-            $consulta = "SELECT SQL_CALC_FOUND_ROWS codigo_producto, nombre, descripcion, precio, stock, video, fecha_registro FROM tbl_producto WHERE nombre LIKE '%$busqueda%' ORDER BY nombre ASC LIMIT $inicio, $registros";
+            $consulta = "SELECT SQL_CALC_FOUND_ROWS codigo_producto, nombre, descripcion, precio, stock, video, fecha_registro FROM tbl_producto WHERE (nombre LIKE '%$busqueda%' OR codigo_producto LIKE '%$busqueda%') ORDER BY nombre ASC LIMIT $inicio, $registros";
         } else {
             $consulta = "SELECT SQL_CALC_FOUND_ROWS codigo_producto, nombre, descripcion, precio, stock, video, fecha_registro FROM tbl_producto ORDER BY nombre ASC LIMIT $inicio, $registros";
         }
@@ -186,7 +186,7 @@ class productoControlador extends productoModelo
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrió un error inesperado.",
-                "Texto" => "No hemos encontrado la persona en el sistema",
+                "Texto" => "No hemos encontrado el producto en el sistema",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -200,9 +200,6 @@ class productoControlador extends productoModelo
         $stock = mainModel::limpiar_cadena($_POST['updatetstock']);
         $video = mainModel::limpiar_cadena($_POST['updatetvideo']);
        
-
-        /* Verificando integridad de los datos */ 
-        /* Verificando integridad de los datos */
         if ($nombres == "" || $descricpcion=="" || $precio=="" || $stock=="" || $video=="") {
             $alerta = [
                 "Alerta" => "simple",
@@ -213,18 +210,6 @@ class productoControlador extends productoModelo
             echo json_encode($alerta);
             exit();
         }
-     
-        // Validación adicional en el servidor
-        // if (!preg_match("/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+\s*#\s*[0-9]+$/", $nombres)) {
-        //     $alerta = [
-        //         "Alerta" => "simple",
-        //         "Titulo" => "Ocurrió un error inesperado",
-        //         "Texto" => "El nombre no cumple con el formato requerido Ej:(mesa #21).",
-        //         "Tipo" => "error"
-        //     ];
-        //     echo json_encode($alerta);
-        //     exit();
-        // }
         
 
         $datos_ins_up = [
@@ -247,7 +232,7 @@ class productoControlador extends productoModelo
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrió un error inesperado",
-                "Texto" => "No hemos podido actualizar tus datos ;(",
+                "Texto" => "No hemos podido actualizar tus datos",
                 "Tipo" => "error"
             ];
         }
@@ -266,7 +251,7 @@ class productoControlador extends productoModelo
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrio un error inesperado",
-                "Texto" => "la mesa que intenta eliminar no es existe en el sistema",
+                "Texto" => "El producto que intenta eliminar no existe en el sistema",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -278,14 +263,14 @@ class productoControlador extends productoModelo
             $alerta = [
                 "Alerta" => "limpiarTime",
                 "Titulo" => "Eliminado",
-                "Texto" => "Se ha eliminado la mesa exitosamente.",
+                "Texto" => "Se ha eliminado el producto exitosamente.",
                 "Tipo" => "success"
             ];
         } else {
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrió un error inesperado.",
-                "Texto" => "No hemos podido eliminar la mesa.",
+                "Texto" => "No hemos podido eliminar el producto",
                 "Tipo" => "error"
             ];
         }

@@ -35,7 +35,7 @@
                                 <form class="FormularioAjax1" action="<?php echo SERVERURL; ?>ajax/buscadorAjax.php" method="POST" data-form="default">
                                     <div class="input-group mt-5">
                                         <input type="hidden" name="modulo" value="producto">
-                                        <input class="form-control" type="search" name="Horarios_search" placeholder="Ingresa una Identificacion">
+                                        <input class="form-control" type="search" name="Horarios_search" placeholder="Buscar">
                                         <button class="btn btn-outline-secondary" type="submit" name="accion" value="buscarPersona" id="button-addon2"><i class="bi bi-search lead p-1"></i></button>
                                     </div>
                                 </form>

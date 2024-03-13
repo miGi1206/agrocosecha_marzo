@@ -252,7 +252,11 @@ class personasControlador extends personasModelo
         $inicio = ($pagina > 0) ? (($pagina * $registros) - $registros) : 0;
 
         if (isset($busqueda) && $busqueda != "") {
-            $consulta = "SELECT SQL_CALC_FOUND_ROWS * FROM tbl_persona, tbl_sexo WHERE cod_sexo=codigo_sexo AND ((codigo_persona  !='$id') AND (identificacion LIKE '%$busqueda%' OR primer_nombre  LIKE '%$busqueda%'OR segundo_nombre  LIKE '%$busqueda%')) ORDER BY identificacion ASC LIMIT $inicio, $registros";
+            $consulta = "SELECT SQL_CALC_FOUND_ROWS * FROM tbl_persona, tbl_sexo 
+            WHERE cod_sexo=codigo_sexo AND ((codigo_persona  !='$id') 
+            AND (identificacion LIKE '%$busqueda%' OR primer_nombre  LIKE '%$busqueda%' OR segundo_nombre  LIKE '%$busqueda%'
+            OR primer_apellido LIKE '%$busqueda%' OR segundo_apellido  LIKE '%$busqueda%' OR telefono  LIKE '%$busqueda%'
+            OR correo  LIKE '%$busqueda%' OR sexo  LIKE '%$busqueda%' OR direccion  LIKE '%$busqueda%')) ORDER BY identificacion ASC LIMIT $inicio, $registros";
         } else {
             $consulta = "SELECT SQL_CALC_FOUND_ROWS * FROM tbl_persona, tbl_sexo WHERE cod_sexo=codigo_sexo AND codigo_persona  !='$id' ORDER BY codigo_persona  ASC LIMIT $inicio, $registros";
         }
@@ -269,7 +273,7 @@ class personasControlador extends personasModelo
         $tabla .= '<div class="">
             <table class="table table-hover table-sm">
             <tr>
-                <th class="text-center"></th>
+                <th class="text-center">N°</th>
                 <th class="text-center">Identificacion</th>
                 <th class="text-center">Nombres</th>
                 <th class="text-center">Apellidos</th>
@@ -350,7 +354,7 @@ class personasControlador extends personasModelo
                 $alerta = [
                     "Alerta" => "simple",
                     "Titulo" => "Ocurrio un error inesperado",
-                    "Texto" => "La persona que intenta eliminar no es existe en el sistema",
+                    "Texto" => "La persona que intenta eliminar no existe en el sistema",
                     "Tipo" => "error"
                 ];
                 echo json_encode($alerta);
@@ -525,7 +529,7 @@ class personasControlador extends personasModelo
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrió un error inesperado",
-                "Texto" => "No hemos podido actualizar tus datos ;(",
+                "Texto" => "No hemos podido actualizar tus datos",
                 "Tipo" => "error"
             ];
         }
