@@ -60,13 +60,13 @@
         </a>
         <ul id="ddmenu_49" class="collapse dropdown-nav">
           <li>
-            <a href="<?php echo SERVERURL;?>producto-list/">Lista de productos</a>
+            <a href="<?php echo SERVERURL;?>servicio-list/">Lista de servicio</a>
           </li>
           <li>
-            <a href="<?php echo SERVERURL;?>servicio/">Crear productos</a>
+            <a href="<?php echo SERVERURL;?>servicio/">Crear servicio</a>
           </li>
           <li>
-            <a  href="<?php echo SERVERURL;?>producto-search/">Buscar productos</a>
+            <a  href="<?php echo SERVERURL;?>servicio-search/">Buscar servicio</a>
           </li>
         </ul>
       </li>
