@@ -10,7 +10,7 @@ $tipo_usuario = $ins_sexo_usuario->listar_tipo_usuario();
             <div class="row align-items-center">
                 <div class="col-md-6">
                     <div class="title mb-30">
-                        <h2>Sistema de votaciones</h2>
+                        <h2>Agrocosecha</h2>
                     </div>
                 </div>
 

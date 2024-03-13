@@ -1,93 +1,111 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!-->
-<html lang="en"> <!--<![endif]-->
-
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>404</title>
-    <meta name="author" content="pkfrom" />
-    <meta name="keywords" content="404 page, css3, template, html5 template" />
-    <meta name="description" content="404 - Page Template" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <!-- Libs CSS -->
-    <link type="text/css" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
-    <link type="text/css" media="all" href="//pkfrom.github.io/404/assets/css/404.min.css" rel="stylesheet" />
-
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="144x144" href="//pkfrom.github.io/404/assets/img/favicons/favicon144x144.png" />
-    <link rel="apple-touch-icon" sizes="114x114" href="//pkfrom.github.io/404/assets/img/favicons/favicon114x114.png" />
-    <link rel="apple-touch-icon" sizes="72x72" href="//pkfrom.github.io/404/assets/img/favicons/favicon72x72.png" />
-    <link rel="apple-touch-icon" href="//pkfrom.github.io/404/assets/img/favicons/favicon57x57.png" />
-    <link rel="shortcut icon" href="//pkfrom.github.io/404/assets/img/favicons/favicon.png" />
-    <!-- Google Fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900' rel='stylesheet' type='text/css'>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Error 404</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- Load page -->
-    <div class="animationload">
-        <div class="loader">
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #065F2C; }
+
+    .conten {
+        position: fixed;
+        top: 2em;
+        width: 100%;
+        text-align: center; }
+    .conten__img {
+        width: 100%;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center; }
+        .conten__img img {
+        width: 300px;
+        display: block;
+        -webkit-animation: animates 2s linear infinite alternate;
+        animation: animates 2s linear infinite alternate; }
+    .conten__number {
+        position: absolute;
+        font-size: 5.5rem;
+        font-family: "Gill Sans", sans-serif;
+        font-weight: 600;
+        top: 20rem;
+        color: rgba(255, 255, 255, 0.5);
+        -webkit-animation: animatestext 2s linear infinite alternate;
+        animation: animatestext 2s linear infinite alternate; }
+    .conten__error {
+        color: #ffffff;
+        width: 50%;
+        margin: 5em auto 2em auto;
+        font-family: "Gill Sans", sans-serif; }
+    .conten__button {
+        background-color: #0077d8f4;
+        color: #ffffff;
+        font-weight: 600;
+        font-family: "Gill Sans", sans-serif;
+        padding: 0.8em 1em;
+        border-radius: 50px;
+        text-decoration: none; }
+
+    @-webkit-keyframes animates {
+    0% {
+        -webkit-transform: translateX(5%);
+        transform: translateX(5%); }
+    100% {
+        -webkit-transform: translateX(-5%);
+        transform: translateX(-5%); } }
+
+    @keyframes animates {
+    0% {
+        -webkit-transform: translateX(5%);
+        transform: translateX(5%); }
+    100% {
+        -webkit-transform: translateX(-5%);
+        transform: translateX(-5%); } }
+
+    @-webkit-keyframes animatestext {
+    0% {
+        -webkit-transform: rotate(5deg);
+        transform: rotate(5deg); }
+    100% {
+        -webkit-transform: rotate(-5deg);
+        transform: rotate(-5deg); } }
+
+    @keyframes animatestext {
+    0% {
+        -webkit-transform: rotate(5deg);
+        transform: rotate(5deg); }
+    100% {
+        -webkit-transform: rotate(-5deg);
+        transform: rotate(-5deg); } }
+    
+</style>
+    
+    <div class="conten">
+        <div class="conten__img">
+            <img src="<?php echo SERVERURL;?>view/img/logomaiz1.png" alt="">
+            <p class="conten__number">
+                404
+            </p>
+        </div>
+        <div class="conten__Description">
+            <p class="conten__error">
+                UPSSSS!!!! Algo salio mal, pagina no encontrada.
+            </p>
+        <a href="<?php echo SERVERURL;?>home-agro/" class="conten__button">SACAME DE AQUI!.</a>
         </div>
     </div>
-    <!-- End load page -->
-
-    <!-- Content Wrapper -->
-    <div id="wrapper">
-        <div class="container">
-            <!-- Switcher -->
-            <div class="switcher">
-                <input id="sw" type="checkbox" class="switcher-value">
-                <label for="sw" class="sw_btn"></label>
-                <div class="bg"></div>
-                <div class="text"><span class="text-l">Apagar</span><span class="text-d">Encender</span><br />la luz</div>
-            </div>
-            <!-- End Switcher -->
-
-            <!-- Dark version -->
-            <div id="dark" class="row text-center">
-                <div class="info">
-                    <img src="//pkfrom.github.io/404/assets/img/404-dark.png" alt="404 error" />
-                </div>
-            </div>
-            <!-- End Dark version -->
-
-            <!-- Light version -->
-            <div id="light" class="row text-center">
-                <!-- Info -->
-                <div class="info">
-                    <img src="//pkfrom.github.io/404/assets/img/404-light.gif" alt="404 error" />
-                    <!-- end Rabbit -->
-                    <p>La página que buscas fue movida, eliminada<br />
-                        renombrado o puede que nunca haya existido.</p>
-                    <a href="<?php echo SERVERURL;?>home-agro/" class="btn">Ir al Home</a>
-                    <!--<a href="#" class="btn btn-brown">Contact Us</a>-->
-                </div>
-                <!-- end Info -->
-            </div>
-            <!-- End Light version -->
-
-        </div>
-        <!-- end container -->
-    </div>
-    <!-- end Content Wrapper -->
-
-
-    <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="//pkfrom.github.io/404/assets/js/modernizr.custom.js" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.6.0/jquery.nicescroll.min.js" type="text/javascript"></script>
-    <script src="//pkfrom.github.io/404/assets/js/404.min.js" type="text/javascript"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
 </body>
 </html>

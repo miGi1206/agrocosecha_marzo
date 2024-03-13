@@ -1,17 +1,21 @@
-
 <script>
-    function mostrarContraseña() {
-        var x = document.getElementById("contraseña");
-        var y = document.getElementById("confirm_password");
-        if (x.type === "password" && y.type === "password") {
-            x.type = "text";
-            y.type = "text";
-        } else {
-            x.type = "password";
-            y.type = "password";
-        }
+function mostrarContraseña() {
+    var x = document.getElementById("contraseña");
+    var y = document.getElementById("confirm_password");
+    if (x.type === "password" && y.type === "password") {
+        x.type = "text";
+        y.type = "text";
+    } else {
+        x.type = "password";
+        y.type = "password";
     }
+}
 </script>
+<?php
+include "./model/registrarseModelo.php";
+$ins_sexo_usuario = new registrarseModelo();
+$sexo = $ins_sexo_usuario->listar_sexo();
+?>
 <style>
 .login-box {
     /* background: linear-gradient(to left, #3AAA3C 50%, #ffffff 50%); */
@@ -30,10 +34,10 @@
                     <span style="color:#F8AB14;">Bienv</span>enido
                 </div>
             </div>
-            <div >
+            <div>
                 <div class="col-12" style="margin-top: -3em;">
                     <h3 class="header-title" id="textExample">REGISTRARSE</h3>
-                    <form action="" class="row" style="margin-top: 2em;" autocomplete="off" method="POST">
+                    <form action="<?php echo SERVERURL; ?>ajax/registrarseAjax.php" class="row FormularioAjax" style="margin-top: 2em;" autocomplete="off" method="POST">
                         <div class="row mt-4">
                             <div class="form-group col-md-4 mt-3">
                                 <label class="control-label">Identificación <span style="color:red;">*</span></label>
@@ -96,16 +100,6 @@
                                 <label class="control-label">Direccion <span style="color:red;">*</span></label>
                                 <input class="form-control" maxlength="50" type="text" name="txtDireccion_ins" require>
                             </div>
-                            <div class="form-group col-md-4 mt-3">
-                                <label class="control-label">Tipo de usuario <span style="color:red;">*</span></label>
-                                <select class="form-control" id="input-select-tipo-usuario" name="txtTipo_usuario_ins">
-                                    <option></option>
-                                    <?php foreach ($tipo_usuario as $fila2) : ?>
-                                    <option value="<?php echo $fila2['codigo_tipo_usuario']; ?>">
-                                        <?php echo $fila2['tipo_usuario']; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
                         </div>
                         <hr style="margin-top:5%;">
                         <div class="row mt-4">
@@ -130,7 +124,7 @@
                                 <span class="exelen" id="exelen"
                                     style="color: #065F2C;  font-size: 15px; margin-left: 2% "></span>
                             </div>
-                            
+
                         </div>
                         <div style="display:grid; justify-content:center;">
                             <div class="mx-2" style="margin-top: 1em;">
@@ -138,9 +132,17 @@
                                     Contraseña</span>
                             </div>
                         </div>
+                        <div class="row justify-content-center">
+    <div class="form-group col-md-4 text-center mt-5">
+        <button class="main-btn success-btn-outline rounded-full btn-hover m-1" type="submit" style="font-size: 15px;">Registrarse</button>
+        <a href="<?php echo SERVERURL; ?>home-agro/" class="main-btn success-btn-outline rounded-full btn-hover m-1">Regresar</a>
+    </div>
+</div>
+
+
                     </form>
                 </div>
-                
+
             </div>
         </div>
     </div>

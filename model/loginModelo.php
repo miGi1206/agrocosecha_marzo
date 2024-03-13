@@ -4,13 +4,15 @@ require_once "mainModel.php";
 class loginModelo extends mainModel{   
 
     /*----------- modelo para iniciar sesion ------------------*/
-        // $correo = $datos['Correo'];
-        // $contra = SHA1($datos['Contra']);
+        
     protected static function iniciar_sesion_modelo($datos){
         
+        // $correo = $datos['Correo'];
+        // $contra = SHA1($datos['Contra']);
+
         $sql=mainModel::conectar()->prepare("SELECT * FROM tbl_persona, 
         tbl_usuario,tbl_tipo_usuario WHERE cod_tipo_usuario=codigo_tipo_usuario 
-        AND cod_persona=codigo_persona AND usuario=:Correo AND contrasena=SHA1(:Contra)");
+        AND cod_persona=codigo_persona AND usuario=:Correo AND contrasena=:Contra");
 
         // $sql=mainModel::conectar()->prepare("SELECT * FROM tbl_usuario 
         // JOIN tbl_tipo_usuario ON tbl_usuario.cod_tipo_usuario = tbl_tipo_usuario.codigo_tipo_usuario 
