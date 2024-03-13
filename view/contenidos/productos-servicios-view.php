@@ -228,9 +228,13 @@
                                 <!-- //! Mostrar el precio y stock solo cuando se halla iniciado sesion como cliente -->
                                 <?php
                                 if (isset($_SESSION['tipo_usuario_spm']) && $_SESSION['tipo_usuario_spm'] == "2") {
-                                            echo "<p><b>Precio: $". $row['precio'] . "</b></p>";
-                                            echo "<p><b>Stock: ". $row['stock'] . "</b></p>";
+                                    echo "<p><b>Precio: $". $row['precio'] . "</b></p>";
+                                    echo "<p><b>Stock: ". $row['stock'] . "</b></p>";
                                 }
+                                if (isset($_SESSION['tipo_usuario_spm']) && $_SESSION['tipo_usuario_spm'] == "3" && isset($_SESSION['cod_prod_prov_spm']) && $_SESSION['cod_prod_prov_spm'] == $busqueda) {
+                                    echo "<p><b>Stock: " . $_SESSION['stock_producto_spm'] . "</b></p>";
+                                }
+                                
                                 ?>
 
                                 <h6>Descripción</h6>
