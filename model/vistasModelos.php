@@ -8,7 +8,8 @@ class vistasModelos
             "personas", "personas-list", "personas-update","personas-search",
             "usuario","usuario-list","usuario-update","usuario-search",
             "producto","producto-list","producto-update","producto-search",
-            "proveedor", "proveedor-list","proveedor-search","proveedor-update"];
+            "proveedor", "proveedor-list","proveedor-search","proveedor-update",
+            "servicio"];
         if (in_array($vistas, $listaPermitida)) {
             if (is_file("./view/contenidos/" . $vistas . "-view.php")) {
                 $contenido = "./view/contenidos/" . $vistas . "-view.php";

@@ -36,7 +36,7 @@
                             <form class="FormularioAjax" action="<?php echo SERVERURL; ?>ajax/productoAjax.php" method="POST" data-form="save" autocomplete="off">
                             <div class="row mt-4">
                                     <div class="form-group col-md-4 mt-3">
-                                         
+                                      
                                         <label class="control-label">Codigo: <span style="color:red;">*</span></label>
                                         <input class="form-control" maxlength="11" type="text" id="txtcodigo_reg" name="txtcodigo_reg" required>
                                         <div id="codigo_error" style="color: red;"></div>

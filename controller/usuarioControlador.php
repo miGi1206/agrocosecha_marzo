@@ -63,11 +63,6 @@ class usuarioControlador extends usuarioModelo
                         <td class="min-width">' . $rows['identificacion'] . '</td>
                         <td class="min-width">' . $rows['primer_nombre'] . ' - ' . $rows['primer_apellido'] . '</td>
                         <td class="min-width">' . $rows['tipo_usuario'] . '</td>
-                        <td class="stat"><a href="' . SERVERURL . 'usuario-update/' . mainModel::encryption($rows['codigo_usuario']) . '/"</input>
-                            <button type="submit" class="btn warnign-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                <i class="bi bi-pencil-square lead"></i>
-                            </button>
-                        </td>
                         <td>
                             <form class="FormularioAjax" action="' . SERVERURL . 'ajax/usuarioAjax.php"
                                 method="post" data-form="delete" autocomplete="off">

@@ -35,17 +35,17 @@ class proveedorControlador extends proveedorModelo
             echo json_encode($alerta);
             exit();
         }
-        if (preg_match("/^\d+-\d+$/", $nit)) {
+        if (!preg_match("/^\d+-\d+$/", $nit)) {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "Ocurrió un error inesperado",
-                "Texto" => "El Identificacion no coincide con el formato solicitado",
+                "Titulo" => "Error de formato",
+                "Texto" => "el nit no coincide con el formato solicitado. Debe seguir el formato 'número-número'.",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
             exit();
         }
-       
+        
 
         if (mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,100}", $razonsocial)) {
             $alerta = [
@@ -162,9 +162,10 @@ class proveedorControlador extends proveedorModelo
                 exit();
             }
 
+            $contraincriptada = SHA1($contra);
             $datos_usuario_add  = [
                 "Usuario"     => $usuario,
-                "Contra"     => $contra,
+                "Contra"     => $contraincriptada,
                 "tipo_usuario"   => $tipo_usuario,
                 "nit_proveedor"   => $nit,
             ];
@@ -252,8 +253,7 @@ class proveedorControlador extends proveedorModelo
             if ($total >= 1 &&  $pagina <= $Npaginas) {
                 $contador = $inicio + 1;
                 $reg_inicio = $inicio + 1;
-                foreach ($datos as $rows) {
-                   
+                foreach ($datos as $rows) {                  
                         $tabla .=
                             '<tr class="p">
                             <td class="min-width">' . $contador . '</td>
@@ -347,6 +347,8 @@ class proveedorControlador extends proveedorModelo
         echo json_encode($alerta);
     }/*-------------- FIN ELIMINAR PROVEEDOR --------------------------*/
 
+    //actualizar proveedor 
+
     public function datos_proveedor_controlador($id){
         $id=mainModel::decryption($id);
         return proveedorModelo::datos_proveedor_modelo($id);
@@ -390,11 +392,11 @@ class proveedorControlador extends proveedorModelo
             echo json_encode($alerta);
             exit();
         }
-        if (mainModel::verificar_datos("[0-9]{7,11}", $nit)) {
+        if (!preg_match("/^\d+-\d+$/", $nit)) {
             $alerta = [
                 "Alerta" => "simple",
-                "Titulo" => "Ocurrió un error inesperado",
-                "Texto" => "El Nit no coincide con el formato solicitado",
+                "Titulo" => "Error de formato",
+                "Texto" => "el nit no coincide con el formato solicitado. Debe seguir el formato 'número-número'.",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -410,7 +412,32 @@ class proveedorControlador extends proveedorModelo
             echo json_encode($alerta);
             exit();
         }
+        if ($email != "") {
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ocurrió un error inesperado",
+                    "Texto" => "Ha ingresado un correo no válido",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+        }
 
+        if ($emailContacto != "") {
+            if (!filter_var($emailContacto, FILTER_VALIDATE_EMAIL)) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ocurrió un error inesperado",
+                    "Texto" => "Ha ingresado un correo no válido",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+        }
+        
         
         if ($telefono != "") {
             if (mainModel::verificar_datos("[0-9]{8,15}", $telefono)) {

@@ -54,6 +54,23 @@
         </ul>
       </li>
       <li class="nav-item nav-item-has-children">
+        <a href="" class="collapsed dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#ddmenu_49" aria-controls="ddmenu_49" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="bi bi-box-seam   px-2 iconos-color"></i>
+          <span class="text">Servicio</span>
+        </a>
+        <ul id="ddmenu_49" class="collapse dropdown-nav">
+          <li>
+            <a href="<?php echo SERVERURL;?>producto-list/">Lista de productos</a>
+          </li>
+          <li>
+            <a href="<?php echo SERVERURL;?>servicio/">Crear productos</a>
+          </li>
+          <li>
+            <a  href="<?php echo SERVERURL;?>producto-search/">Buscar productos</a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-item-has-children">
         <a href="" class="collapsed dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#ddmenu_47" aria-controls="ddmenu_47" aria-expanded="false" aria-label="Toggle navigation">
           <i class="bi bi-person-circle px-2 iconos-color"></i>
           <span class="text">Usuarios</span>
@@ -61,9 +78,6 @@
         <ul id="ddmenu_47" class="collapse dropdown-nav">
           <li>
             <a href="<?php echo SERVERURL;?>usuario-list/">Lista de Usuarios</a>
-          </li>
-          <li>
-            <a href="<?php echo SERVERURL;?>usuario/">Crear usuario</a>
           </li>
           <li>
             <a href="<?php echo SERVERURL;?>usuario-search/">Buscar usuario</a>

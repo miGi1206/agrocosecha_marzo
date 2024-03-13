@@ -43,11 +43,10 @@ $tipo_usuario = $ins_sexo_usuario->listar_tipo_usuario();
                                     <span style="color:red;">Campos obligatorios (*)</span>
                                 </div>
                                 <div class="row mt-4">
-                                    <div class="form-group col-md-4 mt-3">
-                                        <label class="control-label">NIT <span style="color:red;">*</span></label>
-                                        <input class="form-control" maxlength="11" type="text" id="nit"
-                                            name="txtNit_ins" pattern="[0-9]{1,15}" require>
-                                    </div>
+                                <div class="form-group col-md-4 mt-3">
+                                    <label class="control-label">NIT <span style="color:red;">*</span></label>
+                                    <input class="form-control" maxlength="11" type="text" id="nit" name="txtNit_ins" pattern="[0-9-]{1,15}" required oninput="validateNit(this)">
+                                </div>
 
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Nombre Razon social<span style="color:red;">*</span></label>
@@ -56,8 +55,7 @@ $tipo_usuario = $ins_sexo_usuario->listar_tipo_usuario();
                                     </div>
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Teléfono</label>
-                                        <input class="form-control" maxlength="50" type="text" id="telefono"
-                                            name="txtTelefono_ins" pattern="[0-9]{1,11}" require>
+                                        <input class="form-control" maxlength="10" type="text" id="telefono" name="txtTelefono_ins" required>
                                     </div>
 
                                     <div class="form-group col-md-4 mt-3">
@@ -77,8 +75,7 @@ $tipo_usuario = $ins_sexo_usuario->listar_tipo_usuario();
                                     </div>
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Teléfono contacto</label>
-                                        <input class="form-control" maxlength="50" type="text" id="telefonoContacto"
-                                            name="txtTelefonoContacto_ins" pattern="[0-9]{1,11}" require>
+                                        <input class="form-control" maxlength="10" type="text" id="telefonoContacto" name="txtTelefonoContacto_ins" required>
                                     </div>
 
                                     <div class="form-group col-md-4 mt-3">
@@ -145,23 +142,9 @@ $tipo_usuario = $ins_sexo_usuario->listar_tipo_usuario();
 
 <!-- //! script para mostrar un mensaje de que no puede colocar letras -->
 <script>
-const nit = document.getElementById('nit');
-
-let lastValidInputIdentificacion = ''; // Variable para almacenar la última entrada válida
-
-nit.addEventListener('input', (event) => {
-    const textValue = event.currentTarget.value;
-
-    if (!isValidInputIdentificacion(textValue)) {
-        nit.value = lastValidInputIdentificacion; // Restaurar el último valor válido
-    } else {
-        lastValidInputIdentificacion = textValue; // Actualizar la última entrada válida
-    }
-});
-
-function isValidInputIdentificacion(text) {
-    // Verificar si la cadena solo contiene números y el carácter "-"
-    return /^[0-9]*$/.test(text);
+function validateNit(input) {
+    // Filtra solo números y el carácter especial "-"
+    input.value = input.value.replace(/[^0-9-]/g, '');
 }
 </script>
 
@@ -188,31 +171,39 @@ function isValidInputNombre(text) {
 }
 </script>
 
-
+<!-- validacion persodna de contacto -->
+<script>
+document.getElementById('personaContacto').addEventListener('input', function () {
+    // Filtra solo letras y espacios
+    this.value = this.value.replace(/[^A-Za-z\s]/g, '');
+});
+</script>
 
 
 
 
 <!-- //! Validacion para solo numeros en el campo del telefono -->
 <script>
-const telefono = document.getElementById('telefono');
+document.getElementById('telefono').addEventListener('input', function () {
+    // Filtra solo números
+    this.value = this.value.replace(/[^0-9]/g, '');
 
-let lastValidInputTelefono = ''; // Variable para almacenar la última entrada válida
-
-telefono.addEventListener('input', (event) => {
-    const textValue = event.currentTarget.value;
-
-    if (!isValidInputTelefono(textValue)) {
-        telefono.value = lastValidInputTelefono; // Restaurar el último valor válido
-    } else {
-        lastValidInputTelefono = textValue; // Actualizar la última entrada válida
+    // Limita la longitud a 10 caracteres
+    if (this.value.length > 10) {
+        this.value = this.value.slice(0, 10);
     }
 });
+</script>
+<script>
+document.getElementById('telefonoContacto').addEventListener('input', function () {
+    // Filtra solo números
+    this.value = this.value.replace(/[^0-9]/g, '');
 
-function isValidInputTelefono(text) {
-    // Verificar si la cadena solo contiene números
-    return /^[0-9]*$/.test(text);
-}
+    // Limita la longitud a 10 caracteres
+    if (this.value.length > 10) {
+        this.value = this.value.slice(0, 10);
+    }
+});
 </script>
 
 <!-- //! vadidacion para bloquear la tecla espacio en el campo de correo -->
@@ -220,6 +211,16 @@ function isValidInputTelefono(text) {
 const correo = document.getElementById('correo');
 
 correo.addEventListener('keydown', (event) => {
+    if (event.key === ' ') {
+        event.preventDefault(); // Evitar que se escriba el espacio
+    }
+});
+</script>
+
+<script>
+const correocontacto = document.getElementById('EmailContacto');
+
+correocontacto.addEventListener('keydown', (event) => {
     if (event.key === ' ') {
         event.preventDefault(); // Evitar que se escriba el espacio
     }
