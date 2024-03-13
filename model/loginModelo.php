@@ -4,28 +4,29 @@ require_once "mainModel.php";
 class loginModelo extends mainModel{   
 
     /*----------- modelo para iniciar sesion ------------------*/
-        
-    protected static function iniciar_sesion_modelo($datos){
-        
         // $correo = $datos['Correo'];
         // $contra = SHA1($datos['Contra']);
-
-        $sql=mainModel::conectar()->prepare("SELECT * FROM tbl_persona, 
-        tbl_usuario,tbl_tipo_usuario WHERE cod_tipo_usuario=codigo_tipo_usuario 
-        AND cod_persona=codigo_persona AND usuario=:Correo AND contrasena=:Contra");
-
-        // $sql=mainModel::conectar()->prepare("SELECT * FROM tbl_usuario 
-        // JOIN tbl_tipo_usuario ON tbl_usuario.cod_tipo_usuario = tbl_tipo_usuario.codigo_tipo_usuario 
-        // LEFT JOIN tbl_persona ON tbl_usuario.cod_persona = tbl_persona.codigo_persona 
-        // LEFT JOIN tbl_proveedor ON tbl_usuario.nit_proveedor = tbl_proveedor.nit 
-        // WHERE tbl_usuario.usuario = :Correo AND tbl_usuario.contrasena = SHA1(:Contra) 
-        // AND (tbl_usuario.cod_persona IS NOT NULL OR tbl_usuario.nit_proveedor IS NOT NULL)");
-
-        $sql->bindParam(":Correo",$datos['Correo']);
-        $sql->bindParam(":Contra",$datos['Contra']);
-
-        $sql->execute();
-
-        return $sql;
-    }
+        protected static function iniciar_sesion_modelo($datos) {
+            $correo = $datos['Correo'];
+            $contrasena = SHA1($datos['Contra']); // No es necesario limpiar la contraseña ya que se usa para autenticar
+            
+            $sql = mainModel::conectar()->prepare("
+                SELECT u.*, p.*, tu.*,pr.nombre_razonsocial,pr.nit
+                FROM tbl_usuario AS u
+                LEFT JOIN tbl_persona AS p ON u.cod_persona = p.codigo_persona
+                LEFT JOIN tbl_tipo_usuario AS tu ON u.cod_tipo_usuario = tu.codigo_tipo_usuario
+                LEFT JOIN tbl_proveedor AS pr ON u.nit_proveedor = pr.nit
+                WHERE u.usuario = :Correo AND u.contrasena = :Contrasena
+            ");
+            
+            $sql->bindParam(":Correo", $correo);
+            $sql->bindParam(":Contrasena", $contrasena);
+            
+            $sql->execute();
+            
+            return $sql;
+        }
+        
+        
+                
 }

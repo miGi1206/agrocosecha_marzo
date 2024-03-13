@@ -1,4 +1,4 @@
-    <?php
+<?php
     if ($peticionAjax) {
         require_once "../model/loginModelo.php";
     } else {
@@ -25,7 +25,6 @@
                 $row = $iniciar_sesion->fetch();
 
                 session_start(['name' => 'SPM']); 
-
                 // TODO: datos de la persona cuando inicia sesion
                 $_SESSION['cod_persona_spm'] = $row['codigo_persona'];
                 $_SESSION['id_spm'] = $row['identificacion'];
@@ -58,22 +57,14 @@
 
                 $_SESSION['token_spm'] = md5(uniqid(mt_rand(), true));
 
+                
                 if ($_SESSION['tipo_usuario_spm'] == 1) { // Si es administrador
-                    if (headers_sent()) {    
-                        echo "<script> window.location.href='" . SERVERURL . "personas-list/'; </script>";
-                    } else {
-                        header("Location: " . SERVERURL . "personas-list/");
-                        exit();
-                    } 
-                } 
-                elseif ($_SESSION['tipo_usuario_spm'] == 2 || $_SESSION['tipo_usuario_spm'] == 3 ) { // Si es cliente o proveedor
-                    if (headers_sent()) {    
-                        echo "<script> window.location.href='" . SERVERURL . "home-agro/'; </script>";
-                    } else {
-                        header("Location: " . SERVERURL . "home-agro/");
-                        exit();
-                    } 
-                }
+                    header("Location: " . SERVERURL . "personas-list/");
+                    exit();
+                } elseif ($_SESSION['tipo_usuario_spm'] == 2 || $_SESSION['tipo_usuario_spm'] == 3) { // Si es cliente o proveedor
+                    header("Location: " . SERVERURL . "home-agro/");
+                    exit();
+                }                              
 
             } elseif ($correo == ""  || $clave == "") {
                 echo '

@@ -114,7 +114,7 @@ class registrarseControlador extends registrarseModelo
                 $alerta = [
                     "Alerta" => "simple",
                     "Titulo" => "Ocurrió un error inesperado",
-                    "Texto" => "Ha ingresado un correo no valido",
+                    "Texto" => "Has ingresado un correo no valido",
                     "Tipo" => "error"
                 ];
                 echo json_encode($alerta);
@@ -195,14 +195,14 @@ class registrarseControlador extends registrarseModelo
             $alerta = [
                 "Alerta" => "limpiarTime",
                 "Titulo" => "Persona Registrado",
-                "Texto" => "La persona se ha sido registrado exitosamente.",
+                "Texto" => "Te has registrado exitosamente.",
                 "Tipo" => "success"
             ];
         }else {
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrió un error inesperado",
-                "Texto" => "No hemos podido registrar a la persona.",
+                "Texto" => "No hemos podido registrarte",
                 "Tipo" => "error"
             ];
         }
@@ -211,14 +211,14 @@ class registrarseControlador extends registrarseModelo
                 $alerta = [
                     "Alerta" => "limpiarTime",
                     "Titulo" => "Persona Registrado",
-                    "Texto" => "La persona ha sido registrado exitosamente.",
+                    "Texto" => "te has registrado exitosamente.",
                     "Tipo" => "success"
                 ];
             }else {
                 $alerta = [
                     "Alerta" => "simple",
                     "Titulo" => "Ocurrió un error inesperado",
-                    "Texto" => "No hemos podido registrar a la persona.",
+                    "Texto" => "No hemos podido registrarte",
                     "Tipo" => "error"
                 ];
             }
@@ -228,7 +228,7 @@ class registrarseControlador extends registrarseModelo
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrió un error inesperado",
-                "Texto" => "No pudimos registrarte intentalo mas tarde",
+                "Texto" => "No pudimos registrarte, intentalo mas tarde",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);

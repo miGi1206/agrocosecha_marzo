@@ -67,9 +67,9 @@
                             <a class="nav-link dropdown-toggle" href="#" id="usuarioDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <?php
                                 if (isset($_SESSION['tipo_usuario_spm']) && $_SESSION['tipo_usuario_spm'] == "3") { ?>
-                                    <i class="bi bi-person text-dark"></i> <?php echo $_SESSION['cod_tipo_usuario_spm']; ?>
+                                    <i class="bi bi-person text-dark"></i> <?php echo $_SESSION['nombre_razonsocial_spm']; ?>
                                 <?php }else { ?>
-                                    <i class="bi bi-person text-dark"></i> <?php echo $_SESSION['cod_tipo_usuario_spm']; ?>
+                                    <i class="bi bi-person text-dark"></i> <?php echo $_SESSION['primer_nombre_spm']; ?>
                                 <?php } ?>
                             </a>
                             <div class="dropdown-menu dropdown-menu dropdown-menu-end" aria-labelledby="usuarioDropdown">

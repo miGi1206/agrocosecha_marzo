@@ -19,7 +19,7 @@ class proveedorControlador extends proveedorModelo
         $personaContacto = mainModel::limpiar_cadena($_POST['txtPersonaContacto_ins']);
         $telefonoContacto = mainModel::limpiar_cadena($_POST['txtTelefonoContacto_ins']);
         $emailContacto = mainModel::limpiar_cadena($_POST['txtEmailContacto_ins']);
-        $tipo_usuario = mainModel::limpiar_cadena($_POST['txtTipo_usuario_ins']);
+        $tipo_usuario = 3;
         $usuario = mainModel::limpiar_cadena($_POST['txtUsuario_ins']);
         $contra = mainModel::limpiar_cadena($_POST['txtContra_ins']);
         $confir_contra = mainModel::limpiar_cadena($_POST['txtConfir_contra_ins']);
@@ -47,22 +47,22 @@ class proveedorControlador extends proveedorModelo
         }
         
 
-        if (mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,100}", $razonsocial)) {
+        if (mainModel::verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{1,100}", $razonsocial)) {
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrió un error inesperado",
-                "Texto" => "El Primer apellido no coincide con el formato solicitado",
+                "Texto" => "El nombre o razon social no coincide con el formato solicitado",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
             exit();
         }
         if ($telefono != "") {
-            if (mainModel::verificar_datos("[0-9()+]{8,20}", $telefono)) {
+            if (mainModel::verificar_datos("[0-9()+]{8,15}", $telefono)) {
                 $alerta = [
                     "Alerta" => "simple",
                     "Titulo" => "Ocurrió un error inesperado",
-                    "Texto" => "El numero de celular no coincide con el formato solicitado",
+                    "Texto" => "El telefono empresarial no coincide con el formato solicitado",
                     "Tipo" => "error"
                 ];
                 echo json_encode($alerta);
@@ -74,7 +74,7 @@ class proveedorControlador extends proveedorModelo
                 $alerta = [
                     "Alerta" => "simple",
                     "Titulo" => "Ocurrió un error inesperado",
-                    "Texto" => "El numero de celular no coincide con el formato solicitado",
+                    "Texto" => "El telefono personal no coincide con el formato solicitado",
                     "Tipo" => "error"
                 ];
                 echo json_encode($alerta);
@@ -134,7 +134,7 @@ class proveedorControlador extends proveedorModelo
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrió un error Inesperado",
-                "Texto" => "La identificacion ingresada ya se encuentra registrada en el sistema",
+                "Texto" => "El nit ingresada ya se encuentra registrada en el sistema",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -191,14 +191,14 @@ class proveedorControlador extends proveedorModelo
                 $alerta = [
                     "Alerta" => "limpiarTime",
                     "Titulo" => "Persona Registrado",
-                    "Texto" => "La persona ha sido registrado exitosamente.",
+                    "Texto" => "El proveedor ha sido registrado exitosamente.",
                     "Tipo" => "success"
                 ];
             } else {
                 $alerta = [
                     "Alerta" => "simple",
                     "Titulo" => "Ocurrió un error inesperado",
-                    "Texto" => "No hemos podido registrar a la persona.",
+                    "Texto" => "No hemos podido registrar al proveedor.",
                     "Tipo" => "error"
                 ];
             }
@@ -340,7 +340,7 @@ class proveedorControlador extends proveedorModelo
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrió un error inesperado.",
-                "Texto" => "No hemos podido eliminar la persona.",
+                "Texto" => "No hemos podido eliminar al proveedor.",
                 "Tipo" => "error"
             ];
         }
@@ -406,7 +406,7 @@ class proveedorControlador extends proveedorModelo
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrió un error inesperado",
-                "Texto" => "El nombre no coincide con el formato solicitado",
+                "Texto" => "El nombre o razon social no coincide con el formato solicitado",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -417,7 +417,7 @@ class proveedorControlador extends proveedorModelo
                 $alerta = [
                     "Alerta" => "simple",
                     "Titulo" => "Ocurrió un error inesperado",
-                    "Texto" => "Ha ingresado un correo no válido",
+                    "Texto" => "Ha ingresado un correo no válido en el correo empresarial",
                     "Tipo" => "error"
                 ];
                 echo json_encode($alerta);
@@ -430,7 +430,7 @@ class proveedorControlador extends proveedorModelo
                 $alerta = [
                     "Alerta" => "simple",
                     "Titulo" => "Ocurrió un error inesperado",
-                    "Texto" => "Ha ingresado un correo no válido",
+                    "Texto" => "Ha ingresado un correo no válido en el correo personal",
                     "Tipo" => "error"
                 ];
                 echo json_encode($alerta);
@@ -444,7 +444,7 @@ class proveedorControlador extends proveedorModelo
                 $alerta = [
                     "Alerta" => "simple",
                     "Titulo" => "Ocurrió un error inesperado",
-                    "Texto" => "El numero de celular no coincide con el formato solicitado",
+                    "Texto" => "El telefono empresarial no coincide con el formato solicitado",
                     "Tipo" => "error"
                 ];
                 echo json_encode($alerta);
@@ -485,7 +485,7 @@ class proveedorControlador extends proveedorModelo
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrió un error inesperado",
-                "Texto" => "No hemos podido actualizar tus datos ;(",
+                "Texto" => "No hemos podido actualizar tus datos",
                 "Tipo" => "error"
             ];
         }
