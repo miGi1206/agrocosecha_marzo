@@ -33,10 +33,26 @@ class proveedorModelo extends mainModel
         return $sql;
     }
 
+    protected static function agregar_prov_prod_modelo($datos_prov_prod){
+        $sql = mainModel::conectar()->prepare("INSERT INTO tbl_prov_prod(nit_proveedor,cod_producto)
+            VALUES(:nit_proveedor,:cod_producto)");
+        $sql->bindParam(":nit_proveedor", $datos_prov_prod['nit_proveedor']);
+        $sql->bindParam(":cod_producto", $datos_prov_prod['cod_producto']);
+        $sql->execute();
+        return $sql;
+    }
+
 
     public function listar_tipo_usuario()
     {
         $sql = mainModel::conectar()->prepare("SELECT * FROM tbl_tipo_usuario WHERE tipo_usuario = 'proveedor'");
+        $sql->execute();
+        return $sql;
+    }
+
+    public function listar_producto()
+    {
+        $sql = mainModel::conectar()->prepare("SELECT * FROM tbl_producto");
         $sql->execute();
         return $sql;
     }
@@ -51,7 +67,7 @@ class proveedorModelo extends mainModel
     }
 
 
-    /*------------- MODELO ACTUALIZAR MESA -----------------------*/
+    /*------------- MODELO ACTUALIZAR PROVEEDOR -----------------------*/
     protected static function datos_proveedor_modelo($nit){
         $sql=mainModel::conectar()->prepare("SELECT * FROM tbl_proveedor WHERE nit =:nit");
 
@@ -77,7 +93,16 @@ class proveedorModelo extends mainModel
         $sql->execute();
         return $sql;
     }
+
+    // protected static function actualizar_prov_prod($datos_prov_prod)
+    // {
+    //     $sql = mainModel::conectar()->prepare("UPDATE tbl_prov_prod SET nit_proveedor=:nit_proveedor,cod_producto=:cod_producto 
+    //     WHERE nit=:nit");
+    //     $sql->bindParam(":nit_proveedor",$datos_prov_prod['nit_proveedor']);
+    //     $sql->bindParam(":cod_producto",$datos_prov_prod['cod_producto']);
+    //     $sql->execute();
+    //     return $sql;
+    // }
     
-    /*------------- eliminar mesa -----------------------*/
     
 }
