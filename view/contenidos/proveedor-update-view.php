@@ -1,7 +1,7 @@
 <?php
 include "./model/proveedorModelo.php";
 $ins_sexo_usuario = new proveedorModelo();
-
+$productoVinculado = $ins_sexo_usuario->listar_producto();
 ?>
 <section class="tab-components">
     <div class="container-fluid">
@@ -78,6 +78,19 @@ $ins_sexo_usuario = new proveedorModelo();
                                         <label class="control-label">Email <span style="color:red;">*</span></label>
                                         <input class="form-control" maxlength="50" type="text" name="updateCorreo" id="correo"
                                             value="<?php echo $campos['correo']; ?>" require>
+                                    </div>
+
+                                    <div class="form-group col-md-4 mt-3">
+                                        <label class="control-label">Sexo <span style="color:red;">*</span></label>
+                                        <select class="form-control" id="input-select-producto" name="updateProductoVinculado">
+                                            <?php foreach ($productoVinculado as $filaP) : ?>
+                                            <?php $selected = ($campos['nombre'] == $filaP['codigo_producto']) ? 'selected' : ''; ?>
+                                            <option value="<?php echo $filaP['codigo_producto']; ?>"
+                                                <?php echo $selected; ?>>
+                                                <?php echo $filaP['nombre']; ?>
+                                            </option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </div>
 
                                     
