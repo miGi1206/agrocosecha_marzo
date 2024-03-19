@@ -56,7 +56,7 @@
 
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">descripción: <span style="color:red;">*</span></label>
-                                        <input class="form-control" maxlength="50" type="text" id="updatedescripcion"
+                                        <input class="form-control" type="text" id="updatedescripcion"
                                             name="updatedescripcion" required  value="<?php echo $campos['descripcion']; ?>">
                                             <div id="descripcion_error" style="color: red;"></div>
                                     </div>

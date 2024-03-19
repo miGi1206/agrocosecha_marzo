@@ -17,8 +17,41 @@ class productoModelo extends mainModel
         $sql->bindParam(":stock", $datos['stock']);
         $sql->bindParam(":video", $datos['video']);
         $sql->execute();
+
+
+        // Subir las imágenes y guardar sus nombres en la base de datos
+        $dir_local = "../view/img/img_productos";
+
+        if (!file_exists($dir_local)) {
+            mkdir($dir_local, 0777, true);
+        }
+
+        foreach ($_FILES['txtfotos_reg']['name'] as $i => $name) {
+            if (strlen($_FILES['txtfotos_reg']['name'][$i]) > 1) {
+                $file_name = $_FILES['txtfotos_reg']['name'][$i];
+                $sourse_foto = $_FILES['txtfotos_reg']['tmp_name'][$i];
+                $tamaño_foto = $_FILES['txtfotos_reg']['size'][$i];
+
+                $nuevo_nombre_file = md5(uniqid(rand()));
+                $extension_foto = pathinfo($file_name, PATHINFO_EXTENSION);
+                $nombre_foto = md5(uniqid(rand())) . '_' . $datos['Nombre'] . '.' . $extension_foto;
+
+                $result_foto = $dir_local . '/' . $nombre_foto;
+
+                move_uploaded_file($sourse_foto, $result_foto);
+
+                $insert_image_sql = "INSERT INTO tbl_imagen (foto, cod_producto) VALUES (:foto, :codigo_producto)";
+                $sql_imagen = mainModel::conectar()->prepare($insert_image_sql);
+                $sql_imagen->bindParam(":foto", $nombre_foto);
+                $sql_imagen->bindParam(":codigo_producto", $datos['codigo_producto']);
+                $sql_imagen->execute();
+                
+            }
+        }
+
         return $sql;
     }
+
     /*------------- MODELO ELIMINAR APRENDIZ -----------------------*/
     protected static function eliminar_producto_modelo($id)
     {

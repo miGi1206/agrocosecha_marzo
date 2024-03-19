@@ -8,6 +8,91 @@ if ($peticionAjax) {
 
 class usuarioControlador extends usuarioModelo
 {
+    /*------------- CONTROLADOR AGREGAR USUARIO -----------------------*/
+    public function agregar_usuario_controlador()
+    {
+        $usuario = mainModel::limpiar_cadena($_POST['txtUsuario_ins']);
+        $contraseña = mainModel::limpiar_cadena($_POST['txtContra_ins']);
+        $confir_contra = mainModel::limpiar_cadena($_POST['txtConfir_contra_ins']);
+        $persona = mainModel::limpiar_cadena($_POST['txtIDpersona_ins']);
+        $tipo_usuario = mainModel::limpiar_cadena($_POST['txtTipo_usuario_ins']);
+
+        if ($usuario == "" || $contraseña == "" || $persona == "" || $tipo_usuario == "" || $confir_contra == "") {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Ocurrio un error inesperado",
+                "Texto" => "No has llenado todos los campos que son obligatorios",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+
+        $comprobarpersona = mainModel::ejecutar_consulta_simple("SELECT * FROM tbl_usuario WHERE cod_persona ='$persona' AND cod_tipo_usuario = '$tipo_usuario'");
+
+        if ($comprobarpersona->rowCount() > 0) {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Ocurrió un error Inesperado",
+                "Texto" => "La identificación ingresada ya cuenta con un usuario con ese tipo",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+        // Verificar si el usuario ya existe
+        $checkUsuario = mainModel::ejecutar_consulta_simple("SELECT usuario FROM tbl_usuario WHERE usuario='$usuario'");
+        if ($checkUsuario->rowCount() > 0) {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Ocurrió un error inesperado",
+                "Texto" => "El nombre de usuario ingresado ya se encuentra registrado en el sistema",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+        if ($contraseña != $confir_contra) {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Ocurrió un error inesperado",
+                "Texto" => "La contraseñas no coinciden",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+    }
+        else {
+                $contraincriptada = SHA1($contraseña);
+                $datos_users_add = [
+                    "usuario" => $usuario,
+                    "contrasena" => $contraincriptada,
+                    "persona" => $persona,
+                    "tipo_usuario" => $tipo_usuario,
+                ];
+
+                $agregar_usuario = usuarioModelo::agregar_usuario_modelo($datos_users_add);
+
+                if ($agregar_usuario->rowCount() == 1) {
+                    $alerta = [
+                        "Alerta" => "limpiarTime",
+                        "Titulo" => "Usuario Registrado",
+                        "Texto" => "El Usuario ha sido registrado exitosamente.",
+                        "Tipo" => "success"
+                    ];
+                } else {
+                    $alerta = [
+                        "Alerta" => "simple",
+                        "Titulo" => "Ocurrió un error inesperado",
+                        "Texto" => "No hemos podido registrar el usuario.",
+                        "Tipo" => "error"
+                    ];
+                }
+            echo json_encode($alerta);
+            exit();
+        }
+    }
+    /*------------- FIN AGREGAR USUARIO -----------------------------*/
 
     /*--------------------- TABLA PAGINADOR ---------------------------*/
     public function paginador_usuario_controlador($pagina, $registros, $id, $url, $busqueda)
@@ -41,10 +126,11 @@ class usuarioControlador extends usuarioModelo
                         ORDER BY codigo_usuario ASC LIMIT $inicio, $registros";
         } else {
             $consulta = "SELECT SQL_CALC_FOUND_ROWS * 
-                        FROM tbl_usuario,tbl_tipo_usuario,tbl_persona,tbl_proveedor 
-                        WHERE tbl_tipo_usuario.codigo_tipo_usuario= tbl_usuario.cod_tipo_usuario 
-                        AND (tbl_persona.codigo_persona=tbl_usuario.cod_persona OR tbl_proveedor.nit=tbl_usuario.nit_proveedor) 
-                        ORDER BY codigo_usuario ASC LIMIT $inicio, $registros";
+            FROM tbl_usuario 
+            LEFT JOIN tbl_tipo_usuario ON tbl_tipo_usuario.codigo_tipo_usuario = tbl_usuario.cod_tipo_usuario
+            LEFT JOIN tbl_persona ON tbl_persona.codigo_persona = tbl_usuario.cod_persona
+            LEFT JOIN tbl_proveedor ON tbl_proveedor.nit = tbl_usuario.nit_proveedor
+            ORDER BY codigo_usuario ASC LIMIT $inicio, $registros";
         }
         
         $conexion = mainModel::conectar();

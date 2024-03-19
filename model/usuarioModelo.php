@@ -5,14 +5,28 @@ require_once "mainModel.php";
 class usuarioModelo extends mainModel
 {
 
-    /*------------- MODELO AGREGAR APRENDIZ -----------------------*/
+    /*------------- MODELO AGREGAR USUARIO -----------------------*/
     protected static function agregar_usuario_modelo($datos)
     {
-        $sql = mainModel::conectar()->prepare("INSERT INTO tbl_usuario(useUser, usePass, tbl_apren_ID)       
-                VALUES(:usuario,:contrasena,:aprendiz)");
+        $sql = mainModel::conectar()->prepare("INSERT INTO tbl_usuario(usuario, contrasena, cod_persona, cod_tipo_usuario)       
+                VALUES(:usuario,:contrasena,:persona, :tipo_usuario)");
         $sql->bindParam(":usuario", $datos['usuario']);
         $sql->bindParam(":contrasena", $datos['contrasena']);
-        $sql->bindParam(":aprendiz", $datos['aprendiz']);
+        $sql->bindParam(":persona", $datos['persona']);
+        $sql->bindParam(":tipo_usuario", $datos['tipo_usuario']);
+        $sql->execute();
+        return $sql;
+    }
+    public function listar_persona()
+    {
+        $sql = mainModel::conectar()->prepare("SELECT * FROM tbl_persona");
+        $sql->execute();
+        return $sql;
+    }
+
+    public function listar_tipo_usuario()
+    {
+        $sql = mainModel::conectar()->prepare("SELECT * FROM tbl_tipo_usuario WHERE tipo_usuario != 'proveedor'");
         $sql->execute();
         return $sql;
     }
@@ -21,7 +35,7 @@ class usuarioModelo extends mainModel
     /*------------- MODELO ELIMINAR USUARIO -----------------------*/
     protected static function eliminar_usuario_modelo($id)
     {
-        $sql = mainModel::conectar()->prepare("DELETE FROM tbl_usuario WHERE usuarioId =:id");
+        $sql = mainModel::conectar()->prepare("DELETE FROM tbl_usuario WHERE codigo_usuario =:id");
 
         $sql->bindParam(":id", $id);
         $sql->execute();

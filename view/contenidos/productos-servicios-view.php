@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<title>Agrocosecha</title>
+    <title>Agrocosecha</title>
     <meta charset="utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,7 +24,70 @@
 
 <body>
 
+    <style>
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 50px;
+        /* Define el ancho de los botones */
+        height: 35%;
+        /* Define la altura de los botones */
+        background-color: transparent;
+        /* Define el color de fondo transparente */
+        border: none;
+        /* Elimina el borde */
+
+
+    }
+
+    @media (max-width: 990px) {
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 50px;
+            /* Define el ancho de los botones */
+            height: 100%;
+            /* Define la altura de los botones */
+            background-color: transparent;
+            /* Define el color de fondo transparente */
+            border: none;
+            /* Elimina el borde */
+
+
+        }
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: green;
+        /* Cambia el color de fondo al pasar el ratón sobre las flechas */
+        border-radius: 50%;
+        background-size: 50%;
+        /* Ajusta el tamaño de la imagen de la flecha */
+        margin-top: 150%;
+        /* Centra verticalmente la flecha */
+
+    }
+
+    .carousel-control-prev-icon:hover,
+    .carousel-control-next-icon:hover {
+        background-color: green;
+        /* Cambia el color de fondo al pasar el ratón sobre las flechas */
+        border-radius: 50%;
+    }
+    </style>
+
     <?php include "config\coneccion_tabla.php";?>
+    <?php
+$foto = array(); // Inicializa $foto como un array vacío
+
+if (isset($_GET['busqueda'])) {
+    $busqueda = $_GET['busqueda'];
+    $foto = "SELECT foto FROM tbl_imagen, tbl_producto 
+            WHERE tbl_imagen.cod_producto = tbl_producto.codigo_producto 
+            AND tbl_producto.codigo_producto = '$busqueda'";
+    $result_foto = mysqli_query($conn, $foto);
+}
+?>
 
     <style>
     .contenido-fijo {
@@ -62,6 +126,7 @@
         <!-- Close Header -->
     </div>
 
+
     <!-- Close Header -->
 
     <!-- Start Content -->
@@ -72,118 +137,32 @@
             <?php include "view/inc/sidebar_proser.php"?>
             <!--Fin del sidebar-->
 
-            <div class="container pb-5 bg-light" style="width: 70%;">
+            <div class="container pb-5 bg-light" style="width: 80%;">
                 <div class="row">
-                    <div class="col-lg-5 mt-5">
-                        <div class="card mb-3">
-                            <img class="card-img img-fluid" src="<?php echo SERVERURL; ?>view/img/arroz.jpg"
-                                alt="Card image cap" id="product-detail">
+                    <div id="carouselExample" class="carousel slide col-12 col-md-5 my-5">
+                        <div class="carousel-inner">
+                            <?php
+                            $active = true;
+                            while ($row_foto = mysqli_fetch_assoc($result_foto)) {
+                                echo '<div class="carousel-item ' . ($active ? 'active' : '') . '">';
+                                echo '<img src="view/img/img_productos/' . $row_foto["foto"] . '" class="d-block w-100" alt="Product Image">';
+                                echo '</div>';
+                                $active = false; // Desactivar la clase 'active' después del primer elemento
+                            }
+                            ?>
                         </div>
-                        <div class="row">
-                            <!--Start Controls-->
-                            <div class="col-1 align-self-center">
-                                <a href="#multi-item-example" role="button" data-bs-slide="prev">
-                                    <i class="text-dark bi bi-chevron-left"></i>
-                                </a>
-                            </div>
-                            <!--End Controls-->
-                            <!--Start Carousel Wrapper-->
-                            <div id="multi-item-example" class="col-10 carousel slide carousel-multi-item"
-                                data-bs-ride="carousel">
-                                <!--Start Slides-->
-                                <div class="carousel-inner product-links-wap" role="listbox">
-
-                                    <!--First slide-->
-                                    <div class="carousel-item active">
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <a href="#">
-                                                    <img class="card-img img-fluid"
-                                                        src="<?php echo SERVERURL; ?>view/img/principio_arroz (1).jpg"
-                                                        alt="Product Image 1">
-                                                </a>
-                                            </div>
-                                            <div class="col-4">
-                                                <a href="#">
-                                                    <img class="card-img img-fluid"
-                                                        src="<?php echo SERVERURL; ?>view/img/2Face_arroz.jpg"
-                                                        alt="Product Image 2">
-                                                </a>
-                                            </div>
-                                            <div class="col-4">
-                                                <a href="#">
-                                                    <img class="card-img img-fluid"
-                                                        src="<?php echo SERVERURL; ?>view/img/3face_arroz.png"
-                                                        alt="Product Image 3">
-                                                </a>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <!--/.First slide-->
-
-                                    <!--Second slide-->
-                                    <div class="carousel-item">
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <a href="#">
-                                                    <img class="card-img img-fluid"
-                                                        src="<?php echo SERVERURL; ?>view/img/4face_arroz.png"
-                                                        alt="Product Image 4">
-                                                </a>
-                                            </div>
-                                            <div class="col-4">
-                                                <a href="#">
-                                                    <img class="card-img img-fluid"
-                                                        src="<?php echo SERVERURL; ?>view/img/5face_arroz.png"
-                                                        alt="Product Image 5">
-                                                </a>
-                                            </div>
-                                            <div class="col-4">
-                                                <a href="#">
-                                                    <img class="card-img img-fluid"
-                                                        src="<?php echo SERVERURL; ?>view/img/6face_arroz.png"
-                                                        alt="Product Image 6">
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--/.Second slide-->
-
-                                    <!--Third slide-->
-                                    <div class="carousel-item">
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <a href="#">
-                                                    <img class="card-img img-fluid"
-                                                        src="<?php echo SERVERURL; ?>view/img/arroz.jpg"
-                                                        alt="Product Image 7">
-                                                </a>
-                                            </div>
-                                            <div class="col-4">
-                                                <a href="#">
-                                                    <img class="card-img img-fluid"
-                                                        src="<?php echo SERVERURL; ?>view/img/ultimaface_arroz.png "
-                                                        alt="Product Image 8">
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--/.Third slide-->
-                                </div>
-                                <!--End Slides-->
-                            </div>
-                            <!--End Carousel Wrapper-->
-                            <!--Start Controls-->
-                            <div class="col-1 align-self-center" style="margin-top:-4%;">
-                                <a href="#multi-item-example" role="button" data-bs-slide="next">
-                                    <i class="text-dark bi bi-chevron-right"></i>
-                                </a>
-                            </div>
-                            <!--End Controls-->
-
-                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
+
                     <!-- col end -->
                     <?php
                     $productos="";
@@ -211,7 +190,7 @@
                     <div class="col-lg-7 mt-5">
                         <div class="card">
                             <div class="card-body">
-                            <?php
+                                <?php
                                 $productos = "";
                                 $alquiler = "";
 
@@ -232,7 +211,13 @@
                                     echo "<p><b>Stock: ". $row['stock'] . "</b></p>";
                                 }
                                 if (isset($_SESSION['tipo_usuario_spm']) && $_SESSION['tipo_usuario_spm'] == "3" && isset($_SESSION['cod_prod_prov_spm']) && $_SESSION['cod_prod_prov_spm'] == $busqueda) {
-                                    echo "<p><b>Stock: " . $_SESSION['stock_producto_spm'] . "</b></p>";
+                                    $sql_stock = "SELECT * 
+                                                    FROM tbl_producto AS p 
+                                                    JOIN tbl_prov_prod AS pp ON p.codigo_producto = pp.cod_producto 
+                                                    WHERE pp.nit_proveedor = '" . $_SESSION['nit_spm'] . "'";
+                                    $result_stock = mysqli_query($conn, $sql_stock);
+                                    while($fila = mysqli_fetch_assoc($result_stock)){
+                                    echo "<p><b>Stock: ". $row['stock'] . "</b></p>";}
                                 }
                                 
                                 ?>
@@ -240,68 +225,6 @@
                                 <h6>Descripción</h6>
                                 <p><?= $row['descripcion']?></p>
 
-                                <!-- //! Mostrar el boton de comprar  -->
-                                <?php
-                                if (isset($_SESSION['tipo_usuario_spm']) && $_SESSION['tipo_usuario_spm'] == "2") {
-                                    echo '<div class="navbar align-self-center d-flex">
-                                                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-                                                        <li class="nav-item">
-                                                            <button class="nav-link" href="#"
-                                                                style="background-color:#3aaa3c; border-radius:5px; padding:5%; color:white;  width: 130px;"
-                                                                data-bs-toggle="modal" data-bs-target="#exampleModalToggle2"
-                                                                aria-expanded="false" role="button"><i class="bi bi-cart-fill text-black"></i></button>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="modal fade" id="exampleModalToggle2" aria-hidden="true"
-                                                    aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                                                    <div class="modal-dialog modal-dialog-centered">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                    
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                    aria-label="Close"></button>
-                                                            </div>
-                    
-                                                            <div class="modal-body">
-                                                                <div class="z-flex2">
-                    
-                                                                    <!-- inicio del formulario -->
-                                                                    <form method="POST" action="">
-                                                                        <img src="/agrocosecha_final/vista_corp/assets/img/nombre_logo.png"
-                                                                            class="col-sm-6" id="ini_logo3" style="margin: auto">
-                                                                        <h5 class="modal-title" id="exampleModalToggleLabel"
-                                                                            style="margin-bottom: 5%; color: #065F2C;"><b>Comprar</b></h5>
-                                                                        <div class="form-floating mb-3">
-                                                                            <input type="number" class="form-control cuadro_texto2"
-                                                                                id="floatingInput" name="cantidad" placeholder="cantidad"
-                                                                                required>
-                                                                            <label for="floatingInput">Cantidad</label>
-                                                                        </div>
-                                                                        <div class="form-floating mb-3">
-                                                                            <input type="text" class="form-control cuadro_texto2"
-                                                                                id="floatingInput" name="direccion" placeholder="direccion"
-                                                                                required>
-                                                                            <label for="floatingInput">Dirección</label>
-                                                                        </div>
-                                                                        <div class="form-floating mb-3">
-                                                                            <input type="number" class="form-control cuadro_texto2"
-                                                                                id="floatingInput" name="telefono" placeholder="direccion"
-                                                                                required>
-                                                                            <label for="floatingInput">Telefono</label>
-                                                                        </div>
-                                                                        <button type="submit" class="btn-iniciar2" style="padding:1% 5%; ">
-                                                                            Comprar</button>
-                                                                    </form>
-                                                                    <!-- fin del formulario  -->
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>';
-                                
-                                }
-                                ?>
                                 <?php
                                     }
                                 }elseif (isset($_GET['busqueda2'])) {
@@ -348,18 +271,28 @@
                         </div>
                     </div>
 
+
                 </div>
 
-                <div>
+                <div class="my-5 col-md-12">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe width="70%" height="315" src="https://www.youtube.com/embed/Q_Xxrp4oNds"
+                            title="Siembra y Producción de Arroz Orgánico - TvAgro por Juan Gonzalo Angel"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+                    </div>
+                </div>
+
+                <!-- <div class="my-5 col-md-12">
                     <iframe width="560" height="315" src="https://www.youtube.com/embed/UxeZeUd0Yb0" frameborder="0"
                         allowfullscreen></iframe>
 
-                    <!-- <iframe width="100%" height="315"
+                    <iframe width="100%" height="315"
                         src="https://www.youtube.com/embed/JBOmT-Mnm60?si=rpB4_5W3-uPtVAE1" title="YouTube video player"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe> -->
-                </div>
+                        allowfullscreen></iframe>
+                </div> -->
             </div>
         </div>
 
@@ -378,6 +311,28 @@
     <script src="view/js/templatemo.js"></script>
     <script src="view/js/custom.js"></script>
     <!-- End Script -->
+
+    <!-- //TODO: Agregar al carrito -->
+    <script>
+    function addProducto(id, token) {
+        let url = 'carrito/carrito.php';
+        let formData = new FormData();
+        formData.append('busqueda', id);
+        formData.append('token', token);
+
+        fetch(url, {
+                method: 'POST',
+                body: formData,
+                mode: 'cors'
+            }).then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    let elemento = document.getElementById("num_cart")
+                    elemento.innerHTML = data.numero
+                }
+            })
+    }
+    </script>
 </body>
 
 </html>
