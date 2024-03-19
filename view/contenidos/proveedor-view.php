@@ -1,3 +1,8 @@
+<?php
+include "./model/proveedorModelo.php";
+$ins_sexo_usuario = new proveedorModelo();
+$productoLista = $ins_sexo_usuario->listar_producto();
+?>
 <section class="tab-components">
     <div class="container-fluid">
         <div class="title-wrapper pt-30">
@@ -48,7 +53,7 @@
                                             name="txtRazonSocial_ins" require>
                                     </div>
                                     <div class="form-group col-md-4 mt-3">
-                                        <label class="control-label">Teléfono</label>
+                                        <label class="control-label">Teléfono <span style="color:red;">*</span></label>
                                         <input class="form-control" maxlength="15" type="text" id="telefono" name="txtTelefono_ins" required>
                                     </div>
 
@@ -56,6 +61,18 @@
                                         <label class="control-label">Email <span style="color:red;">*</span></label>
                                         <input class="form-control" maxlength="50" type="text" id="correo"
                                             name="txtEmail_ins" require>
+                                    </div>
+
+                                    <div class="form-group col-md-4 mt-3">
+                                        <label class="control-label">Producto-proveedor <span style="color:red;">*</span></label>
+                                        <select class="form-control" id="input-select-tipo-usuario"
+                                            name="txtProductoVinculado_ins">
+                                            <option></option>
+                                            <?php foreach ($productoLista as $filaP) : ?>
+                                            <option value="<?php echo $filaP['codigo_producto']; ?>">
+                                                <?php echo $filaP['nombre']; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </div>
                                     
                                 </div>
@@ -68,7 +85,7 @@
                                             name="txtPersonaContacto_ins" require>
                                     </div>
                                     <div class="form-group col-md-4 mt-3">
-                                        <label class="control-label">Teléfono contacto</label>
+                                        <label class="control-label">Teléfono contacto <span style="color:red;">*</span></label>
                                         <input class="form-control" maxlength="15" type="text" id="telefonoContacto" name="txtTelefonoContacto_ins" required>
                                     </div>
 

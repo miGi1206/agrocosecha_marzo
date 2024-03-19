@@ -62,6 +62,11 @@
 
                 $_SESSION['token_spm'] = md5(uniqid(mt_rand(), true));
 
+                $num_cart = 0;
+                if (isset($_SESSION['carrito']['productos'])){
+                    $num_cart = count($_SESSION['carrito']['productos']);
+                }
+
                 
                 if ($_SESSION['tipo_usuario_spm'] == 1) { // Si es administrador
                     header("Location: " . SERVERURL . "personas-list/");

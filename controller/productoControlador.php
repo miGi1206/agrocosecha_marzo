@@ -17,7 +17,9 @@ class productoControlador extends productoModelo
         $precio = mainModel::limpiar_cadena($_POST['txtprecio_reg']);
         $stock = mainModel::limpiar_cadena($_POST['txtstock_ins']);
         $video = mainModel::limpiar_cadena($_POST['txtvideo_reg']);
-    
+
+        $fotos = $_FILES['txtfotos_reg']; // Obtener información de las imágenes
+
         // Validación adicional en el servidor
         if (!preg_match("/^[0-9]+$/", $codigo)) {
             $alerta = [
@@ -42,8 +44,20 @@ class productoControlador extends productoModelo
             echo json_encode($alerta);
             exit();
         }
+
+        $comprobarcodigo = mainModel::ejecutar_consulta_simple("SELECT codigo_producto FROM tbl_producto WHERE codigo_producto='$codigo'");
+        if ($comprobarcodigo->rowCount() > 0) {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Ocurrió un error Inesperado",
+                "Texto" => "El codigo ingresada ya se encuentra registrada en el sistema",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
     
-        $datos_mesa_add = [
+        $datos_producto_add = [
             "Nombre" => $nombres,
             "codigo_producto" => $codigo,
             "descripcion" => $descricpcion,
@@ -52,11 +66,11 @@ class productoControlador extends productoModelo
             "video" => $video
         ];
     
-        $agregar_producto = productoModelo::agregar_producto_modelo($datos_mesa_add);
+        $agregar_producto = productoModelo::agregar_producto_modelo($datos_producto_add);
         if ($agregar_producto->rowCount() == 1) {
             $alerta = [
                 "Alerta" => "limpiarTime",
-                "Titulo" => "Mesas registradas",
+                "Titulo" => "Producto registrado",
                 "Texto" => " El producto se ha registrado exitosamente",
                 "Tipo" => "success"
             ];
@@ -112,6 +126,7 @@ class productoControlador extends productoModelo
             <th class="text-center">Precio</th>
             <th class="text-center">Stock</th>
             <th class="text-center">Video</th>
+            <th class="text-center">Fotos</th>
             <th class="text-center">Fecha</th>
             <th class="text-center" colspan="2">Acciones</th>
             </tr>
@@ -120,33 +135,42 @@ class productoControlador extends productoModelo
             $contador = $inicio + 1;
             $reg_inicio = $inicio + 1;
             foreach ($datos as $rows) {
-                    $tabla .=
-                        '<tr class="p">
-                        <td class="min-width">' . $contador . '</td>
-                        <td class="min-width">' . $rows['codigo_producto'] . '</td>
-                        <td class="min-width">' . $rows['nombre'] . '</td>  
-                        <td class="min-width">' . $rows['descripcion'] . '</td>  
-                        <td class="min-width">' . $rows['precio'] . '</td>  
-                        <td class="min-width">' . $rows['stock'] . '</td>  
-                        <td class="min-width">' . $rows['video'] . '</td>  
-                        <td class="min-width">' . $rows['fecha_registro'] . '</td>
-
-                        <td class="stat"><a href="' . SERVERURL . 'producto-update/' . mainModel::encryption($rows['codigo_producto']) . '/"</input>
-                            <button type="submit" class="btn warnign-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                <i class="bi bi-pencil-square lead"></i>
-                            </button>
-                        </td>  
-                        <td>
-                            <form class="FormularioAjax" action="' . SERVERURL . 'ajax/productoAjax.php" 
-                                method="post" data-form="delete" autocomplete="off"> 		
-                                <input type="hidden" name="idcodigo_del" value="' . mainModel::encryption($rows['codigo_producto']) . '"></input>
-                                <button type="submit" class="btn danger-btn">
-                                    <i class="bi bi-trash3 lead"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>';
-                
+                $descripcion = $rows["descripcion"];
+                $descripcion_corta = substr($descripcion, 0, 100);
+                $descripcion_larga = substr($descripcion, 100);
+                $tabla .= '<tr class="p">
+                                <td class="min-width">' . $contador . '</td>
+                                <td class="min-width">' . $rows['codigo_producto'] . '</td>
+                                <td class="min-width">' . $rows['nombre'] . '</td>  
+                                <td>';
+            
+                $tabla .= "<span codigo_producto='resumen" . $rows['codigo_producto'] . "'>" . $descripcion_corta . "</span>";
+                if (strlen($descripcion) > 100) {
+                    $tabla .= "<span codigo_producto='detalle" . $rows['codigo_producto'] . "' style='display:none;'>" . $descripcion_larga . "</span>";
+                    $tabla .= "<button onclick='leerMas(" . $rows['codigo_producto'] . ")' style='background-color: transparent; border:none; color:blue;'> Leer más</button>";
+                    $tabla .= "<button onclick='leerMenos(" . $rows['codigo_producto'] . ")' style='display:none; background-color: transparent; border:none; color:blue;'> Leer menos</button>";
+                }
+                $tabla .= '</td> 
+                            <td class="min-width">' . $rows['precio'] . '</td>  
+                            <td class="min-width">' . $rows['stock'] . '</td>  
+                            <td class="min-width">' . $rows['video'] . '</td>
+                            <td class="min-width"><a href="' . SERVERURL . 'ver-fotos?id=' . $rows['codigo_producto'] . '">Ver fotos</a></td>
+                            <td class="stat">
+                                <a href="' . SERVERURL . 'producto-update/' . mainModel::encryption($rows['codigo_producto']) . '/">
+                                    <button type="submit" class="btn warnign-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        <i class="bi bi-pencil-square lead"></i>
+                                    </button>
+                                </a>
+                            </td>  
+                            <td>
+                                <form class="FormularioAjax" action="' . SERVERURL . 'ajax/productoAjax.php" method="post" data-form="delete" autocomplete="off"> 		
+                                    <input type="hidden" name="idcodigo_del" value="' . mainModel::encryption($rows['codigo_producto']) . '">
+                                    <button type="submit" class="btn danger-btn">
+                                        <i class="bi bi-trash3 lead"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>';
                 $contador++;
             }
             $reg_final = $contador - 1;
@@ -170,7 +194,7 @@ class productoControlador extends productoModelo
         return $tabla;
     }/*------------------- FIN TABLA ---------------------------------*/
 
-    /*------------- CONTROLADOR ACTUALIZAR mesa -----------------------*/
+    /*------------- CONTROLADOR ACTUALIZAR PRODUCTO -----------------------*/
     public function datos_producto_controlador($id){
         $id=mainModel::decryption($id);
         return productoModelo::datos_producto_modelo($id);

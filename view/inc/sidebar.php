@@ -80,6 +80,9 @@
             <a href="<?php echo SERVERURL;?>usuario-list/">Lista de Usuarios</a>
           </li>
           <li>
+            <a href="<?php echo SERVERURL;?>usuario/">Crear usuario</a>
+          </li>
+          <li>
             <a href="<?php echo SERVERURL;?>usuario-search/">Buscar usuario</a>
           </li>
         </ul>

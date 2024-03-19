@@ -16,6 +16,7 @@ class proveedorControlador extends proveedorModelo
         $razonsocial = mainModel::limpiar_cadena($_POST['txtRazonSocial_ins']);
         $telefono = mainModel::limpiar_cadena($_POST['txtTelefono_ins']);
         $email = mainModel::limpiar_cadena($_POST['txtEmail_ins']);
+        $productoVinculado= mainModel::limpiar_cadena($_POST['txtProductoVinculado_ins']);
         $personaContacto = mainModel::limpiar_cadena($_POST['txtPersonaContacto_ins']);
         $telefonoContacto = mainModel::limpiar_cadena($_POST['txtTelefonoContacto_ins']);
         $emailContacto = mainModel::limpiar_cadena($_POST['txtEmailContacto_ins']);
@@ -25,7 +26,7 @@ class proveedorControlador extends proveedorModelo
         $confir_contra = mainModel::limpiar_cadena($_POST['txtConfir_contra_ins']);
 
         /* Verificando integridad de los datos */
-        if ($nit == "" || $razonsocial == "" || $telefono == "" || $email == ""  || $personaContacto == "" || $telefonoContacto == "" || $emailContacto == "") {
+        if ($nit == "" || $razonsocial == "" || $telefono == "" || $email == ""  || $personaContacto == "" || $telefonoContacto == "" || $emailContacto == "" || $productoVinculado == "") {
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrio un error inesperado",
@@ -134,7 +135,7 @@ class proveedorControlador extends proveedorModelo
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrió un error Inesperado",
-                "Texto" => "El nit ingresada ya se encuentra registrada en el sistema",
+                "Texto" => "El nit ingresado ya se encuentra registrada en el sistema",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
@@ -170,6 +171,11 @@ class proveedorControlador extends proveedorModelo
                 "nit_proveedor"   => $nit,
             ];
 
+            $datos_prov_prod_add = [
+                "nit_proveedor" => $nit,
+                "cod_producto" => $productoVinculado,
+            ];
+
         $agregar_proveedor = proveedorModelo::agregar_proveedor_modelo($datos_proveedor_add);
         if ($agregar_proveedor->rowCount() == 1) {
             $alerta = [
@@ -190,7 +196,7 @@ class proveedorControlador extends proveedorModelo
             if ($agregar_usuario->rowCount() == 1) {
                 $alerta = [
                     "Alerta" => "limpiarTime",
-                    "Titulo" => "Persona Registrado",
+                    "Titulo" => "Proveedor Registrado",
                     "Texto" => "El proveedor ha sido registrado exitosamente.",
                     "Tipo" => "success"
                 ];
@@ -199,6 +205,22 @@ class proveedorControlador extends proveedorModelo
                     "Alerta" => "simple",
                     "Titulo" => "Ocurrió un error inesperado",
                     "Texto" => "No hemos podido registrar al proveedor.",
+                    "Tipo" => "error"
+                ];
+            }
+            $agregar_prov_prod = proveedorModelo::agregar_prov_prod_modelo($datos_prov_prod_add);
+            if ($agregar_prov_prod->rowCount() == 1) {
+                $alerta = [
+                    "Alerta" => "limpiarTime",
+                    "Titulo" => "Proveedor Registrado",
+                    "Texto" => "El proveedor ha sido registrado exitosamente.",
+                    "Tipo" => "success"
+                ];
+            } else {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ocurrió un error inesperado",
+                    "Texto" => "No hemos podido vincular producto.",
                     "Tipo" => "error"
                 ];
             }
@@ -353,6 +375,7 @@ class proveedorControlador extends proveedorModelo
         $id=mainModel::decryption($id);
         return proveedorModelo::datos_proveedor_modelo($id);
     }
+
 
     public function actualizar_proveedor_controlador()
     {
