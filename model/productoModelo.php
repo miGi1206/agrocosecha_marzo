@@ -5,7 +5,7 @@ require_once "mainModel.php";
 class productoModelo extends mainModel
 {
 
-    /*------------- MODELO AGREGAR MESA -----------------------*/
+    /*------------- MODELO AGREGAR PRODUCTO -----------------------*/
     protected static function agregar_producto_modelo($datos)
     {
         $sql = mainModel::conectar()->prepare("INSERT INTO tbl_producto(codigo_producto,nombre,descripcion,precio,stock,video,fecha_registro)       
@@ -52,18 +52,31 @@ class productoModelo extends mainModel
         return $sql;
     }
 
-    /*------------- MODELO ELIMINAR APRENDIZ -----------------------*/
+    /*------------- MODELO ELIMINAR PRODUCTO -----------------------*/
     protected static function eliminar_producto_modelo($id)
     {
-        $sql = mainModel::conectar()->prepare("DELETE FROM tbl_producto WHERE codigo_producto=:ID");
+        
+        $sql_select_imagenes = mainModel::conectar()->prepare("SELECT foto FROM tbl_imagen WHERE cod_producto=:ID");
+        $sql_select_imagenes->bindParam(":ID", $id);
+        $sql_select_imagenes->execute();
+        $imagenes = $sql_select_imagenes->fetchAll(PDO::FETCH_ASSOC);
 
+        // Iterar sobre cada imagen y eliminarla de la carpeta
+        foreach ($imagenes as $imagen) {
+            $ruta_imagen = "../view/img/img_productos/{$imagen['foto']}";
+            if (file_exists($ruta_imagen)) {
+                unlink($ruta_imagen);
+            }
+        }
+
+        $sql = mainModel::conectar()->prepare("DELETE FROM tbl_producto WHERE codigo_producto=:ID");
         $sql->bindParam(":ID", $id);
         $sql->execute();
-
+        
         return $sql;
     }
 
-    /*------------- MODELO ACTUALIZAR MESA -----------------------*/
+    /*------------- MODELO ACTUALIZAR PRODUCTO -----------------------*/
     protected static function datos_producto_modelo($id){
         $sql=mainModel::conectar()->prepare("SELECT * FROM tbl_producto WHERE codigo_producto =:id");
 

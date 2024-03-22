@@ -14,7 +14,6 @@
         ?>
         <form action="" method="GET">
             <div class="form-floating mb-3" style="margin-top:15px; margin-bottom:0px !important;" class="logo_nav A">
-                <!-- <input name="busqueda" type="button" class="form-control cuadro_texto1" id="nombre" placeholder="Nombre" value="<?= $row['nombre']?>" requered readonly> -->
                 <button style="width:100%; height:50px !important; margin-top:0px !important; border-radius:100px;" class="A"
                     type="submit" name="busqueda" value="<?= $row['codigo_producto']?>"><?= $row['nombre']?></button>
             </div>
@@ -41,7 +40,6 @@
         ?>
         <form action="" method="GET">
             <div class="form-floating mb-3" style="margin-top:15px; margin-bottom:0px !important;" class="logo_nav A">
-                <!-- <input name="busqueda" type="button" class="form-control cuadro_texto1" id="nombre" placeholder="Nombre" value="<?= $row['nombre']?>" requered readonly> -->
                 <button style="width:100%; height:50px !important; margin-top:0px !important; border-radius:100px;" class="A"
                     type="submit" name="busqueda2" value="<?= $row['codigo_servicio']?>"><?= $row['nombre']?></button>
             </div>

@@ -8,7 +8,7 @@ if ($peticionAjax) {
 
 class productoControlador extends productoModelo
 {
-    /*------------- CONTROLADOR AGREGAR producto -----------------------*/
+    /*------------- CONTROLADOR AGREGAR PRODUCTO -----------------------*/
     public function agregar_producto_controlador()
     {
         $codigo = mainModel::limpiar_cadena($_POST['txtcodigo_reg']);
@@ -223,7 +223,7 @@ class productoControlador extends productoModelo
         $precio = mainModel::limpiar_cadena($_POST['updateprecio']);
         $stock = mainModel::limpiar_cadena($_POST['updatetstock']);
         $video = mainModel::limpiar_cadena($_POST['updatetvideo']);
-       
+        
         if ($nombres == "" || $descricpcion=="" || $precio=="" || $stock=="" || $video=="") {
             $alerta = [
                 "Alerta" => "simple",
@@ -243,7 +243,7 @@ class productoControlador extends productoModelo
             "stock" => $stock,
             "video" => $video,
             "id" => $id,
-       
+        
         ];
         if (productoModelo::actualizar_producto_modelo($datos_ins_up)) {
             $alerta = [
@@ -262,9 +262,9 @@ class productoControlador extends productoModelo
         }
         echo json_encode($alerta);
         exit();
-    }/*------------------ FIN ACTUALIZAR APRENDIZ -----------------------*/
+    }/*------------------ FIN ACTUALIZAR PRODUCTO -----------------------*/
 
-    /*------------- CONTROLADOR ELIMINAR mesa --------------------*/
+    /*------------- CONTROLADOR ELIMINAR PRODUCTO --------------------*/
     public function eliminar_producto_controlador()
     {
         $id = mainModel::decryption($_POST['idcodigo_del']);
@@ -299,5 +299,5 @@ class productoControlador extends productoModelo
             ];
         }
         echo json_encode($alerta);
-}
+    }
 }

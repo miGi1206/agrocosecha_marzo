@@ -38,10 +38,9 @@ $servicio = $ins_servicio->listar_servicio();
                     <div class="col-lg-12">
                         <div class="card-style mb-30 text-center">
                             <div class="text-center mt-2 texto" style="font-size: 25px;"><i class="bi bi-person-plus lead p-1"></i>Crear servicio</div>
-                            <form class="FormularioAjax" action="<?php echo SERVERURL; ?>ajax/servicioAjax.php" method="POST" data-form="save" autocomplete="off">
+                            <form class="" action="<?php echo SERVERURL; ?>ajax/servicioAjax.php" method="POST" data-form="save" autocomplete="off" enctype="multipart/form-data">
                             <div class="row mt-4">
-                                    <div class="form-group col-md-4 mt-3">
-                                      
+                                    <div class="form-group col-md-4 mt-3">              
                                         <label class="control-label">Codigo: <span style="color:red;">*</span></label>
                                         <input class="form-control" maxlength="11" type="text" id="txtcodigo_reg" name="txtcodigo_reg" required>
                                         <div id="codigo_error" style="color: red;"></div>
@@ -79,10 +78,13 @@ $servicio = $ins_servicio->listar_servicio();
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
+                                    <div class="form-group col-md-4 mt-3">
+                                        <label class="control-label">Imagenes:</label>
+                                        <input class="form-control" maxlength="50" type="file" id="txtfotos_reg"
+                                            name="txtfotos_reg[]" multiple accept="image/*" required>
+                                    </div>
                                 </div>
-                        </div>
-
-                       
+                        </div>      
                                 <div class="form-group col-md-4 mx-auto mt-5"> <!-- Se agrega la clase mx-auto para centrar horizontalmente -->
                                     <button class="main-btn success-btn-outline rounded-full btn-hover m-1" type="submit" style="font-size: 15px;">Guardar datos</button>
                                     <button class="main-btn success-btn-outline rounded-full btn-hover m-1" type="reset" style="font-size: 15px;">Vaciar área</button>
