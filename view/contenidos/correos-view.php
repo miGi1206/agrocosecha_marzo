@@ -15,21 +15,7 @@ $servicio = $ins_servicio->listar_servicio();
                 </div>
 
                 <div class="col-md-6">
-                    <div class="breadcrumb-wrapper mb-30">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <a href="<?php echo SERVERURL; ?>home/">Principal</a>
-                                </li>
-                                <li class="breadcrumb-item">
-                                    <a href="#0">servicio</a>
-                                </li>
-                                <li class="breadcrumb-item active" aria-current="page">
-                                    Crear servicio
-                                </li>
-                            </ol>
-                        </nav>
-                    </div>
+                    
                 </div>
             </div>
 
@@ -54,7 +40,7 @@ $servicio = $ins_servicio->listar_servicio();
                                 </div>
 
 
-                                <button type="submit" class="submit" name="enviar_mensaje_masivo" style="margin-top:3% !important ;">Enviar</button>
+                                <button type="submit" class="submit main-btn success-btn-outline rounded-full btn-hover m-1" onclick="enviarYVaciarFormulario()" name="enviar_mensaje_masivo" style="margin-top:3% !important ;">Enviar</button>
 
                             </form>
                         </div>
@@ -64,3 +50,18 @@ $servicio = $ins_servicio->listar_servicio();
         </div>
     </div>
 </section>
+<script>
+    async function enviarYVaciarFormulario() {
+        // Agrega la lógica para enviar el formulario aquí
+        // Espera un breve período antes de vaciar el área
+        setTimeout(() => {
+            // Restablece los valores y la validación
+            document.getElementById('asunto').value = '';
+            document.getElementById('mensaje').value = '';
+
+            // También puedes restablecer la validación si es necesario
+            result_asunto.innerHTML = '';
+            result_asunto.innerHTML = '';
+        }, 100); // Puedes ajustar el tiempo de espera según tus necesidades
+    }
+</script>

@@ -73,7 +73,8 @@ function enviar_mensaje_masivo($request, $conn)
         // $mail->addAddress('andresteheran360@gmail.com', 'andres');
         
         // Realizar la consulta SQL para obtener los correos de la tabla tbl_persona
-        $query = "SELECT correo FROM tbl_persona";
+        $query = "SELECT correo, cod_tipo_usuario FROM tbl_persona join tbl_usuario on tbl_persona.codigo_persona = tbl_usuario.cod_persona 
+        where cod_tipo_usuario='2'";
         $result = mysqli_query($conn, $query);
 
         // Verificar si la consulta se ejecutó correctamente
@@ -96,67 +97,75 @@ function enviar_mensaje_masivo($request, $conn)
         // Contenido del correo electrónico
         $mail->isHTML(true);
         $mail->Subject = $request['asunto'];
+
         $mail->Body = '
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>' . $request['asunto'] . '</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                margin: 0;
-                padding: 0;
-            }
-            .container {
-                max-width: 600px;
-                margin: 0 auto;
-                padding: 20px;
-                background-color: #fff;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                border-radius: 5px;
-            }
-            .header {
-                background-color: #3AAA3C;
-                padding: 15px;
-                color: white;
-                text-align: center;
-                border-radius: 5px 5px 0 0;
-            }
-            .content {
-                padding: 20px;
-            }
-            .footer {
-                background-color: #3AAA3C;
-                padding: 10px;
-                color: white;
-                text-align: center;
-                border-radius: 0 0 5px 5px;
-            }
-            h2 {
-                color: #333;
-            }
-            p {
-                color: #555;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="header">
-            <h2 style="color:#F8AB14;">AGRO<span style="color:#065F2C;">COSECHA</span></h2>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>' . $request['asunto'] . '</title>
+            <style>
+                body {
+                    font-family: Tahoma, Geneva, Verdana, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                    background-color: #f5f5f5;
+                }
+                .container {
+                    max-width: 600px;
+                    margin: 50px auto;
+                    background-color: #fff;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                }
+                .header {
+                    background-color: #3AAA3C;
+                    padding: 20px;
+                    text-align: center;
+                    color: #fff;
+                }
+                .header h1 {
+                    margin: 0;
+                    font-size: 24px;
+                }
+                .content {
+                    padding: 30px;
+                }
+                p {
+                    line-height: 1.6;
+                    color: #333;
+                }
+                .footer {
+                    background-color: #3AAA3C;
+                    padding: 20px;
+                    text-align: center;
+                    color: #fff;
+                }
+                .footer p {
+                    margin: 0;
+                    font-size: 14px;
+                    color: #fff !important
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>AGRO<span style="color:#F8AB14;">COSECHA</span></h1>
+                </div>
+                <div class="content">
+                    <p><strong>Mensaje:</strong></p>
+                    <p>' . nl2br($request['mensaje']) . '</p>
+                </div>
+                <div class="footer">
+                <p>Contacto: <a href="mailto:trabajadoragrocosecha@gmail.com" style="color: #fff; text-decoration: none;">trabajadoragrocosecha@gmail.com</a> | Teléfono: 123-456-7890</p>
+                </div>
             </div>
-            <div class="content">
-                <p><b>Mensaje:</b></p>
-                <p>' . nl2br($request['mensaje']) . '</p>
-            </div>
-            <div class="footer">
-            </div>
-        </div>
-    </body>
-    </html>';
+        </body>
+        </html>
+        ';
 
         // Envío del correo electrónico
         $mail->send();
