@@ -139,13 +139,14 @@ if (isset($_GET['busqueda'])) {
 
             <div class="container pb-5 bg-light" style="width: 80%;">
                 <div class="row">
+                    <!-- =============================================================== -->
                     <div id="carouselExample" class="carousel slide col-12 col-md-5 my-5">
                         <div class="carousel-inner">
                             <?php
                             $active = true;
                             while ($row_foto = mysqli_fetch_assoc($result_foto)) {
                                 echo '<div class="carousel-item ' . ($active ? 'active' : '') . '">';
-                                echo '<img src="view/img/img_productos/' . $row_foto["foto"] . '" class="d-block w-100" alt="Product Image">';
+                                echo '<img src="view/img/img_productos/' . $row_foto["foto"] . '" class="d-block w-100" alt="Product Image" style="max-width:100%; max-height:300px;">';
                                 echo '</div>';
                                 $active = false; // Desactivar la clase 'active' después del primer elemento
                             }
@@ -162,6 +163,7 @@ if (isset($_GET['busqueda'])) {
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
+                    <!-- ================================================================ -->
 
                     <!-- col end -->
                     <?php
@@ -219,11 +221,12 @@ if (isset($_GET['busqueda'])) {
                                     while($fila = mysqli_fetch_assoc($result_stock)){
                                     echo "<p><b>Stock: ". $row['stock'] . "</b></p>";}
                                 }
-                                
                                 ?>
 
                                 <h6>Descripción</h6>
                                 <p><?= $row['descripcion']?></p>
+                                <video src="view\img\vid_productos\<?php echo $row['video']?>" controls style="width:100%; height:auto;"></video>
+                                
 
                                 <?php
                                     }
@@ -275,12 +278,14 @@ if (isset($_GET['busqueda'])) {
                 </div>
 
                 <div class="my-5 col-md-12">
+
                     <div class="embed-responsive embed-responsive-16by9">
                         <iframe width="70%" height="315" src="https://www.youtube.com/embed/Q_Xxrp4oNds"
                             title="Siembra y Producción de Arroz Orgánico - TvAgro por Juan Gonzalo Angel"
                             frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
                     </div>
+
                 </div>
 
                 <!-- <div class="my-5 col-md-12">
