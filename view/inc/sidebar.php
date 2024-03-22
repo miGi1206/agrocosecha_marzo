@@ -104,9 +104,16 @@
           </li>
         </ul>
       </li>
+      <li class="nav-item">
+          <a href="<?php echo SERVERURL;?>correos/" >
+            <i class="bi bi-envelope-fill px-2 iconos-color"></i>
+              <span class="text">Enviar correos</span>
+          </a>
+      </li>
       <span class="divider">
       <hr />
       </span>
+      
       <li class="nav-item">
         <a href="" class="exit-system-cerrar">
           <i class="bi bi-box-arrow-left lead px-2 iconos-color" data-bs-toggle="tooltip" data-bs-placement="right" title="Reportes"></i>
