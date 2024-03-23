@@ -8,7 +8,7 @@ if ($peticionAjax) {
 
 class productoControlador extends productoModelo
 {
-    /*------------- CONTROLADOR AGREGAR producto -----------------------*/
+    /*------------- CONTROLADOR AGREGAR PRODUCTO -----------------------*/
     public function agregar_producto_controlador()
     {
         $codigo = mainModel::limpiar_cadena($_POST['txtcodigo_reg']);
@@ -16,8 +16,8 @@ class productoControlador extends productoModelo
         $descricpcion = mainModel::limpiar_cadena($_POST['txtdescripcion_reg']);
         $precio = mainModel::limpiar_cadena($_POST['txtprecio_reg']);
         $stock = mainModel::limpiar_cadena($_POST['txtstock_ins']);
-        $video = mainModel::limpiar_cadena($_POST['txtvideo_reg']);
 
+        $video = $_FILES['txtvideo_reg'];
         $fotos = $_FILES['txtfotos_reg']; // Obtener información de las imágenes
 
         // Validación adicional en el servidor
@@ -63,7 +63,7 @@ class productoControlador extends productoModelo
             "descripcion" => $descricpcion,
             "precio"=> $precio,
             "stock" => $stock,
-            "video" => $video
+            "video" => $video,
         ];
     
         $agregar_producto = productoModelo::agregar_producto_modelo($datos_producto_add);
@@ -125,8 +125,7 @@ class productoControlador extends productoModelo
             <th class="text-center">Descripcion</th>
             <th class="text-center">Precio</th>
             <th class="text-center">Stock</th>
-            <th class="text-center">Video</th>
-            <th class="text-center">Fotos</th>
+            <th class="text-center">Video y Fotos</th>
             <th class="text-center">Fecha</th>
             <th class="text-center" colspan="2">Acciones</th>
             </tr>
@@ -151,10 +150,9 @@ class productoControlador extends productoModelo
                     $tabla .= "<button onclick='leerMenos(" . $rows['codigo_producto'] . ")' style='display:none; background-color: transparent; border:none; color:blue;'> Leer menos</button>";
                 }
                 $tabla .= '</td> 
-                            <td class="min-width">' . $rows['precio'] . '</td>  
+                            <td class="min-width">'. MONEDA . number_format($rows['precio'],0,',','.') . '</td>  
                             <td class="min-width">' . $rows['stock'] . '</td>  
-                            <td class="min-width">' . $rows['video'] . '</td>
-                            <td class="min-width"><a href="' . SERVERURL . 'ver-fotos?id=' . $rows['codigo_producto'] . '">Ver fotos</a></td>
+                            <td class="min-width"><a href="' . SERVERURL . 'ver-fotos?id=' . $rows['codigo_producto'] . '">Ver</a></td>
                             <td class="stat">
                                 <a href="' . SERVERURL . 'producto-update/' . mainModel::encryption($rows['codigo_producto']) . '/">
                                     <button type="submit" class="btn warnign-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -223,7 +221,7 @@ class productoControlador extends productoModelo
         $precio = mainModel::limpiar_cadena($_POST['updateprecio']);
         $stock = mainModel::limpiar_cadena($_POST['updatetstock']);
         $video = mainModel::limpiar_cadena($_POST['updatetvideo']);
-       
+        
         if ($nombres == "" || $descricpcion=="" || $precio=="" || $stock=="" || $video=="") {
             $alerta = [
                 "Alerta" => "simple",
@@ -243,7 +241,7 @@ class productoControlador extends productoModelo
             "stock" => $stock,
             "video" => $video,
             "id" => $id,
-       
+        
         ];
         if (productoModelo::actualizar_producto_modelo($datos_ins_up)) {
             $alerta = [
@@ -262,9 +260,9 @@ class productoControlador extends productoModelo
         }
         echo json_encode($alerta);
         exit();
-    }/*------------------ FIN ACTUALIZAR APRENDIZ -----------------------*/
+    }/*------------------ FIN ACTUALIZAR PRODUCTO -----------------------*/
 
-    /*------------- CONTROLADOR ELIMINAR mesa --------------------*/
+    /*------------- CONTROLADOR ELIMINAR PRODUCTO --------------------*/
     public function eliminar_producto_controlador()
     {
         $id = mainModel::decryption($_POST['idcodigo_del']);
@@ -299,5 +297,5 @@ class productoControlador extends productoModelo
             ];
         }
         echo json_encode($alerta);
-}
+    }
 }

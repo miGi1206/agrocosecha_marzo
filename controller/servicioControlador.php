@@ -17,7 +17,9 @@ class servicioControlador extends servicioModelo
         $precio = mainModel::limpiar_cadena($_POST['txtprecio_reg']);
         $duracion = mainModel::limpiar_cadena($_POST['txtduracion_reg']);
         $tipi_servicio = mainModel::limpiar_cadena($_POST['txtservicio_reg']);
-    
+
+        $fotos = $_FILES['txtfotos_reg'];
+        
         /* Verificando integridad de los datos */
         if ($nombres == "" || $descricpcion=="" || $precio=="" || $codigo=="" || $duracion=="" || $tipi_servicio=="") {
             $alerta = [
@@ -147,6 +149,7 @@ class servicioControlador extends servicioModelo
                 <th class="text-center">Precio</th>
                 <th class="text-center">duracion</th>
                 <th class="text-center">fecha</th>
+                <th class="text-center">Fotos</th>
                 <th class="text-center">tipo_servicio</th>
                 <th class="text-center" colspan="2">Acciones</th>
                 </tr>
@@ -161,11 +164,12 @@ class servicioControlador extends servicioModelo
                             <td class="min-width">' . $rows['codigo_servicio'] . '</td>
                             <td class="min-width">' . $rows['nombre'] . '</td>  
                             <td class="min-width">' . $rows['descripcion'] . '</td>  
-                            <td class="min-width">' . $rows['precio'] . '</td>  
-                            <td class="min-width">' . $rows['duracion'] . '</td>  
+                            <td class="min-width">'. MONEDA . number_format($rows['precio'],0,',','.') . '</td>  
+                            <td class="min-width">' . $rows['duracion'] . 'h</td> 
                             <td class="min-width">' . $rows['fecha_registro'] . '</td>  
+                            <td class="min-width"><a href="' . SERVERURL . 'imagenes-servicios?id=' . $rows['codigo_servicio'] . '">Ver fotos</a></td>
                             <td class="min-width">' . $rows['tipo_servicio'] . '</td>
-    
+
                             <td class="stat"><a href="' . SERVERURL . 'servicio-update/' . mainModel::encryption($rows['codigo_servicio']) . '/"</input>
                                 <button type="submit" class="btn warnign-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     <i class="bi bi-pencil-square lead"></i>

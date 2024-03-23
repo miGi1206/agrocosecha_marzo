@@ -70,28 +70,29 @@
                                         <div id="stock_error" style="color: red;"></div>
                                     </div>
                                     <div class="form-group col-md-4 mt-3">
-                                        <label class="control-label">Video:</label>
-                                        <input class="form-control" maxlength="50" type="text" id="txtvideo_reg"
-                                            name="txtvideo_reg" require>
+                                        <label class="control-label">Video: <span style="color:red;">*</span></label>
+                                        <input class="form-control" type="file" id="txtvideo_reg" name="txtvideo_reg"
+                                            accept="video/*" required multiple>
                                     </div>
                                     <div class="form-group col-md-4 mt-3">
-                                        <label class="control-label">Imagenes:</label>
-                                        <input class="form-control" maxlength="50" type="file" id="txtfotos_reg"
-                                            name="txtfotos_reg[]" multiple accept="image/*" required>
+                                        <label class="control-label">Imagenes: <span style="color:red;">*</span></label>
+                                        <input class="form-control" type="file" id="txtfotos_reg" name="txtfotos_reg[]"
+                                            multiple accept="image/*" required>
                                     </div>
                                 </div>
+
+
+
+                                <div class="form-group col-md-4 mx-auto mt-5">
+                                    <!-- Se agrega la clase mx-auto para centrar horizontalmente -->
+                                    <button class="main-btn success-btn-outline rounded-full btn-hover m-1"
+                                        type="submit" style="font-size: 15px;">Guardar datos</button>
+                                    <button class="main-btn success-btn-outline rounded-full btn-hover m-1" type="reset"
+                                        style="font-size: 15px;">Vaciar área</button>
+                                </div>
+
+                            </form>
                         </div>
-
-
-                        <div class="form-group col-md-4 mx-auto mt-5">
-                            <!-- Se agrega la clase mx-auto para centrar horizontalmente -->
-                            <button class="main-btn success-btn-outline rounded-full btn-hover m-1" type="submit"
-                                style="font-size: 15px;">Guardar datos</button>
-                            <button class="main-btn success-btn-outline rounded-full btn-hover m-1" type="reset"
-                                style="font-size: 15px;">Vaciar área</button>
-                        </div>
-
-                        </form>
                     </div>
                 </div>
             </div>
@@ -99,6 +100,8 @@
     </div>
     </div>
 </section>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <!-- validacion para que el codigo solo tenga numeros -->
 <script>
 document.getElementById('txtcodigo_reg').addEventListener('input', function(event) {
@@ -169,6 +172,18 @@ document.getElementById('txtstock_reg').addEventListener('input', function(event
         event.target.value = inputValue.replace(/\D/g, '');
     } else {
         errorDiv.textContent = '';
+    }
+});
+</script>
+<script>
+document.querySelector('#txtvideo_reg').addEventListener('change', function() {
+    var files = this.files;
+    if (files.length > 1) {
+        Swal.fire({
+            title: 'Solo puedes seleccionar un archivo de video.',
+            icon: 'error'
+        });
+        this.value = ''; // Limpia el campo de entrada para eliminar el archivo seleccionado
     }
 });
 </script>

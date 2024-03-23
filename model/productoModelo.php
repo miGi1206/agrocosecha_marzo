@@ -5,26 +5,52 @@ require_once "mainModel.php";
 class productoModelo extends mainModel
 {
 
-    /*------------- MODELO AGREGAR MESA -----------------------*/
+    /*------------- MODELO AGREGAR PRODUCTO -----------------------*/
     protected static function agregar_producto_modelo($datos)
     {
-        $sql = mainModel::conectar()->prepare("INSERT INTO tbl_producto(codigo_producto,nombre,descripcion,precio,stock,video,fecha_registro)       
-                VALUES(:codigo_producto,:Nombre,:descripcion,:precio,:stock,:video, NOW())"); 
+        $sql = mainModel::conectar()->prepare("INSERT INTO tbl_producto(codigo_producto,nombre,descripcion,precio,stock,fecha_registro)       
+                VALUES(:codigo_producto,:Nombre,:descripcion,:precio,:stock, NOW())"); 
         $sql->bindParam(":codigo_producto", $datos['codigo_producto']);
         $sql->bindParam(":Nombre", $datos['Nombre']);
         $sql->bindParam(":descripcion", $datos['descripcion']);
         $sql->bindParam(":precio", $datos['precio']);
         $sql->bindParam(":stock", $datos['stock']);
-        $sql->bindParam(":video", $datos['video']);
         $sql->execute();
 
 
         // Subir las imágenes y guardar sus nombres en la base de datos
-        $dir_local = "../view/img/img_productos";
+        $dir_local_img = "../view/img/img_productos";
+        $dir_local_vid = "../view/img/vid_productos";
 
-        if (!file_exists($dir_local)) {
-            mkdir($dir_local, 0777, true);
+        if (!file_exists($dir_local_img)) {
+            mkdir($dir_local_img, 0777, true);
         }
+
+        if (!file_exists($dir_local_vid)) {
+            mkdir($dir_local_vid, 0777, true);
+        }
+
+        if ($_FILES['txtvideo_reg']['size'] > 0) {
+            $video_name = $_FILES['txtvideo_reg']['name'];
+            $source_video = $_FILES['txtvideo_reg']['tmp_name'];
+            $tamaño_video = $_FILES['txtvideo_reg']['size'];
+        
+            $nuevo_nombre_video = md5(uniqid(rand()));
+            $extension_video = pathinfo($video_name, PATHINFO_EXTENSION);
+            $nombre_video = md5(uniqid(rand())) . '_' . $datos['Nombre'] . '.' . $extension_video;
+        
+            $result_video = $dir_local_vid . '/' . $nombre_video;
+        
+            move_uploaded_file($source_video, $result_video);
+        
+            $insert_video_sql = "UPDATE tbl_producto SET video=:video WHERE codigo_producto=:cod_producto";
+            $sql_video = mainModel::conectar()->prepare($insert_video_sql);
+            $sql_video->bindParam(":video", $nombre_video);
+            $sql_video->bindParam(":cod_producto", $datos['codigo_producto']); // Aquí corregimos la variable $sql a $sql_video
+            $sql_video->execute();
+        }
+        
+        
 
         foreach ($_FILES['txtfotos_reg']['name'] as $i => $name) {
             if (strlen($_FILES['txtfotos_reg']['name'][$i]) > 1) {
@@ -36,7 +62,7 @@ class productoModelo extends mainModel
                 $extension_foto = pathinfo($file_name, PATHINFO_EXTENSION);
                 $nombre_foto = md5(uniqid(rand())) . '_' . $datos['Nombre'] . '.' . $extension_foto;
 
-                $result_foto = $dir_local . '/' . $nombre_foto;
+                $result_foto = $dir_local_img . '/' . $nombre_foto;
 
                 move_uploaded_file($sourse_foto, $result_foto);
 
@@ -52,18 +78,44 @@ class productoModelo extends mainModel
         return $sql;
     }
 
-    /*------------- MODELO ELIMINAR APRENDIZ -----------------------*/
+    /*------------- MODELO ELIMINAR PRODUCTO -----------------------*/
     protected static function eliminar_producto_modelo($id)
     {
-        $sql = mainModel::conectar()->prepare("DELETE FROM tbl_producto WHERE codigo_producto=:ID");
+        
+        $sql_select_imagenes = mainModel::conectar()->prepare("SELECT foto FROM tbl_imagen WHERE cod_producto=:ID");
+        $sql_select_imagenes->bindParam(":ID", $id);
+        $sql_select_imagenes->execute();
+        $imagenes = $sql_select_imagenes->fetchAll(PDO::FETCH_ASSOC);
 
+        // Iterar sobre cada imagen y eliminarla de la carpeta
+        foreach ($imagenes as $imagen) {
+            $ruta_imagen = "../view/img/img_productos/{$imagen['foto']}";
+            if (file_exists($ruta_imagen)) {
+                unlink($ruta_imagen);
+            }
+        }
+
+        $sql_select_video = mainModel::conectar()->prepare("SELECT video FROM tbl_producto WHERE codigo_producto=:ID");
+        $sql_select_video->bindParam(":ID", $id);
+        $sql_select_video->execute();
+        $video = $sql_select_video->fetchAll(PDO::FETCH_ASSOC);
+
+        // Iterar sobre cada imagen y eliminarla de la carpeta
+        foreach ($video as $vid) {
+            $ruta_video = "../view/img/vid_productos/{$vid['video']}";
+            if (file_exists($ruta_video)) {
+                unlink($ruta_video);
+            }
+        }
+
+        $sql = mainModel::conectar()->prepare("DELETE FROM tbl_producto WHERE codigo_producto=:ID");
         $sql->bindParam(":ID", $id);
         $sql->execute();
-
+        
         return $sql;
     }
 
-    /*------------- MODELO ACTUALIZAR MESA -----------------------*/
+    /*------------- MODELO ACTUALIZAR PRODUCTO -----------------------*/
     protected static function datos_producto_modelo($id){
         $sql=mainModel::conectar()->prepare("SELECT * FROM tbl_producto WHERE codigo_producto =:id");
 

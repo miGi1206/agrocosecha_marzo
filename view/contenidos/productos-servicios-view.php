@@ -87,6 +87,20 @@ if (isset($_GET['busqueda'])) {
             AND tbl_producto.codigo_producto = '$busqueda'";
     $result_foto = mysqli_query($conn, $foto);
 }
+elseif (isset($_GET['busqueda2'])) {
+    $busqueda = $_GET['busqueda2'];
+    $foto = "SELECT foto FROM tbl_imagen, tbl_servicio 
+            WHERE tbl_imagen.cod_servicio = tbl_servicio.codigo_servicio
+            AND tbl_servicio.codigo_servicio = '$busqueda'";
+    $result_foto = mysqli_query($conn, $foto);
+}
+elseif (isset($_GET['busqueda3'])) {
+    $busqueda = $_GET['busqueda3'];
+    $foto = "SELECT foto FROM tbl_imagen, tbl_servicio 
+            WHERE tbl_imagen.cod_servicio = tbl_servicio.codigo_servicio
+            AND tbl_servicio.codigo_servicio = '$busqueda'";
+    $result_foto = mysqli_query($conn, $foto);
+}
 ?>
 
     <style>
@@ -139,13 +153,22 @@ if (isset($_GET['busqueda'])) {
 
             <div class="container pb-5 bg-light" style="width: 80%;">
                 <div class="row">
+                    <!-- =============================================================== -->
                     <div id="carouselExample" class="carousel slide col-12 col-md-5 my-5">
                         <div class="carousel-inner">
                             <?php
                             $active = true;
                             while ($row_foto = mysqli_fetch_assoc($result_foto)) {
                                 echo '<div class="carousel-item ' . ($active ? 'active' : '') . '">';
-                                echo '<img src="view/img/img_productos/' . $row_foto["foto"] . '" class="d-block w-100" alt="Product Image">';
+                                if (isset($_GET['busqueda'])){
+                                    echo '<img src="view/img/img_productos/' . $row_foto["foto"] . '" class="d-block w-100" alt="Product Image" style="max-height:300px;">';
+                                }
+                                if (isset($_GET['busqueda2'])){ 
+                                    echo '<img src="view/img/img_servicio/' . $row_foto["foto"] . '" class="d-block w-100" alt="Product Image" style="max-height:300px;">';
+                                }
+                                if (isset($_GET['busqueda3'])){ 
+                                    echo '<img src="view/img/img_servicio/' . $row_foto["foto"] . '" class="d-block w-100" alt="Product Image" style="max-height:300px; min-height_300px;">';
+                                }
                                 echo '</div>';
                                 $active = false; // Desactivar la clase 'active' después del primer elemento
                             }
@@ -162,6 +185,7 @@ if (isset($_GET['busqueda'])) {
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
+                    <!-- ================================================================ -->
 
                     <!-- col end -->
                     <?php
@@ -200,32 +224,29 @@ if (isset($_GET['busqueda'])) {
                                     $sql_producto = "SELECT * FROM `tbl_producto` $productos";
                                     $result_producto = mysqli_query($conn, $sql_producto);
 
-                                    while ($row = mysqli_fetch_assoc($result_producto)) {
-                            ?>
-                                <h1 class="h2"><?= $row['nombre']?></h1>
+                                    while ($row = mysqli_fetch_assoc($result_producto)) {?>
+                                    <h1 class="h2"><?= $row['nombre']?></h1>
 
-                                <!-- //! Mostrar el precio y stock solo cuando se halla iniciado sesion como cliente -->
-                                <?php
-                                if (isset($_SESSION['tipo_usuario_spm']) && $_SESSION['tipo_usuario_spm'] == "2") {
-                                    echo "<p><b>Precio: $". $row['precio'] . "</b></p>";
-                                    echo "<p><b>Stock: ". $row['stock'] . "</b></p>";
-                                }
-                                if (isset($_SESSION['tipo_usuario_spm']) && $_SESSION['tipo_usuario_spm'] == "3" && isset($_SESSION['cod_prod_prov_spm']) && $_SESSION['cod_prod_prov_spm'] == $busqueda) {
-                                    $sql_stock = "SELECT * 
-                                                    FROM tbl_producto AS p 
-                                                    JOIN tbl_prov_prod AS pp ON p.codigo_producto = pp.cod_producto 
-                                                    WHERE pp.nit_proveedor = '" . $_SESSION['nit_spm'] . "'";
-                                    $result_stock = mysqli_query($conn, $sql_stock);
-                                    while($fila = mysqli_fetch_assoc($result_stock)){
-                                    echo "<p><b>Stock: ". $row['stock'] . "</b></p>";}
-                                }
-                                
-                                ?>
+                                    <!-- //! Mostrar el precio y stock solo cuando se halla iniciado sesion como cliente -->
+                                    <?php
+                                    if (isset($_SESSION['tipo_usuario_spm']) && $_SESSION['tipo_usuario_spm'] == "2") {
+                                        echo "<p><b>Precio: $". number_format($row['precio'], 2, ',', '.') . "</b></p>";
+                                        echo "<p><b>Stock: ". $row['stock'] . "</b></p>";
+                                    }
+                                    if (isset($_SESSION['tipo_usuario_spm']) && $_SESSION['tipo_usuario_spm'] == "3" && isset($_SESSION['cod_prod_prov_spm']) && $_SESSION['cod_prod_prov_spm'] == $busqueda) {
+                                        $sql_stock = "SELECT * 
+                                                        FROM tbl_producto AS p 
+                                                        JOIN tbl_prov_prod AS pp ON p.codigo_producto = pp.cod_producto 
+                                                        WHERE pp.nit_proveedor = '" . $_SESSION['nit_spm'] . "'";
+                                        $result_stock = mysqli_query($conn, $sql_stock);
+                                        while($fila = mysqli_fetch_assoc($result_stock)){
+                                        echo "<p><b>Stock: ". $row['stock'] . "</b></p>";}
+                                    }?>
 
-                                <h6>Descripción</h6>
-                                <p><?= $row['descripcion']?></p>
+                                    <h6>Descripción</h6>
+                                    <p><?= $row['descripcion']?></p>
 
-                                <?php
+                                    <?php
                                     }
                                 }elseif (isset($_GET['busqueda2'])) {
                                     $alquiler_equipos = $_GET['busqueda2'];
@@ -239,7 +260,7 @@ if (isset($_GET['busqueda'])) {
 
                                 <?php
                                 if (isset($_SESSION['tipo_usuario_spm']) && $_SESSION['tipo_usuario_spm'] == "2") {
-                                            echo "<p><b>Precio: $". $row['precio'] . "</b></p>";
+                                    echo "<p><b>Precio: $" . number_format($row['precio'], 2, ',', '.') . "</b></p>";
                                             echo "<p><b>Duración: ". $row['duracion'] . "</b></p>";
                                 }
                                 ?>
@@ -258,8 +279,12 @@ if (isset($_GET['busqueda'])) {
                                     while ($row = mysqli_fetch_assoc($result_personal)) {
                             ?>
                                 <h1 class="h2"><?= $row['nombre']?></h1>
-                                <p><b>Precio: <?= $row['precio']?></b></p>
-                                <p><b>Duración: <?= $row['duracion']?> horas</b></p>
+                                <?php
+                                if (isset($_SESSION['tipo_usuario_spm']) && $_SESSION['tipo_usuario_spm'] == "2") {
+                                    echo "<p><b>Precio: $" . number_format($row['precio'], 2, ',', '.') . "</b></p>";
+                                            echo "<p><b>Duración: ". $row['duracion'] . "</b></p>";
+                                }
+                                ?>
                                 <h6>Descripción</h6>
                                 <p><?= $row['descripcion']?></p>
                                 <?php
@@ -274,13 +299,17 @@ if (isset($_GET['busqueda'])) {
 
                 </div>
 
-                <div class="my-5 col-md-12">
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <iframe width="70%" height="315" src="https://www.youtube.com/embed/Q_Xxrp4oNds"
-                            title="Siembra y Producción de Arroz Orgánico - TvAgro por Juan Gonzalo Angel"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
-                    </div>
+                <div class="my-2 col-md-12">
+                    <?php
+                    if (isset($_GET['busqueda'])) {
+                    $sql_producto = "SELECT * FROM `tbl_producto` $productos";
+                    $result_producto = mysqli_query($conn, $sql_producto);
+
+                    while ($row = mysqli_fetch_assoc($result_producto)) {
+                        echo '<center><video src="'. SERVERURL .'view/img/vid_productos/'. $row['video'] .'" controls style="width:70%; height:auto;"></video></center>';
+                    }
+                    }?>
+
                 </div>
 
                 <!-- <div class="my-5 col-md-12">
