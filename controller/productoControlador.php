@@ -150,7 +150,7 @@ class productoControlador extends productoModelo
                     $tabla .= "<button onclick='leerMenos(" . $rows['codigo_producto'] . ")' style='display:none; background-color: transparent; border:none; color:blue;'> Leer menos</button>";
                 }
                 $tabla .= '</td> 
-                            <td class="min-width">' . $rows['precio'] . '</td>  
+                            <td class="min-width">'. MONEDA . number_format($rows['precio'],0,',','.') . '</td>  
                             <td class="min-width">' . $rows['stock'] . '</td>  
                             <td class="min-width"><a href="' . SERVERURL . 'ver-fotos?id=' . $rows['codigo_producto'] . '">Ver</a></td>
                             <td class="stat">

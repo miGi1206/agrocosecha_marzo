@@ -70,12 +70,12 @@
                                         <div id="stock_error" style="color: red;"></div>
                                     </div>
                                     <div class="form-group col-md-4 mt-3">
-                                        <label class="control-label">Video:</label>
+                                        <label class="control-label">Video: <span style="color:red;">*</span></label>
                                         <input class="form-control" type="file" id="txtvideo_reg" name="txtvideo_reg"
                                             accept="video/*" required multiple>
                                     </div>
                                     <div class="form-group col-md-4 mt-3">
-                                        <label class="control-label">Imagenes:</label>
+                                        <label class="control-label">Imagenes: <span style="color:red;">*</span></label>
                                         <input class="form-control" type="file" id="txtfotos_reg" name="txtfotos_reg[]"
                                             multiple accept="image/*" required>
                                     </div>
