@@ -76,7 +76,7 @@ $sexo = $ins_sexo_usuario->listar_sexo();
                         <div class="row">
                             <div class="form-group col-md-4 mt-3">
                                 <label class="control-label">Email <span style="color:red;">*</span></label>
-                                <input class="form-control" maxlength="30" type="text" id="correo" name="txtEmail_ins"
+                                <input class="form-control" maxlength="50" type="text" id="correo" name="txtEmail_ins"
                                     require>
                             </div>
 
