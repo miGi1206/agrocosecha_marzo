@@ -1,27 +1,70 @@
+<div class="d-flex justify-content-between py-3 px-5">
+    <div>
+        <a class="btn btn-outline-primary" href="<?php echo SERVERURL; ?>servicio-list/"><b>Volver</b></a>
+    </div>
+    <div class="form-group col-6">
+        <form class="FormularioAjax" action="<?php echo SERVERURL; ?>ajax/imgservicioAjax.php" method="POST"
+            data-form="save" autocomplete="off" enctype="multipart/form-data">
+            <div class="row">
+                <?php
+                include "config\coneccion_tabla.php";
 
-
-<a href="<?php echo SERVERURL; ?>servicio-list/"><b>Volver</b></a>
+                if (isset($_GET['id'])){
+                    $id = $_GET['id'];
+                    $sql = "SELECT * FROM tbl_servicio WHERE codigo_servicio = '$id'";
+                    $result = mysqli_query($conn, $sql);
+                }
+                while ($row = mysqli_fetch_assoc($result)) {
+                echo '<div class="col-8" style="display:none;">
+                    <input class="form-control" value="'. $row['codigo_servicio'] .'" type="text" id="txtcodigo_reg" name="txtcodigo_reg" required>
+                    <input class="form-control" value="'. $row['nombre'] .'" type="text" id="txtNombre_reg" name="txtNombre_reg" required>
+                </div>';
+                
+                }?>
+                <label class="control-label">Agregar imagen <span style="color:red;">*</span></label>
+                <div class="col-8">
+                    <input class="form-control" type="file" id="txtfotos_reg" name="txtfotos_reg[]" multiple
+                        accept="image/*" required>
+                </div>
+                <div class="col-4" style="margin-top:-5px;">
+                    <button class="main-btn success-btn-outline rounded-full btn-hover m-1" type="submit"
+                        style="font-size: 15px;">Guardar imagen</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 <style>
-  /* Estilos para la visualización ampliada de la imagen */
+    /* Estilos para la visualización ampliada de la imagen */
     .modal {
         display: none;
+        /* Ocultar el modal de forma predeterminada */
         position: fixed;
+        /* Posición fija para cubrir toda la ventana */
         z-index: 1000;
+        /* Colocar el modal por encima de todo */
         padding-top: 50px;
+        /* Espacio sobre el modal */
         left: 0;
         top: 0;
         width: 100%;
+        /* Ancho completo */
         height: 100%;
+        /* Altura completa */
         overflow: auto;
+        /* Habilitar el desplazamiento si la imagen es demasiado grande */
         background-color: rgba(0, 0, 0, 0.8);
+        /* Fondo negro con opacidad */
     }
 
     .modal-content {
         margin: auto;
         display: block;
         width: 80%;
+        /* Ancho del contenido */
         max-width: 700px;
+        /* Ancho máximo del contenido */
     }
 
     /* Estilos para cerrar el modal */
@@ -29,8 +72,9 @@
         position: absolute;
         top: 15px;
         right: 35px;
-        color: #fff;
-        font-size: 30px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
         transition: 0.3s;
     }
 
@@ -44,11 +88,17 @@
     /* Estilos para la imagen en el modal */
     .modal-content img.modal-image {
         width: 100%;
+        /* Ancho completo */
         height: auto;
+        /* Altura automática para mantener la relación de aspecto */
+        cursor: pointer !important;
+        /* Cambiar el cursor a una mano */
+    }
+
+    img {
         cursor: pointer;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Agrega sombra para resaltar la imagen */
-    }   
+    }
+
     /* Estilos para la galería de imágenes */
     .image-gallery {
         display: flex;
@@ -73,17 +123,7 @@
         border-radius: 5px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-
-    /* Estilos para la superposición de botones */
-    .overlay {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
+    
     /* Estilos para el botón de eliminar */
     .delete-button {
         margin-top:3%;
@@ -109,46 +149,58 @@
         width: 10%;
         height: 50px;
     }
-
-
 </style>
+
+
 
 <?php
     
-//!Conectar a la base de datos
-include "config\coneccion_tabla.php";
-// include "../../controladores/producto/eliminar_imagen.php";
-
-$id_producto = isset($_GET['id']) ? $_GET['id'] : null;
-
-// Verificar si se proporcionó un valor válido para 'codigo_imagen'
-if ($id_producto !== null) {
-    $sqlQuery = "SELECT s.*, f.* FROM tbl_servicio AS s INNER JOIN tbl_imagen AS f
-                ON s.codigo_servicio = f.cod_servicio AND s.codigo_servicio = {$id_producto}";
-
-    $result = mysqli_query($conn, $sqlQuery);
+    //!Conctarse a la base de datos
     
-    // Si hay resultados, mostrar las imágenes
-    if (mysqli_num_rows($result) > 0) {
-        echo '<div class="image-gallery">';
+    // include "../../controladores/producto/eliminar_imagen.php";
 
-        while ($data_fotos = mysqli_fetch_array($result)) {
-            echo '<div class="image-item">
-                    <img style="margin-top:5%;" src="'. SERVERURL . 'view/img/img_servicio/'  . $data_fotos["foto"] . '" alt="" 
-                        onclick="ampliarImagen(\''. SERVERURL . 'view/img/img_servicio/'  . $data_fotos["foto"] . '\')">
-                    
-                        <button class="delete-button" onclick="eliminarImagen(' . $data_fotos["codigo_imagen"] . ')">Eliminar</button>
-                </div>';
+    $id_producto = isset($_GET['id']) ? $_GET['id'] : null;
+
+    // Verificar si se proporcionó un valor válido para 'codigo_imagen'
+    if ($id_producto !== null) {
+        $sqlQuery = "SELECT p.*, f.* FROM tbl_servicio AS p INNER JOIN tbl_imagen AS f
+                    ON p.codigo_servicio = f.cod_servicio AND p.codigo_servicio = {$id_producto}";
+
+        $result = mysqli_query($conn, $sqlQuery);
+
+
+        // Si hay resultados, mostrar las imágenes
+        if (mysqli_num_rows($result) > 0) {
+            echo '<h4 style="margin-top:5%;"><center>Imagenes</center></h4>';
+            echo '<div class="image-gallery">';
+
+            while ($data_fotos = mysqli_fetch_array($result)) {     
+                echo '<div class="image-item"">
+                        <img src="'. SERVERURL . 'view/img/img_servicio/'  . $data_fotos["foto"] . '" alt="" 
+                            style="width:100px; height:auto;" 
+                            onclick="ampliarImagen(\''. SERVERURL . 'view/img/img_servicio/'  . $data_fotos["foto"] . '\')">
+
+                            <form class="FormularioAjax" action="' . SERVERURL . 'ajax/imgservicioAjax.php" method="post" data-form="delete" autocomplete="off"> 		
+                                <input type="hidden" name="idcodigo_del" value="' . $data_fotos['codigo_imagen'] . '">
+                                <button type="submit" class="btn danger-btn">
+                                    Eliminar
+                                </button>
+                            </form>
+                    </div>';
+            }
+            
+            echo '</div>';
+        }else {
+            echo "<p>No se encontraron imágenes del producto.</p>";
         }
-        echo '</div>';
+        
+        
+        
     } else {
-        echo "<p>No se encontraron imágenes para el código de imagen proporcionado.</p>";
+        echo "<p>No se encontraron imágenes del producto.</p>";
     }
-} else {
-    echo "<p>No se proporcionó un código de imagen válido en la URL.</p>";
-}
-?>
-</div> 
+    ?>
+</div>
 
 <script>
 // Función para mostrar el modal y la imagen ampliada
@@ -164,11 +216,10 @@ function cerrarModal() {
     var modal = document.getElementById('modalImagen'); // Obtener el modal
     modal.style.display = "none"; // Ocultar el modal
 }
-
 </script>
 
 <!-- Modal para la imagen ampliada -->
 <div id="modalImagen" class="modal" onclick="cerrarModal()">
-<span class="close" title="Cerrar" onclick="cerrarModal()">&times;</span>
-<img class="modal-content" id="imgAmpliada">
+    <span class="close" title="Cerrar" onclick="cerrarModal()">&times;</span>
+    <img class="modal-content" id="imgAmpliada">
 </div>
