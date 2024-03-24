@@ -302,11 +302,14 @@ elseif (isset($_GET['busqueda3'])) {
                 <div class="my-2 col-md-12">
                     <?php
                     if (isset($_GET['busqueda'])) {
-                    $sql_producto = "SELECT * FROM `tbl_producto` $productos";
+                        $codigo_producto = $_GET['busqueda'];
+                    $sql_producto = "SELECT * FROM tbl_producto WHERE codigo_producto = '$codigo_producto'";
                     $result_producto = mysqli_query($conn, $sql_producto);
 
                     while ($row = mysqli_fetch_assoc($result_producto)) {
-                        echo '<center><video src="'. SERVERURL .'view/img/vid_productos/'. $row['video'] .'" controls style="width:70%; height:auto;"></video></center>';
+                        $ruta_video = SERVERURL . "view/img/vid_productos/" . $row['video'];
+                            echo '<center><video src="'. $ruta_video .'" controls style="width:70%; height:auto;"></video></center>';
+                        
                     }
                     }?>
 

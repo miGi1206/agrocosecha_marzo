@@ -30,6 +30,36 @@
                     <button class="main-btn success-btn-outline rounded-full btn-hover m-1" type="submit"
                         style="font-size: 15px;">Guardar imagen</button>
                 </div>
+
+            </div>
+        </form>
+        <form class="FormularioAjax" action="<?php echo SERVERURL; ?>ajax/vidProductoAjax.php" method="POST"
+        data-form="save" autocomplete="off" enctype="multipart/form-data">
+            <div class="row">
+                <?php
+
+                if (isset($_GET['id'])){
+                    $id2 = $_GET['id'];
+                    $sql2 = "SELECT * FROM tbl_producto WHERE codigo_producto = '$id2'";
+                    $result2 = mysqli_query($conn, $sql2);
+                }
+                while ($row2 = mysqli_fetch_assoc($result2)) {
+                echo '<div class="col-8" style="display:none;">
+                    <input class="form-control" value="'. $row2['codigo_producto'] .'" type="text" id="txtcodigo2_reg" name="txtcodigo2_reg" required>
+                    <input class="form-control" value="'. $row2['nombre'] .'" type="text" id="txtNombre2_reg" name="txtNombre2_reg" required>
+                </div>';
+                
+                }?>
+                <label class="control-label">Agregar video <span style="color:red;">*</span></label>
+                <div class="col-8">
+                    <input class="form-control" type="file" id="txtvideo_reg" name="txtvideo_reg" accept="video/*"
+                        required>
+                </div>
+                <div class="col-4" style="margin-top:-5px;">
+                    <button class="main-btn success-btn-outline rounded-full btn-hover m-1" type="submit"
+                        style="font-size: 15px;">Guardar video</button>
+                </div>
+
             </div>
         </form>
     </div>
@@ -112,7 +142,7 @@
         position: relative;
         margin-bottom: 20px;
         display: grid;
-        grid-template-columns:repeat(1,1fr);
+        grid-template-columns: repeat(1, 1fr);
     }
 
     /* Estilos para la imagen en la galería */
@@ -123,17 +153,17 @@
         border-radius: 5px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-    
+
     /* Estilos para el botón de eliminar */
     .delete-button {
-        margin-top:3%;
+        margin-top: 3%;
         background-color: rgba(255, 0, 0, 0.7);
         color: white;
         padding: 8px 16px;
         border: none;
         border-radius: 5px;
         cursor: pointer;
-        height:50px;
+        height: 50px;
     }
 
     /* Estilos para el botón de eliminar al pasar el ratón */
@@ -145,7 +175,8 @@
     .image-item:hover .overlay {
         opacity: 1;
     }
-    .boton{
+
+    .boton {
         width: 10%;
         height: 50px;
     }
@@ -168,7 +199,7 @@
 
         $result = mysqli_query($conn, $sqlQuery);
 
-        $sqlQuery2 = "SELECT video FROM tbl_producto WHERE codigo_producto = '$id_producto'";
+        $sqlQuery2 = "SELECT * FROM tbl_producto WHERE codigo_producto = '$id_producto'";
 
         $result2 = mysqli_query($conn, $sqlQuery2);
         
@@ -178,6 +209,12 @@
                 echo '<h4 style="margin-top:5%;"><center>Video</center></h4>';
                 echo '<div style="display:flex; flex-wrap:wrap; margin-top:3%;">';
                 echo '<video src="view/img/vid_productos/' . $data_video['video'] . '" controls style="width: 50%; height:auto;"></video>';
+                echo '<form class="FormularioAjax" action="' . SERVERURL . 'ajax/vidProductoAjax.php" method="post" data-form="delete" autocomplete="off"> 		
+                            <input type="hidden" name="idcodigo2_del" value="' . $data_video['codigo_producto'] . '">
+                            <button type="submit" class="btn danger-btn">
+                                Eliminar
+                            </button>
+                        </form>';
                 echo '</div>';
             } else {
                 echo "<p>No se encontró el video del producto.</p><br>";
@@ -240,3 +277,16 @@ function cerrarModal() {
     <span class="close" title="Cerrar" onclick="cerrarModal()">&times;</span>
     <img class="modal-content" id="imgAmpliada">
 </div>
+
+<script>
+document.querySelector('#txtvideo_reg').addEventListener('change', function() {
+    var files = this.files;
+    if (files.length > 1) {
+        Swal.fire({
+            title: 'Solo puedes seleccionar un archivo de video.',
+            icon: 'error'
+        });
+        this.value = ''; // Limpia el campo de entrada para eliminar el archivo seleccionado
+    }
+});
+</script>
