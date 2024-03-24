@@ -167,7 +167,7 @@ class servicioControlador extends servicioModelo
                             <td class="min-width">'. MONEDA . number_format($rows['precio'],0,',','.') . '</td>  
                             <td class="min-width">' . $rows['duracion'] . 'h</td> 
                             <td class="min-width">' . $rows['fecha_registro'] . '</td>  
-                            <td class="min-width"><a href="' . SERVERURL . 'imagenes-servicios?id=' . $rows['codigo_servicio'] . '">Ver fotos</a></td>
+                            <td class="min-width"><a href="' . SERVERURL . 'imagenes-servicios?id=' . $rows['codigo_servicio'] . '">Ver</a></td>
                             <td class="min-width">' . $rows['tipo_servicio'] . '</td>
 
                             <td class="stat"><a href="' . SERVERURL . 'servicio-update/' . mainModel::encryption($rows['codigo_servicio']) . '/"</input>

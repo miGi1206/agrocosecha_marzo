@@ -56,17 +56,25 @@ class servicioModelo extends mainModel
     
     /*------------- MODELO ELIMINAR SERVICIO -----------------------*/
     protected static function eliminar_servicio_modelo($id)
-    {
-        try {
+    {     
+        $sql_select_imagenes = mainModel::conectar()->prepare("SELECT foto FROM tbl_imagen WHERE cod_servicio=:ID");
+        $sql_select_imagenes->bindParam(":ID", $id);
+        $sql_select_imagenes->execute();
+        $imagenes = $sql_select_imagenes->fetchAll(PDO::FETCH_ASSOC);
+
+        // Iterar sobre cada imagen y eliminarla de la carpeta
+        foreach ($imagenes as $imagen) {
+            $ruta_imagen = "../view/img/img_servicio/{$imagen['foto']}";
+            if (file_exists($ruta_imagen)) {
+                unlink($ruta_imagen);
+            }
+        }  
             $sql = mainModel::conectar()->prepare("DELETE FROM tbl_servicio WHERE codigo_servicio=:ID");
     
             $sql->bindParam(":ID", $id);
             $sql->execute();
     
             return $sql;
-        } catch (PDOException $e) {
-            throw $e; // Propagar la excepción hacia arriba
-        }
     }
     /*------------- MODELO ACTUALIZAR SERVICIO -----------------------*/
     protected static function datos_servicio_modelo($id){

@@ -38,7 +38,7 @@ $servicio = $ins_servicio->listar_servicio();
                     <div class="col-lg-12">
                         <div class="card-style mb-30 text-center">
                             <div class="text-center mt-2 texto" style="font-size: 25px;"><i class="bi bi-person-plus lead p-1"></i>Crear servicio</div>
-                            <form class="" action="<?php echo SERVERURL; ?>ajax/servicioAjax.php" method="POST" data-form="save" autocomplete="off" enctype="multipart/form-data">
+                            <form class="FormularioAjax" action="<?php echo SERVERURL; ?>ajax/servicioAjax.php" method="POST" data-form="save" autocomplete="off" enctype="multipart/form-data">
                             <div class="row mt-4">
                                     <div class="form-group col-md-4 mt-3">              
                                         <label class="control-label">Codigo: <span style="color:red;">*</span></label>
