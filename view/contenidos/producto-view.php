@@ -52,7 +52,7 @@
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Descripción: <span
                                                 style="color:red;">*</span></label>
-                                        <input class="form-control" maxlength="50" type="text" id="txtdescripcion_reg"
+                                        <input class="form-control"  type="text" id="txtdescripcion_reg"
                                             name="txtdescripcion_reg">
                                         <div id="descripcion_error" style="color: red;"></div>
                                     </div>

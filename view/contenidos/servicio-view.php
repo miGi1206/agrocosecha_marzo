@@ -53,7 +53,7 @@ $servicio = $ins_servicio->listar_servicio();
                                     </div>
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Descripción: <span style="color:red;">*</span></label>
-                                        <input class="form-control" maxlength="50" type="text" id="txtdescripcion_reg" name="txtdescripcion_reg">
+                                        <input class="form-control"  type="text" id="txtdescripcion_reg" name="txtdescripcion_reg">
                                         <div id="descripcion_error" style="color: red;"></div>
                                     </div>
                                     <div class="form-group col-md-4 mt-3">
@@ -135,7 +135,7 @@ $servicio = $ins_servicio->listar_servicio();
 <script>
     document.getElementById('txtNombre_reg').addEventListener('input', function(event) {
         var inputValue = event.target.value;
-        var lettersAndSpaces = /^[a-zA-Z\s]*$/;
+        var lettersAndSpaces = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
         var errorDiv = document.getElementById('nombre_error');
 
         if (!inputValue.match(lettersAndSpaces)) {

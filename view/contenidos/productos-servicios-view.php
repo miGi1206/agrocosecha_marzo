@@ -282,7 +282,7 @@ elseif (isset($_GET['busqueda3'])) {
                                 <?php
                                 if (isset($_SESSION['tipo_usuario_spm']) && $_SESSION['tipo_usuario_spm'] == "2") {
                                     echo "<p><b>Precio: $" . number_format($row['precio'], 2, ',', '.') . "</b></p>";
-                                            echo "<p><b>Duración: ". $row['duracion'] . "</b></p>";
+                                            echo "<p><b>Duración: ". $row['duracion'] . " horas". "</b></p>";
                                 }
                                 ?>
                                 <h6>Descripción</h6>

@@ -73,11 +73,6 @@
                                             name="updatetstock" required  value="<?php echo $campos['stock']; ?>">
                                             <div id="stock_error" style="color: red;"></div>
                                     </div>
-                                    <div class="form-group col-md-4 mt-3">
-                                    <label class="control-label">video: <span style="color:red;">*</span></label>
-                                        <input class="form-control" maxlength="50" type="text" id="updatetvideo"
-                                            name="updatetvideo"  value="<?php echo $campos['video']; ?>" required>
-                                    </div>
                             </div>
                                 <div class="form-group text-align-end mt-3">
                                     <button class="main-btn success-btn-outline rounded-full btn-hover m-1" type="submit" style="font-size: 15px;">Actualizar Datos</button>
