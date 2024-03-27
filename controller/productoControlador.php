@@ -220,9 +220,8 @@ class productoControlador extends productoModelo
         $descricpcion = mainModel::limpiar_cadena($_POST['updatedescripcion']);
         $precio = mainModel::limpiar_cadena($_POST['updateprecio']);
         $stock = mainModel::limpiar_cadena($_POST['updatetstock']);
-        $video = mainModel::limpiar_cadena($_POST['updatetvideo']);
         
-        if ($nombres == "" || $descricpcion=="" || $precio=="" || $stock=="" || $video=="") {
+        if ($nombres == "" || $descricpcion=="" || $precio=="" || $stock=="" ) {
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrio un error inesperado",
@@ -239,7 +238,6 @@ class productoControlador extends productoModelo
             "descripcion" => $descricpcion,
             "precio"=> $precio,
             "stock" => $stock,
-            "video" => $video,
             "id" => $id,
         
         ];
