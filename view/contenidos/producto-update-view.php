@@ -73,7 +73,7 @@
                                             name="updatetstock" required  value="<?php echo $campos['stock']; ?>">
                                             <div id="stock_error" style="color: red;"></div>
                                     </div>
-                                    
+
                             </div>
                                 <div class="form-group text-align-end mt-3">
                                     <button class="main-btn success-btn-outline rounded-full btn-hover m-1" type="submit" style="font-size: 15px;">Actualizar Datos</button>

@@ -232,7 +232,8 @@ class productoControlador extends productoModelo
         $precio = mainModel::limpiar_cadena($_POST['updateprecio']);
         $stock = mainModel::limpiar_cadena($_POST['updatetstock']);
         
-        if ($nombres == "" || $descricpcion=="" || $precio=="" || $stock=="") {
+        if ($nombres == "" || $descricpcion=="" || $precio=="" || $stock=="" ) {
+
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrio un error inesperado",

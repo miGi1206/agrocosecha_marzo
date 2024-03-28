@@ -65,7 +65,7 @@ $servicio = $ins_servicio->listar_servicio();
                                     </div>
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Descripción: <span style="color:red;">*</span></label>
-                                        <input class="form-control" maxlength="50" type="text" id="updatedescripcion" name="updatedescripcion" value="<?php echo $campos['descripcion']; ?>">
+                                        <input class="form-control" type="text" id="updatedescripcion" name="updatedescripcion" value="<?php echo $campos['descripcion']; ?>">
                                         <div id="descripcion_error" style="color: red;"></div>
                                     </div>
                                     <div class="form-group col-md-4 mt-3">
@@ -129,7 +129,7 @@ $servicio = $ins_servicio->listar_servicio();
 <script>
     document.getElementById('updateNombre').addEventListener('input', function(event) {
         var inputValue = event.target.value;
-        var lettersAndSpaces = /^[a-zA-Z\s]*$/;
+        var lettersAndSpaces = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
         var errorDiv = document.getElementById('nombre_error');
 
         if (!inputValue.match(lettersAndSpaces)) {

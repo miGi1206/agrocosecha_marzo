@@ -182,10 +182,10 @@ class registrarseControlador extends registrarseModelo
                 echo json_encode($alerta);
                 exit();
             }
-        
+            $contraincriptada = SHA1($contra);
             $datos_usuario_add  = [
                 "Usuario"     => $usuario,
-                "Contra"     => $contra,
+                "Contra"     => $contraincriptada,
                 "tipo_usuario"   => $tipo_usuario,
                 "cod_persona"   => $codigo_persona,
             ];
