@@ -65,14 +65,19 @@ $productoLista = $ins_sexo_usuario->listar_producto();
 
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Producto-proveedor <span style="color:red;">*</span></label>
-                                        <select class="form-control" id="input-select-tipo-usuario"
-                                            name="txtProductoVinculado_ins">
-                                            <option></option>
-                                            <?php foreach ($productoLista as $filaP) : ?>
-                                            <option value="<?php echo $filaP['codigo_producto']; ?>">
-                                                <?php echo $filaP['nombre']; ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
+                                        <div class="dropdown bootstrap-select form-control" style="border: 1px solid #ced4da !important; border-radius: 4px !important;">
+                                            <select class="form-control selectpicker" data-live-search="true"  name="txtIDpersona_ins" id="input-persona-sexo" required >
+                                                <option value="">Seleccione un producto</option>
+                                                <?php
+                                                
+                                                // Llenar las opciones del menú desplegable con los proveedores obtenidos
+                                                foreach ($productoLista as $filaP ) {
+                                                    // Mostrar tanto el nombre como el apellido del proveedor en la opción del menú desplegable
+                                                    echo '<option value="' . $filaP['codigo_producto'] . '">' . $filaP['codigo_producto'] . ' - '. $filaP['nombre'] . '</option>';
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
                                     </div>
                                     
                                 </div>

@@ -59,18 +59,6 @@ $tipo_usuario = $ins_personas->listar_tipo_usuario();
                                     </select>
                                     </div>
                                 </div>  
-
-                                    <!-- <div class="form-group col-md-4 mt-3">
-                                        <label class="control-label">identificacion de la persona<span style="color:red;">*</span></label>
-                                        <select class="form-control" id="input-select-sexo" name="txtIDpersona_ins">
-                                            <option></option>
-                                            <?php foreach ($personas as $fila) : ?>
-                                            <option value="<?php echo $fila['codigo_persona']; ?>">
-                                                <?php echo $fila['identificacion'] . " - " . $fila['primer_nombre'] ." ".$fila['primer_apellido']?>
-                                            </option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div> -->
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Tipo de usuario<span style="color:red;">*</span></label>
                                         <select class="form-control" id="tipo_usuario" name="txtTipo_usuario_ins">

@@ -83,48 +83,53 @@ function sendEmailContacto($request)
         <title>' . $request['asunto'] . '</title>
         <style>
             body {
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
+                font-family: Tahoma, Geneva, Verdana, sans-serif;
                 margin: 0;
                 padding: 0;
+                background-color: #f5f5f5;
             }
             .container {
                 max-width: 600px;
-                margin: 0 auto;
-                padding: 20px;
+                margin: 50px auto;
                 background-color: #fff;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                border-radius: 5px;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             }
             .header {
                 background-color: #3AAA3C;
-                padding: 15px;
-                color: white;
+                padding: 20px;
                 text-align: center;
-                border-radius: 5px 5px 0 0;
+                color: #fff;
+            }
+            .header h1 {
+                margin: 0;
+                font-size: 24px;
             }
             .content {
-                padding: 20px;
+                padding: 30px;
+            }
+            p {
+                line-height: 1.6;
+                color: #333;
             }
             .footer {
                 background-color: #3AAA3C;
-                padding: 10px;
-                color: white;
+                padding: 20px;
                 text-align: center;
-                border-radius: 0 0 5px 5px;
+                color: #fff;
             }
-            h2 {
-                color: #333;
-            }
-            p {
-                color: #555;
+            .footer p {
+                margin: 0;
+                font-size: 14px;
+                color: #fff !important
             }
         </style>
     </head>
     <body>
         <div class="container">
             <div class="header">
-            <h2 style="color:#F8AB14;">AGRO<span style="color:#065F2C;">COSECHA</span></h2>
+            <h1>AGRO<span style="color:#F8AB14;">COSECHA</span></h1>
             </div>
             <div class="content">
                 <p><b>Nombre:</b> ' . $request['nombre1'] . '</p>
@@ -135,7 +140,7 @@ function sendEmailContacto($request)
                 <p>Para responder, contactarse con: <a href="mailto:' . $request['correo1'] . '">' . $request['correo1'] . '</a></p>
             </div>
             <div class="footer">
-                <p>&copy; ' . date("Y") . ' Agrocosecha</p>
+            <p>Contacto: <a href="mailto:trabajadoragrocosecha@gmail.com" style="color: #fff; text-decoration: none;">trabajadoragrocosecha@gmail.com</a> | Teléfono: 314-537-5318</p>
             </div>
         </div>
     </body>

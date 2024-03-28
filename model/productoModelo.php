@@ -127,14 +127,12 @@ class productoModelo extends mainModel
     protected static function actualizar_producto_modelo($datos2)
     {
         $sql = mainModel::conectar()->prepare("UPDATE tbl_producto SET
-            nombre=:Nombre, descripcion=:descripcion, precio=:precio,stock=:stock,
-            video=:video WHERE codigo_producto=:id");
+            nombre=:Nombre, descripcion=:descripcion, precio=:precio,stock=:stock WHERE codigo_producto=:id");
 
         $sql->bindParam(":Nombre", $datos2['Nombre']);
         $sql->bindParam(":descripcion", $datos2['descripcion']);
         $sql->bindParam(":precio", $datos2['precio']);
         $sql->bindParam(":stock", $datos2['stock']);
-        $sql->bindParam(":video", $datos2['video']);
         $sql->bindParam(":id", $datos2['id']);
         $sql->execute();
         return $sql;

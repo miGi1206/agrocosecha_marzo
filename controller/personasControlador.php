@@ -8,7 +8,7 @@ if ($peticionAjax) {
 
 class personasControlador extends personasModelo
 {
-    /*------------- CONTROLADOR AGREGAR APRENDIZ -----------------------*/
+    /*------------- CONTROLADOR AGREGAR PERSONAS -----------------------*/
     public function agregar_personas_controlador()
     {
         try{
@@ -491,6 +491,28 @@ class personasControlador extends personasModelo
                 echo json_encode($alerta);
                 exit();
             }
+        }
+        $fecha_nacimiento_timestamp = strtotime($fecha_nacimiento);
+        $edad_minima = 18; // Cambia esto si necesitas una edad mínima diferente.
+
+        // Obtener el timestamp actual.
+        $fecha_actual_timestamp = time();
+
+        // Calcular la diferencia de tiempo en segundos.
+        $diferencia_tiempo = $fecha_actual_timestamp - $fecha_nacimiento_timestamp;
+
+        // Calcular la edad en años.
+        $edad = floor($diferencia_tiempo / (365 * 24 * 60 * 60));
+
+        if ($edad < $edad_minima) {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Error",
+                "Texto" => "Debes ser mayor de 18 años para registrarte.",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
         }
         if ($identificacion != $campos['identificacion']) {
             $check_dni = mainModel::ejecutar_consulta_simple("SELECT identificacion FROM tbl_persona WHERE identificacion='$identificacion'");
