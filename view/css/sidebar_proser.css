@@ -17,9 +17,9 @@
     height: 100vh !important;
     left: 0;
     background: #eee;
-    width: 120px;
+    width: 300px !important;
     overflow-x: hidden;
-    transition: width 0.2s linear;
+    /* transition: width 0.2s linear; */
     box-shadow:0 20px 35px #797979;
 }
 #container_ul{
@@ -90,12 +90,12 @@
     color:#fff !important;
     background: #28a745;
 }
-#container_nav:hover{
+/* #container_nav:hover{
     text-align: center;
     justify-content: center;
     width: 300px;
     transition: all 0.5s ease;
-}
+} */
 
 /* Estilos para navegadores basados en WebKit (Chrome, Safari) */
 #container_nav::-webkit-scrollbar {

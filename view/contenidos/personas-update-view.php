@@ -99,14 +99,19 @@ $sexo = $ins_sexo_usuario->listar_sexo();
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Sexo <span style="color:red;">*</span></label>
                                         <select class="form-control" id="input-select-sexo" name="updateSexo">
-                                            <?php foreach ($sexo as $fila) : ?>
-                                            <?php $selected = ($campos['sexo'] == $fila['codigo_sexo']) ? 'selected' : ''; ?>
-                                            <option value="<?php echo $fila['codigo_sexo']; ?>"
-                                                <?php echo $selected; ?>>
-                                                <?php echo $fila['sexo']; ?>
-                                            </option>
-                                            <?php endforeach; ?>
+                                            <?php
+                                            $valorActual = $campos['codigo_sexo'];
+                                            $valorActual2 = $campos['sexo'];
+
+                                            // Muestra el valor actual como la primera opción
+                                            echo "<option value='$valorActual'>$valorActual2</option>";
+                                            foreach ($sexo as $fila) :
+                                            if ($fila['codigo_sexo'] != $valorActual) {
+                                                    echo "<option value='" . $fila['codigo_sexo'] . "'>" . $fila['sexo'] . "</option>";
+                                                }
+                                            endforeach; ?>
                                         </select>
+                                        
                                     </div>
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Fecha de nacimiento <span style="color:red;">*</span></label>

@@ -56,6 +56,17 @@ class productoControlador extends productoModelo
             echo json_encode($alerta);
             exit();
         }
+        $comprobarnombre = mainModel::ejecutar_consulta_simple("SELECT nombre FROM tbl_producto WHERE nombre='$nombres'");
+        if ($comprobarnombre->rowCount() > 0) {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Ocurrió un error Inesperado",
+                "Texto" => "El nombre del producto ingresado ya se encuentra registrada en el sistema",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
     
         $datos_producto_add = [
             "Nombre" => $nombres,
@@ -222,6 +233,7 @@ class productoControlador extends productoModelo
         $stock = mainModel::limpiar_cadena($_POST['updatetstock']);
         
         if ($nombres == "" || $descricpcion=="" || $precio=="" || $stock=="" ) {
+
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrio un error inesperado",
@@ -232,6 +244,17 @@ class productoControlador extends productoModelo
             exit();
         }
         
+        $comprobarnombre = mainModel::ejecutar_consulta_simple("SELECT nombre FROM tbl_producto WHERE nombre='$nombres'");
+        if ($comprobarnombre->rowCount() > 0) {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Ocurrió un error Inesperado",
+                "Texto" => "El nombre del producto ingresado ya se encuentra registrada en el sistema",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
 
         $datos_ins_up = [
             "Nombre" => $nombres,

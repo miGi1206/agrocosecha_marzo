@@ -63,6 +63,17 @@ class servicioControlador extends servicioModelo
             echo json_encode($alerta);
             exit();
         }
+        $comprobarnombre = mainModel::ejecutar_consulta_simple("SELECT nombre FROM tbl_servicio WHERE nombre='$nombres'");
+        if ($comprobarnombre->rowCount() > 0) {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Ocurrió un error Inesperado",
+                "Texto" => "El nombre del servicio ingresado ya se encuentra registrada en el sistema",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
 
         $datos_servicio_add = [
             "Nombre" => $nombres,
@@ -315,6 +326,18 @@ class servicioControlador extends servicioModelo
                 "Alerta" => "simple",
                 "Titulo" => "Ocurrió un error inesperado",
                 "Texto" => "El Primer nombre no coincide con el formato solicitado",
+                "Tipo" => "error"
+            ];
+            echo json_encode($alerta);
+            exit();
+        }
+        
+        $comprobarnombre = mainModel::ejecutar_consulta_simple("SELECT nombre FROM tbl_servicio WHERE nombre='$nombres'");
+        if ($comprobarnombre->rowCount() > 0) {
+            $alerta = [
+                "Alerta" => "simple",
+                "Titulo" => "Ocurrió un error Inesperado",
+                "Texto" => "El nombre del servicio ingresado ya se encuentra registrada en el sistema",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);

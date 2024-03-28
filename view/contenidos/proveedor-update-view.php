@@ -57,64 +57,73 @@ $productoVinculado = $ins_sexo_usuario->listar_producto();
                                 <div class="row mt-4">
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">NIT</label>
-                                        <input class="form-control" maxlength="11" type="text"
-                                            name="updateNit" value="<?php echo $campos['nit']; ?>"
-                                            pattern="[0-9]{1,11}" readonly require>
+                                        <input class="form-control" maxlength="11" type="text" name="updateNit"
+                                            value="<?php echo $campos['nit']; ?>" pattern="[0-9]{1,11}" readonly
+                                            require>
                                     </div>
 
                                     <div class="form-group col-md-4 mt-3">
-                                        <label class="control-label">Nombre Razon Social <span style="color:red;">*</span></label>
-                                        <input class="form-control" maxlength="50" type="text" name="updateNombrerazonsocial" id="nombre_razonsocial"
+                                        <label class="control-label">Nombre Razon Social <span
+                                                style="color:red;">*</span></label>
+                                        <input class="form-control" maxlength="50" type="text"
+                                            name="updateNombrerazonsocial" id="nombre_razonsocial"
                                             value="<?php echo $campos['nombre_razonsocial']; ?>" require>
                                     </div>
 
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Teléfono<span style="color:red;">*</span></label>
-                                        <input class="form-control" maxlength="15" type="text" name="updateTelefono" id="telefono"
-                                            value="<?php echo $campos['telefono']; ?>" pattern="[0-9]{1,15}" require>
+                                        <input class="form-control" maxlength="15" type="text" name="updateTelefono"
+                                            id="telefono" value="<?php echo $campos['telefono']; ?>"
+                                            pattern="[0-9]{1,15}" require>
                                     </div>
 
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Email <span style="color:red;">*</span></label>
-                                        <input class="form-control" maxlength="50" type="text" name="updateCorreo" id="correo"
-                                            value="<?php echo $campos['correo']; ?>" require>
+                                        <input class="form-control" maxlength="50" type="text" name="updateCorreo"
+                                            id="correo" value="<?php echo $campos['correo']; ?>" require>
                                     </div>
 
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Sexo <span style="color:red;">*</span></label>
-                                        <select class="form-control" id="input-select-producto" name="updateProductoVinculado">
-                                            <?php foreach ($productoVinculado as $filaP) : ?>
-                                            <?php $selected = ($campos['nombre'] == $filaP['codigo_producto']) ? 'selected' : ''; ?>
-                                            <option value="<?php echo $filaP['codigo_producto']; ?>"
-                                                <?php echo $selected; ?>>
-                                                <?php echo $filaP['nombre']; ?>
-                                            </option>
-                                            <?php endforeach; ?>
-                                        </select>
+                                        <div class="dropdown bootstrap-select form-control"
+                                            style="border: 1px solid #ced4da !important; border-radius: 4px !important;">
+                                            <select class="form-control selectpicker" data-live-search="true"
+                                                id="input-select-producto" name="updateProductoVinculado" required>
+                                                <?php foreach ($productoVinculado as $filaP) :
+                                                    echo '<option value="' . $filaP['codigo_producto'] . '">' . $filaP['codigo_producto'] . ' - '. $filaP['nombre'] . '</option>';
+                                                endforeach; ?>
+                                            </select>
+                                        </div>
+
                                     </div>
 
-                                    
+
                                 </div>
                                 <div class="row">
 
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Persona de contacto</label>
-                                        <input class="form-control" maxlength="50" type="text" name="updatePersonaContacto" id="nom_per_contacto"
-                                            value="<?php echo $campos['nom_per_contacto']; ?>" >
+                                        <input class="form-control" maxlength="50" type="text"
+                                            name="updatePersonaContacto" id="nom_per_contacto"
+                                            value="<?php echo $campos['nom_per_contacto']; ?>">
                                     </div>
-                                    
+
                                     <div class="form-group col-md-4 mt-3">
-                                        <label class="control-label">Teléfon de conctato<span style="color:red;">*</span></label>
-                                        <input class="form-control" maxlength="15" type="text" name="updateTelefonoContacto" id="tel_contacto"
-                                            value="<?php echo $campos['tel_contacto']; ?>" pattern="[0-9]{1,15}" require>
+                                        <label class="control-label">Teléfon de conctato<span
+                                                style="color:red;">*</span></label>
+                                        <input class="form-control" maxlength="15" type="text"
+                                            name="updateTelefonoContacto" id="tel_contacto"
+                                            value="<?php echo $campos['tel_contacto']; ?>" pattern="[0-9]{1,15}"
+                                            require>
                                     </div>
 
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Email <span style="color:red;">*</span></label>
-                                        <input class="form-control" maxlength="50" type="text" name="updateCorreoContacto" id="correo_contacto"
+                                        <input class="form-control" maxlength="50" type="text"
+                                            name="updateCorreoContacto" id="correo_contacto"
                                             value="<?php echo $campos['correo_contacto']; ?>" require>
                                     </div>
-                                    
+
                                 </div>
 
                                 <div class="form-group text-align-end mt-3">
@@ -162,7 +171,7 @@ function isValidInputNombre(text) {
 
 <!-- //! Validacion para solo numeros en el campo del telefono -->
 <script>
-document.getElementById('telefono').addEventListener('input', function () {
+document.getElementById('telefono').addEventListener('input', function() {
     // Filtra solo números
     this.value = this.value.replace(/[^0-9]/g, '');
 
@@ -174,7 +183,7 @@ document.getElementById('telefono').addEventListener('input', function () {
 </script>
 
 <script>
-document.getElementById('tel_contacto').addEventListener('input', function () {
+document.getElementById('tel_contacto').addEventListener('input', function() {
     // Filtra solo números
     this.value = this.value.replace(/[^0-9]/g, '');
 
@@ -198,7 +207,7 @@ correo.addEventListener('keydown', (event) => {
 
 <!-- validaicon persona de contacto  -->
 <script>
-document.getElementById('nom_per_contacto').addEventListener('input', function () {
+document.getElementById('nom_per_contacto').addEventListener('input', function() {
     // Filtra solo letras y espacios
     this.value = this.value.replace(/[^A-Za-z\s]/g, '');
 });
