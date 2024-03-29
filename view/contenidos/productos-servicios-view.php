@@ -148,10 +148,6 @@ elseif (isset($_GET['busqueda3'])) {
 
     <!-- Start Content -->
     <div class="container py-3 fuera-navbar">
-        <div class="alert alert-succes">
-            <?php echo $mensaje;?>
-            <a href="#" class="badge badge-success">Ver carrito</a>
-        </div>
         <div class="row" id="div">
 
             <!--Inicio de sidebar-->

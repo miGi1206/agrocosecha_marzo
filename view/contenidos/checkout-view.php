@@ -84,7 +84,18 @@
                         <tr>
                             <td width="40%"><?php echo $productoCarrito['nombre']?></td>
                             <td width="15%"><?php echo $productoCarrito['precio']?></td>
-                            <td width="20%"><?php echo $productoCarrito['cantidad']?></td>
+                            <td width="20%">
+                                <form action="" method="POST">
+                                    <button class="btn btn-secondary btn-sm" type="submit" name="btnAccion" value="RestarCantidad">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <?php echo $productoCarrito['cantidad']; ?>
+                                    <button class="btn btn-secondary btn-sm" type="submit" name="btnAccion" value="SumarCantidad">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                    <input type="hidden" name="codigo_producto" value="<?php echo $productoCarrito['codigo_producto']; ?>">
+                                </form>
+                            </td>
                             <td width="20%"><?php echo number_format($productoCarrito['precio']*$productoCarrito['cantidad'],2);?></td>
                             <td width="5%">
                                 <form action="" method="POST">
@@ -128,7 +139,6 @@
     <?php include "view/inc/foother_home.php";?>
     <!-- End Footer -->
     </div>
-    <script><?php include ('view/js/carrito.js'); ?></script>
     
     
 

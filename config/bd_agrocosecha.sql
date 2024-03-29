@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-03-2024 a las 16:05:54
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
+-- Tiempo de generación: 29-03-2024 a las 03:38:55
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,10 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `tbl_detalle` (
-  `num_ticket` int(11) NOT NULL,
+  `codigo_detalle` int(11) NOT NULL,
   `precio_unitario` float NOT NULL,
   `cantidad` int(11) NOT NULL,
-  `total` float NOT NULL,
+  `subtotal` float NOT NULL,
   `cod_producto` int(11) NOT NULL,
   `cod_venta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
@@ -40,8 +40,12 @@ CREATE TABLE `tbl_detalle` (
 -- Volcado de datos para la tabla `tbl_detalle`
 --
 
-INSERT INTO `tbl_detalle` (`num_ticket`, `precio_unitario`, `cantidad`, `total`, `cod_producto`, `cod_venta`) VALUES
-(12344, 5654, 10, 55676, 1, 12);
+INSERT INTO `tbl_detalle` (`codigo_detalle`, `precio_unitario`, `cantidad`, `subtotal`, `cod_producto`, `cod_venta`) VALUES
+(12344, 5654, 10, 55676, 1, 12),
+(12345, 5000, 5, 25000, 1, 29443),
+(12346, 5000, 4, 20000, 1, 43973),
+(12347, 6700, 1, 6700, 879, 43973),
+(12348, 5000, 2, 10000, 2231, 43973);
 
 --
 -- Disparadores `tbl_detalle`
@@ -63,9 +67,76 @@ DELIMITER ;
 CREATE TABLE `tbl_imagen` (
   `codigo_imagen` int(11) NOT NULL,
   `foto` varchar(200) NOT NULL,
-  `cod_servicio` int(11) NOT NULL,
-  `cod_producto` int(11) NOT NULL
+  `cod_servicio` int(11) DEFAULT NULL,
+  `cod_producto` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `tbl_imagen`
+--
+
+INSERT INTO `tbl_imagen` (`codigo_imagen`, `foto`, `cod_servicio`, `cod_producto`) VALUES
+(1, '5cc67d492076dc11319d7bba63c78e36_arroz.jpg', NULL, 1),
+(2, '9a9d1832f1949106d468467273fb7583_arroz.png', NULL, 1),
+(3, '950d674569d88ca10277701562996cf5_arroz.png', NULL, 1),
+(4, 'de655ba88420e7467db1a0d5633c4620_arroz.jpg', NULL, 1),
+(5, '054c5c3e219fcb8c3cf9cbd05965ed05_arroz.png', NULL, 1),
+(6, '670217e899f1614849c0cd38c2139500_arroz.png', NULL, 1),
+(231, '7b28929557c8ee4fdbaaa765921de80c_Gallinas criollas.webp', NULL, 5678),
+(232, '363f231f5a6f9412270827a2139b3dc9_Gallinas criollas.webp', NULL, 5678),
+(233, '6d1bad15a57b194c77f7f7420f1afd49_Gallinas criollas.webp', NULL, 5678),
+(234, '43f23ce77d74b1f6f42acf1508c324fe_Gallinas criollas.webp', NULL, 5678),
+(235, '48872bb8ffeef918c917bc9d1204f329_Pollos.webp', NULL, 321),
+(236, 'b3f8d48e717c294f3ba78f89921d2367_Pollos.webp', NULL, 321),
+(237, 'cd1a1a60881263212393e4927e4308f1_Pollos.webp', NULL, 321),
+(238, '24af895c7f69c921ef4dfb9f8cbc3028_Cerdos.webp', NULL, 879),
+(239, 'a6fab01e9b3925fed4602cf516d54ac2_Cerdos.webp', NULL, 879),
+(240, '0a6e0032104fafea58358678b022da8d_Cerdos.webp', NULL, 879),
+(241, 'c879d79a520163a73b07da2bb4dbc0f8_Cerdos.webp', NULL, 879),
+(242, 'd58519336cc8179fd7f4a5cf3b7b2672_Ponedoras.webp', NULL, 9876),
+(243, '4b99cf1c85373ac30fae7633dff31382_Ponedoras.webp', NULL, 9876),
+(244, 'c6ea39e67ff846302c6832a3b684db0a_Ponedoras.webp', NULL, 9876),
+(245, 'f335d43d35dbf80bc1eaaa0be4a76f74_Ponedoras.webp', NULL, 9876),
+(246, '356ea23e225c45c4848b32f882b0fd22_Ganado.webp', NULL, 45675),
+(247, 'ca0f8a9992a553d8c3d188575c9f382d_Ganado.webp', NULL, 45675),
+(248, '5b354cebfdaab7ac49e88127ebd98a30_Ganado.webp', NULL, 45675),
+(249, '798bbf5fb55015af7041a80a62b880c2_Ganado.webp', NULL, 45675),
+(250, '456028ca2b1bf9aee2810c89ee3cc8fc_Yuca.webp', NULL, 4432),
+(251, '688f018fbe036abe47e0fc386280103d_Yuca.webp', NULL, 4432),
+(252, 'ae1648e764f1fe2ae42590f4a1f64842_Yuca.webp', NULL, 4432),
+(253, '71bdaa55055886ec5f0df4b5ae821b5a_Yuca.webp', NULL, 4432),
+(254, '2cdb05061e7048011cc61bb3318bbdb5_Platano.webp', NULL, 2231),
+(255, 'd7eb8c242ceaa72a930d563e2b1e41c9_Platano.webp', NULL, 2231),
+(256, '1d35975ed4a8d95819d4e85c7515b2e6_Platano.webp', NULL, 2231),
+(257, '3a131c82f0291593c2cdeab1ad5ad261_Platano.webp', NULL, 2231),
+(258, '63500c5aea1ea1645d831547247643ad_Peces.webp', NULL, 9987),
+(259, '1b6ed5c466e77f8e4b24776b6ab46ba9_Peces.webp', NULL, 9987),
+(260, '97fd6c107b5e19144a77be48ed03089d_Peces.webp', NULL, 9987),
+(261, 'fd20627afd18237cdf573ed165186359_Peces.webp', NULL, 9987),
+(267, 'b6448e9c512b94c9d49a58f290e614ac_Fumigacion.webp', 3452, NULL),
+(268, '6f9702cd993ac9da6ce90eecdecf0e69_Fumigacion.webp', 3452, NULL),
+(269, '3774a79a745ea12fae6b80b6f33110f1_Fumigacion.webp', 3452, NULL),
+(270, '33cbecd322ca3b49a02f92e1d37ed2bc_Fumigacion.webp', 3452, NULL),
+(271, '1a54b37f15e576897226b1feac4cde5e_Abono.webp', 2421, NULL),
+(272, '38f10c70113310a17911dd1b3a431de9_Abono.webp', 2421, NULL),
+(273, 'cd564ade8f0fe47712fb70af66aac1ec_Abono.webp', 2421, NULL),
+(274, '8f55781969b83b2e82a71671765dd858_Abono.webp', 2421, NULL),
+(275, 'cb539bf9ddd85b5fbaac84f7ea4547fd_Fumigacion.webp', 987, NULL),
+(276, '38835b36e8a074306e0d60e07d236ae6_Fumigacion.webp', 987, NULL),
+(277, '5d4435f0825d9b41e145dd6628379c1c_Fumigacion.webp', 987, NULL),
+(278, '7dcd43a0b91e6dd540bea5c8bac72506_Fumigacion.webp', 987, NULL),
+(279, '8eda801740e28e54affb8e3314371311_Controles.webp', 3456, NULL),
+(280, 'affb8fe8cb1564d38f1be824c9b96f2e_Controles.webp', 3456, NULL),
+(281, 'e3caebc3b59033acb2e7d3e28654abc0_Controles.webp', 3456, NULL),
+(282, '6e0831da9156fad5008afc9c31e214cb_Abono.webp', 456423, NULL),
+(283, 'fd3ee02dd8042edcca7425b80e5da283_Abono.webp', 456423, NULL),
+(284, '6d96518c5b95f0dbedfe9d1ece925db3_Abono.webp', 456423, NULL),
+(285, '0b7fc3cf31d0d85468f46d068d3964cb_Asesorias.webp', 2345, NULL),
+(286, 'adf5dc7ff52a88a53b9cedb351e86a2c_Asesorias.webp', 2345, NULL),
+(287, 'be80e03a7cfec5098422045895914193_Asesorias.webp', 2345, NULL),
+(288, 'd23bae7f3d4e277e10a8a4018f4be99c_Preparación de tierras.webp', 9983, NULL),
+(289, 'e37a6fd36c0201e47c1d99309218328e_Preparación de tierras.webp', 9983, NULL),
+(290, 'f5b2a19c0e0df6dfa6439302a07b13ba_Preparación de tierras.webp', 9983, NULL);
 
 -- --------------------------------------------------------
 
@@ -94,12 +165,8 @@ CREATE TABLE `tbl_persona` (
 
 INSERT INTO `tbl_persona` (`codigo_persona`, `identificacion`, `primer_nombre`, `segundo_nombre`, `primer_apellido`, `segundo_apellido`, `telefono`, `correo`, `cod_sexo`, `fecha_nacimiento`, `direccion`, `fecha_creacion`) VALUES
 (1, 1001030201, 'harold', 'andres', 'ortega', 'teheran', '3205113702', 'harold@gmail.com', 1, '2003-06-12', 'fundadores', '2024-02-13'),
-(33, 987348398, 'braider', 'dario', 'urango', 'cabrera', '8768768768', 'dario@gmail.com', 1, '2024-02-19', 'rio grande', '2024-02-21'),
-(35, 12345, 'dery', 'andres', 'torrez', 'garcia', '5645', 'dery@gmail.com', 2, '2024-02-19', 'fundadores', '2024-02-21'),
-(52, 3453453, 'dario', '', 'urango', '', '097897', 'derbrai@gmail.com', 1, '2024-02-15', 'rio grande', '2024-02-28'),
-(65, 21423423, 'manuel', '', 'gutierrez', '', '342626358', 'manuel@gmail.com', 1, '2003-06-12', 'apartado', '2024-03-11'),
-(66, 4532352, 'manolo', '', 'mendez', '', '323235654', 'manolo@gmail.com', 1, '2005-07-05', 'poray', '2024-03-05'),
-(69, 43443645, 'manolito', '', 'mendez', '', '343542232', 'manolito@gmail.com', 1, '1998-06-05', 'poray', '2024-03-05');
+(225151063, 2147483647, 'juan', 'jose', 'piedrahita', 'parra', '3138608432', 'denyamanx133@gmail.com', 1, '2003-02-11', 'asadwadawd', '2024-03-27'),
+(272384277, 2147483647, 'jose', '', 'parra', 'parra', '324234242323', 'jfkefioee@fg.com', 1, '2000-02-11', 'awdwd', '2024-03-27');
 
 -- --------------------------------------------------------
 
@@ -146,8 +213,15 @@ CREATE TABLE `tbl_producto` (
 --
 
 INSERT INTO `tbl_producto` (`codigo_producto`, `nombre`, `descripcion`, `precio`, `stock`, `video`, `fecha_registro`) VALUES
-(1, 'arroz', 'programar es como hacer arroz', 5000000000, 10, 'hola mundo!!!', '2024-02-13'),
-(767588678, 'aguacate', 'el aguacate es una fruta', 78576, 6899, 'khfydfghjh', '2024-02-21');
+(1, 'Arroz', 'Nos enorgullece presentar nuestro arroz, cultivado con cuidado y dedicación en los fértiles campos de la región del Darién. Nuestro arroz es el resultado de prácticas agrícolas sostenibles, garantizando no solo un producto de alta calidad sino también el respeto por el medio ambiente.', 5000, 691, 'f54d4227b8354a7ec7a919984ba0082d_Arroz.mp4', '2024-02-13'),
+(321, 'Pollos', 'Nos enorgullece presentar nuestro pollo, criado con esmero y dedicación en los amplios campos de nuestra región. Nuestro pollo es el resultado de prácticas avícolas sostenibles, garantizando no solo un producto de alta calidad, sino también el respeto por el bienestar de las aves y el cuidado del medio ambiente. Con orgullo, ofrecemos a su mesa pollo fresco y sabroso, criados de manera responsable y comprometida con la excelencia y la sostenibilidad.', 8000, 30, '8e585d9f300ba9220372f4b586c3aaed_Pollos.mp4', '2024-03-27'),
+(879, 'Cerdos', 'Con satisfacción, introducimos nuestro cerdo, criado con esmero y dedicación en los prósperos terrenos de nuestra región. Nuestro cerdo es el producto de prácticas porcinas sostenibles, asegurando no solo una carne de alta calidad, sino también el respeto por el bienestar animal y la preservación del entorno. Con orgullo, ofrecemos a su mesa carne de cerdo fresca y sabrosa, criada de manera responsable y comprometida con la excelencia y la sostenibilidad.', 6700, 12, '', '2024-03-27'),
+(2231, 'Platano', 'Con entusiasmo, les presentamos nuestros plátanos, cultivados con esmero y dedicación en los prósperos campos de nuestra región. Nuestros plátanos son el resultado de prácticas agrícolas sostenibles, garantizando no solo un fruto de alta calidad, sino también el respeto por el medio ambiente. Con orgullo, ofrecemos a su mesa plátanos frescos y deliciosos, cultivados de manera responsable y comprometida con la excelencia y la sostenibilidad en la producción de esta fruta versátil y nutritiva.', 5000, 38, '', '2024-03-27'),
+(4432, 'Yuca', 'Con satisfacción, presentamos nuestra yuca, cultivada con esmero y dedicación en los fértiles suelos de nuestra región. Nuestra yuca es el fruto de prácticas agrícolas sostenibles, garantizando no solo un tubérculo de alta calidad, sino también el respeto por el medio ambiente. Con orgullo, ofrecemos a su mesa yuca fresca y nutritiva, cultivada de manera responsable y comprometida con la excelencia y la sostenibilidad en la agricultura.', 1000, 100, '', '2024-03-27'),
+(5678, 'Gallinas criollas', 'Nos complace introducir nuestros huevos de gallinas criollas, cuidadosamente producidos con dedicación en los prósperos corrales de nuestra región. Nuestros huevos son el fruto de prácticas avícolas sostenibles, asegurando no solo un producto de excelente calidad, sino también el respeto por el bienestar de las aves y la preservación del entorno. Con orgullo, traemos a su mesa huevos frescos y nutritivos, cultivados en armonía con la naturaleza y comprometidos con la calidad y sostenibilidad.', 3000, 45, '87f309c20e6e36de6d3523a94e4fcb20_Gallinas criollas.mp4', '2024-03-27'),
+(9876, 'Ponedoras', 'Nos complace presentar nuestros huevos de gallinas ponedoras, producidos con cuidado y dedicación en los espacios amplios de nuestra región. Nuestros huevos son el resultado de prácticas avícolas sostenibles, garantizando no solo un producto de alta calidad, sino también el respeto por el bienestar de las aves y la preservación del entorno. Con orgullo, ofrecemos a su mesa huevos frescos y nutritivos, cultivados de manera responsable y comprometida con la excelencia y la sostenibilidad.', 2500, 60, '', '2024-03-27'),
+(9987, 'Peces', 'Nos complace presentar nuestros peces, criados con cuidado y dedicación en las aguas prístinas de nuestra región. Nuestros peces son el resultado de prácticas acuícolas sostenibles, garantizando no solo productos pesqueros de alta calidad, sino también el respeto por la salud de los ecosistemas acuáticos. Con orgullo, ofrecemos a su mesa pescado fresco y nutritivo, cultivado de manera responsable y comprometida con la excelencia y la sostenibilidad en la pesca.', 4000, 150, '', '2024-03-27'),
+(45675, 'Ganado', 'Nos enorgullece presentar nuestro ganado , criado con esmero y dedicación en los extensos pastizales de nuestra región. Nuestro ganado es el resultado de prácticas ganaderas sostenibles, garantizando no solo productos cárnicos de alta calidad, sino también el respeto por el bienestar de los animales y la preservación del entorno. Con orgullo, ofrecemos a su mesa carne fresca y sabrosa, Criado de manera responsable y comprometida con la excelencia y la sostenibilidad en la producción ganadera.', 5000000, 10, '', '2024-03-27');
 
 -- --------------------------------------------------------
 
@@ -170,11 +244,7 @@ CREATE TABLE `tbl_proveedor` (
 --
 
 INSERT INTO `tbl_proveedor` (`nit`, `nombre_razonsocial`, `telefono`, `correo`, `nom_per_contacto`, `tel_contacto`, `correo_contacto`) VALUES
-('2423543-4', 'agrocosecha', '3132234325', 'agro@gmail.com', 'darwin', '345465', 'darwin@gmail.com'),
-('32422453453', 'proveedor', '3121342342', 'proveedor@gmail.com', 'juan', '323434238', 'juan@gmail.com'),
-('32482934', 'helados h', '5371365578', 'heladosH@gmail.com', 'harold', '6326327678', 'harold@gmail.com'),
-('3264263-4357', 'darwinianos', '3762548997', 'darwinianos@gmail.com', 'miguel', '3726823768', 'miguel@gmail.com'),
-('95548-8', 'juan  jose ', '3138608446', 'juan@gmail.com', 'jose', '31389634', 'jose@gmail.com');
+('12643-6', 'agro', '3242342343', 'juan@gmail.com', 'jjpp', '1233124234', 'jjawdwd@g.com');
 
 -- --------------------------------------------------------
 
@@ -193,9 +263,7 @@ CREATE TABLE `tbl_prov_prod` (
 --
 
 INSERT INTO `tbl_prov_prod` (`codigo`, `nit_proveedor`, `cod_producto`) VALUES
-(1, '2423543-4', 1),
-(2, '3264263-4357', 767588678),
-(5, '2423543-4', 767588678);
+(11, '12643-6', 5678);
 
 -- --------------------------------------------------------
 
@@ -218,9 +286,13 @@ CREATE TABLE `tbl_servicio` (
 --
 
 INSERT INTO `tbl_servicio` (`codigo_servicio`, `nombre`, `descripcion`, `precio`, `duracion`, `fecha_registro`, `cod_tipo_servicio`) VALUES
-(57567, 'fdfsdg', 'dffdhfhgfdg', 345, 45, '2024-02-27', 2),
-(877687, 'jhgjhgjk', 'kugkjhvgvh', 78009, 89, '2024-02-21', 1),
-(5645654, 'juan jose', 'juanadsjsiuj', 94789, 98, '2024-03-13', 2);
+(987, 'Fumigación', 'Con gran satisfacción, nos complace presentar nuestros servicios personalizados de fumigación, diseñados para brindar soluciones efectivas y seguras en el control de plagas, adaptados a las necesidades específicas de cada cliente. Comprometidos con la calidad y la responsabilidad ambiental, nuestro equipo de expertos utiliza métodos cuidadosamente seleccionados para garantizar un manejo eficiente de las situaciones, respetando tanto la salud humana como el equilibrio de los ecosistemas.', 10000, 45, '2024-03-27', 2),
+(2345, 'Asesorias', 'Con gran entusiasmo, presentamos nuestro servicio de asesoría agrícola especializada. Nuestro equipo de expertos está dedicado a proporcionarle orientación precisa y personalizada para potenciar el rendimiento y la eficiencia de sus cultivos. A través de nuestras asesorías agrícolas, abordamos una variedad de aspectos, desde la selección de cultivos hasta la implementación de prácticas agronómicas avanzadas.', 10000, 5, '2024-03-27', 2),
+(2421, 'Abono', 'Con gran satisfacción, les presentamos nuestros servicios de alquiler de equipos para fertilización, diseñados para ofrecer soluciones efectivas y sostenibles en el enriquecimiento del suelo. Comprometidos con la calidad y la responsabilidad ambiental, nuestros equipos son cuidadosamente seleccionados para garantizar un manejo eficiente de las prácticas agrícolas, respetando tanto la salud del suelo como la preservación del equilibrio ecológico.', 4000, 5, '2024-03-27', 1),
+(3452, 'Fumigación', 'Con gran satisfacción, les presentamos nuestros servicios de alquiler de equipos de fumigación, diseñados para brindar soluciones efectivas y seguras en el control de plagas. Comprometidos con la calidad y la responsabilidad ambiental, nuestros equipos son seleccionados cuidadosamente para garantizar un manejo eficiente de las situaciones, respetando tanto la salud humana como el equilibrio de los ecosistemas.', 5000, 4, '2024-03-27', 1),
+(3456, 'Controles', 'Con gran satisfacción, presentamos nuestros servicios de control personalizados, diseñados para ofrecer soluciones efectivas y seguras adaptadas a sus necesidades específicas. En nuestro enfoque integral, nos comprometemos a proporcionar controles especializados.', 300, 34, '2024-03-27', 2),
+(9983, 'Preparación de tierras', 'Con gran entusiasmo, presentamos nuestro servicio especializado en la preparación de tierra, enfocado en potenciar la salud y fertilidad de su suelo. Nuestra oferta está meticulosamente diseñada para optimizar las condiciones necesarias que favorecen un crecimiento robusto de sus cultivos.', 3000, 45, '2024-03-27', 2),
+(456423, 'Abono', 'Con gran satisfacción, les presentamos nuestro servicio exclusivo de abono, diseñado para optimizar la salud y la fertilidad de su suelo. Comprometidos con la excelencia y la responsabilidad ambiental, nuestra oferta de abono está formulada cuidadosamente para proporcionar los nutrientes esenciales que promueven un crecimiento vigoroso y sostenible de sus plantas.', 3000, 12, '2024-03-27', 2);
 
 -- --------------------------------------------------------
 
@@ -301,16 +373,9 @@ CREATE TABLE `tbl_usuario` (
 
 INSERT INTO `tbl_usuario` (`codigo_usuario`, `usuario`, `contrasena`, `cod_persona`, `cod_tipo_usuario`, `nit_proveedor`) VALUES
 (5, 'Harold', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 1, NULL),
-(31, 'agrocosecha', '43cfb601f7ce3675c2361cb578cb0d2b6f109adc', NULL, 3, '2423543-4'),
-(33, 'jose', '3e8306d204cb86f1ecd67c5f820c8ccf19090088', NULL, 3, '95548-8'),
-(43, 'dario', '352ec802e20730b5bf7bd240a4b58a822a472a27', 33, 2, NULL),
-(45, 'dery', '7cf8cc32538cf4e7a78dc764aebf0aaf2a0e3045', 35, 2, NULL),
-(67, 'derbrai', '797615f36867ec6826c39e19f95e67f648dec093', 52, 1, NULL),
-(73, 'manolo', '0d18e2b6d68973f0f02c17c97e4765f716eca440', 66, 2, NULL),
-(86, 'heladosH', 'heladosh', NULL, 3, '32482934'),
-(87, 'holaproveedor', '123456', NULL, 3, '32422453453'),
-(92, 'manuel150', '123', 65, 2, NULL),
-(117, 'darwinianos', '8cb2237d0679ca88db6464eac60da96345513964', NULL, 3, '3264263-4357');
+(129, 'cliente', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 225151063, 2, NULL),
+(130, 'proveedor', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', NULL, 3, '12643-6'),
+(131, 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 272384277, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -319,7 +384,7 @@ INSERT INTO `tbl_usuario` (`codigo_usuario`, `usuario`, `contrasena`, `cod_perso
 --
 
 CREATE TABLE `tbl_venta` (
-  `codigo_venta` int(11) NOT NULL,
+  `ticket` int(11) NOT NULL,
   `fecha_venta` date NOT NULL,
   `direccion` varchar(50) NOT NULL,
   `sub_total` float NOT NULL,
@@ -332,8 +397,11 @@ CREATE TABLE `tbl_venta` (
 -- Volcado de datos para la tabla `tbl_venta`
 --
 
-INSERT INTO `tbl_venta` (`codigo_venta`, `fecha_venta`, `direccion`, `sub_total`, `total_venta`, `iva`, `cod_persona`) VALUES
-(12, '2024-02-13', 'carepa', 0, 0, 0, 1);
+INSERT INTO `tbl_venta` (`ticket`, `fecha_venta`, `direccion`, `sub_total`, `total_venta`, `iva`, `cod_persona`) VALUES
+(12, '2024-02-13', 'carepa', 0, 0, 0, 1),
+(29443, '2024-03-28', 'asadwadawd', 25000, 28000, 3000, 225151063),
+(43973, '2024-03-28', 'asadwadawd', 36700, 41104, 4404, 225151063),
+(45916, '2024-03-28', 'asadwadawd', 25000, 28000, 3000, 225151063);
 
 --
 -- Índices para tablas volcadas
@@ -343,7 +411,7 @@ INSERT INTO `tbl_venta` (`codigo_venta`, `fecha_venta`, `direccion`, `sub_total`
 -- Indices de la tabla `tbl_detalle`
 --
 ALTER TABLE `tbl_detalle`
-  ADD PRIMARY KEY (`num_ticket`),
+  ADD PRIMARY KEY (`codigo_detalle`),
   ADD KEY `cod_producto` (`cod_producto`),
   ADD KEY `cod_venta` (`cod_venta`);
 
@@ -436,7 +504,7 @@ ALTER TABLE `tbl_usuario`
 -- Indices de la tabla `tbl_venta`
 --
 ALTER TABLE `tbl_venta`
-  ADD PRIMARY KEY (`codigo_venta`),
+  ADD PRIMARY KEY (`ticket`),
   ADD KEY `cod_persona` (`cod_persona`);
 
 --
@@ -447,13 +515,13 @@ ALTER TABLE `tbl_venta`
 -- AUTO_INCREMENT de la tabla `tbl_detalle`
 --
 ALTER TABLE `tbl_detalle`
-  MODIFY `num_ticket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12345;
+  MODIFY `codigo_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12349;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_imagen`
 --
 ALTER TABLE `tbl_imagen`
-  MODIFY `codigo_imagen` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `codigo_imagen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=291;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_persona`
@@ -477,13 +545,13 @@ ALTER TABLE `tbl_per_ser`
 -- AUTO_INCREMENT de la tabla `tbl_producto`
 --
 ALTER TABLE `tbl_producto`
-  MODIFY `codigo_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=767588679;
+  MODIFY `codigo_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483648;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_prov_prod`
 --
 ALTER TABLE `tbl_prov_prod`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_servicio`
@@ -513,13 +581,13 @@ ALTER TABLE `tbl_tipo_usuario`
 -- AUTO_INCREMENT de la tabla `tbl_usuario`
 --
 ALTER TABLE `tbl_usuario`
-  MODIFY `codigo_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+  MODIFY `codigo_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_venta`
 --
 ALTER TABLE `tbl_venta`
-  MODIFY `codigo_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `ticket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45917;
 
 --
 -- Restricciones para tablas volcadas
@@ -530,7 +598,7 @@ ALTER TABLE `tbl_venta`
 --
 ALTER TABLE `tbl_detalle`
   ADD CONSTRAINT `tbl_detalle_ibfk_1` FOREIGN KEY (`cod_producto`) REFERENCES `tbl_producto` (`codigo_producto`),
-  ADD CONSTRAINT `tbl_detalle_ibfk_2` FOREIGN KEY (`cod_venta`) REFERENCES `tbl_venta` (`codigo_venta`);
+  ADD CONSTRAINT `tbl_detalle_ibfk_2` FOREIGN KEY (`cod_venta`) REFERENCES `tbl_venta` (`ticket`);
 
 --
 -- Filtros para la tabla `tbl_imagen`
