@@ -145,16 +145,25 @@ if(isset($_POST['btnAccion'])){
                     $stmt->bind_param("dddii", $productoCarrito['precio'], $productoCarrito['cantidad'], $subtotal_producto, $cod_producto, $codigo_venta);
                     $stmt->execute();
                 }
+                    $_SESSION['num_ticket'] = $num_ticket; // Asigna el número de ticket generado
+                    $_SESSION['fecha_venta'] = date('Y-m-d'); // Guarda la fecha actual de la venta
+                    $_SESSION['direccion'] = $direccion; // Guarda la dirección de envío
+                    $_SESSION['productos_comprados'] = $_SESSION['CARRITO']; // Guarda los productos comprados
+                    $_SESSION['total_venta'] = $total; // Guarda el total de la venta
                 unset($_SESSION['CARRITO']);
                 echo '<script>
-                Swal.fire({
-                    title: "La compra ha sido realizada",
-                    text: "",
-                    icon: "info",
-                    timer: 8000,
-                    timerProgressBar: true,
-                    backdrop: false
-                })
+                    Swal.fire({
+                        title: "La compra ha sido realizada",
+                        text: "",
+                        icon: "info",
+                        timer: 8000,
+                        timerProgressBar: true,
+                        backdrop: false
+                    }).then(function() {
+                        setTimeout(function() {
+                            window.location.href = "' . SERVERURL . 'ticket/";
+                        }, 1000); // Espera 3 segundos antes de redireccionar
+                    });
                 </script>';
             } else {
                 $mensaje = "<script>alert('Algo ha salido mal');</script>";

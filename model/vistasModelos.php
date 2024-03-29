@@ -32,6 +32,8 @@ class vistasModelos
             $contenido = "registrarse";
         }elseif ($vistas == "checkout") {
             $contenido = "checkout";
+        }elseif ($vistas == "ticket"){
+            $contenido = "ticket";   
         }else{
             $contenido = "404";
         }
