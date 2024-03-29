@@ -1,4 +1,7 @@
 <!-- //! Segundo navbar, MENU de opciones -->
+<?php
+    include "config\coneccion_tabla.php";
+?>
 <nav class="navbar navbar-expand-lg navbar-light shadow">
     <div class="container d-flex justify-content-between align-items-center">
         <div>
@@ -40,6 +43,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo SERVERURL;?>contactanos/">Contactanos</a>
                     </li>
+                    <?php
+                        if (isset($_SESSION['tipo_usuario_spm']) && $_SESSION['tipo_usuario_spm'] == "2"){ ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?php echo SERVERURL;?>checkout/">Carrito(
+                                    <?php echo (empty($_SESSION['CARRITO']))?0:count($_SESSION['CARRITO']);?>)    
+                                </a>
+                            </li>
+                    <?php } ?>
                 </ul>
             </div>
 
@@ -85,24 +96,4 @@
         </div>
     </div>
 </nav>
-<script>
-    function addProducto(id, token) {
-        let url = 'clases/carrito.php';
-        let formData = new FormData();
-        formData.append('busqueda', id);
-        formData.append('token', token);
-
-        fetch(url, {
-                method: 'POST',
-                body: formData,
-                mode: 'cors'
-            }).then(response => response.json())
-            .then(data => {
-                if (data.ok) {
-                    let elemento = document.getElementById("num_cart")
-                    elemento.innerHTML = data.numero
-                }
-            })
-    }
-    </script>
 <?php include "./view/inc/LogOut.php"; ?>

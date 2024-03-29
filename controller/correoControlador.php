@@ -167,7 +167,7 @@ function enviar_mensaje_masivo($request, $conn)
                 }
                 echo '<script>
                 Swal.fire({
-                    title: "Mensaje enviado. Pronto te responderemos",
+                    title: "Mensaje enviado a los clientes.",
                     text: "",
                     icon: "success",
                     timer: 4000,

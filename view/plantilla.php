@@ -20,7 +20,7 @@ session_start(['name' => 'SPM']);
     $IV = new vistasControlador();
     $vistas = $IV->obtener_vistas_controlador();
 
-    if ($vistas == "contactanos" || $vistas == "home-agro" || $vistas == "404" || $vistas == "login" || $vistas == "quienes-somos" || $vistas == "productos-servicios" || $vistas == "registrarse" || $vistas == "checkout") {
+    if ($vistas == "contactanos" || $vistas == "home-agro" || $vistas == "404" || $vistas == "login" || $vistas == "quienes-somos" || $vistas == "productos-servicios" || $vistas == "registrarse" || $vistas == "checkout" || $vistas == "ticket") {
         require_once "./view/contenidos/" . $vistas . "-view.php";
     } else {
         $pagina = explode("/", $_GET['views']);

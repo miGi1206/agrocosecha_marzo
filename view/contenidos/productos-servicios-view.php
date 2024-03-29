@@ -76,7 +76,10 @@
     }
     </style>
 
-    <?php include "config\coneccion_tabla.php";?>
+    <?php 
+        include "config\coneccion_tabla.php";
+        include "funciones\carrito.php";
+    ?>
     <?php
 $foto = array(); // Inicializa $foto como un array vacío
 
@@ -231,7 +234,18 @@ elseif (isset($_GET['busqueda3'])) {
                                     <?php
                                     if (isset($_SESSION['tipo_usuario_spm']) && $_SESSION['tipo_usuario_spm'] == "2") {
                                         echo "<p><b>Precio: $". number_format($row['precio'], 2, ',', '.') . "</b></p>";
-                                        echo "<p><b>Stock: ". $row['stock'] . "</b></p>";
+                                        echo "<p><b>Stock: ". $row['stock'] . "</b></p>"; ?>
+                                            <form action="" method="POST">
+                                                <input type="hidden" name="codigo_producto" id="codigo_producto" value="<?php echo $row['codigo_producto']; ?>">
+                                                <input type="hidden" name="nombre" id="nombre" value="<?php echo $row['nombre']; ?>">
+                                                <input type="hidden" name="precio" id="precio" value="<?php echo $row['precio']; ?>">
+                                                <input type="hidden" name="cantidad" id="cantidad" value="<?php echo 1; ?>">
+
+                                                <button class="btn btn-primary" name="btnAccion" value="Agregar" type="submit">
+                                                    Agregar al carrito
+                                                </button>
+                                            </form>
+                                    <?php
                                     }
                                     if (isset($_SESSION['tipo_usuario_spm']) && $_SESSION['tipo_usuario_spm'] == "3" && isset($_SESSION['cod_prod_prov_spm']) && $_SESSION['cod_prod_prov_spm'] == $busqueda) {
                                         $sql_stock = "SELECT * 
@@ -245,7 +259,7 @@ elseif (isset($_GET['busqueda3'])) {
 
                                     <h6>Descripción</h6>
                                     <p><?= $row['descripcion']?></p>
-
+                                    
                                     <?php
                                     }
                                 }elseif (isset($_GET['busqueda2'])) {
