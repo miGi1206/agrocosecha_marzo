@@ -26,9 +26,9 @@
 </head>
 
 <body>
-    <?php include "config\coneccion_tabla.php";?>
-    <?php include "funciones\carrito.php";?>
-    <?php include "funciones\generar_pdf.php";?>
+    <?php include_once "config\coneccion_tabla.php";?>
+    <?php include_once "funciones\carrito.php";?>
+    <?php include_once "funciones\generar_pdf.php";?>
     <style>
         .contenido-fijo {
             position: fixed;
@@ -63,7 +63,6 @@
         <!-- Header -->
         <?php include "view/inc/navbar-superior.php";?>
         <?php include "view/inc/navbar_menu.php";?>
-        <?php include "funciones\carrito.php";?>
         <?php include "funciones\generar_pdf.php";?>
         <!-- Close Header -->
     </div>
