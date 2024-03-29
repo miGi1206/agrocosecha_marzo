@@ -1,6 +1,6 @@
 <nav class="container pb-5 bg-light" id="container_nav">
 
-    <h5 class="h4 text-success" style="color:#28a745;" id="h5">Productos</h5>
+    <h5 class="h4 text-success" style="color:#28a745;  text-align: center;" id="h5">Productos</h5>
 
     <ul id="container_ul">
         <form action="" method="GET">
@@ -25,7 +25,7 @@
         </form>
     </ul>
 
-    <h5 class="h4 text-success" style="color:#28a745;" id="h5">Alquiler</h5>
+    <h5 class="h4 text-success" style="color:#28a745;  text-align: center;" id="h5">Alquiler</h5>
 
     <ul id="container_ul">
         <form action="" method="GET">
@@ -51,7 +51,7 @@
         </form>
     </ul>
 
-    <h5 class="h4 text-success" style="color:#28a745;" id="h5">Servicios</h5>
+    <h5 class="h4 text-success" style="color:#28a745;  text-align: center;" id="h5">Servicios</h5>
 
     <ul id="container_ul">
         <form action="" method="GET">

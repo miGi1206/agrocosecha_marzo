@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-PG3wSCi3awfYiZM6dfOZNPPwNWSK5rq1fTZ8ds5XXRTGu8+5G8rxB3q0FQz22iQV+eYgSbVTFzGyC+7f7t6HEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 
@@ -135,6 +136,22 @@ elseif (isset($_GET['busqueda3'])) {
             margin-top: 15%;
         }
     }
+    
+.submit {
+	background-color: #3aaa3c;
+	color: #fff;
+	padding: 1px;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	font-size: 1em;
+	width: 25%;
+}
+
+.submit:hover {
+	background-color: #388e38;
+	transform: scale(1.05);
+}
     </style>
     <div class="contenido-fijo">
         <!-- Header -->
@@ -241,8 +258,8 @@ elseif (isset($_GET['busqueda3'])) {
                                                 <input type="hidden" name="precio" id="precio" value="<?php echo $row['precio']; ?>">
                                                 <input type="hidden" name="cantidad" id="cantidad" value="<?php echo 1; ?>">
 
-                                                <button class="btn btn-primary" name="btnAccion" value="Agregar" type="submit">
-                                                    Agregar al carrito
+                                                <button class="submit" name="btnAccion" value="Agregar" type="submit">
+                                                <i class="fas fa-shopping-cart"></i> 
                                                 </button>
                                             </form>
                                     <?php
