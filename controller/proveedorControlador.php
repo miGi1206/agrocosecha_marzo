@@ -16,7 +16,7 @@ class proveedorControlador extends proveedorModelo
         $razonsocial = mainModel::limpiar_cadena($_POST['txtRazonSocial_ins']);
         $telefono = mainModel::limpiar_cadena($_POST['txtTelefono_ins']);
         $email = mainModel::limpiar_cadena($_POST['txtEmail_ins']);
-        $productoVinculado= mainModel::limpiar_cadena($_POST['txtProductoVinculado_ins']);
+        $productoVinculado= mainModel::limpiar_cadena($_POST['txtIDpersona_ins']);
         $personaContacto = mainModel::limpiar_cadena($_POST['txtPersonaContacto_ins']);
         $telefonoContacto = mainModel::limpiar_cadena($_POST['txtTelefonoContacto_ins']);
         $emailContacto = mainModel::limpiar_cadena($_POST['txtEmailContacto_ins']);
@@ -402,6 +402,7 @@ class proveedorControlador extends proveedorModelo
         $personaContacto = mainModel::limpiar_cadena($_POST['updatePersonaContacto']);
         $telefonoContacto = mainModel::limpiar_cadena($_POST['updateTelefonoContacto']);
         $emailContacto = mainModel::limpiar_cadena($_POST['updateCorreoContacto']);
+        $productoVinculado = mainModel::limpiar_cadena($_POST['updateProductoVinculado']);
 
         /* Verificando integridad de los datos */
         if ($nit == "" || $razonsocial == "" || $telefono == "" || $email == ""  || $personaContacto == ""
@@ -497,6 +498,12 @@ class proveedorControlador extends proveedorModelo
             "correo_contacto"        => $emailContacto,
             "ID"            => $nit_primary,
         ];
+
+        $datos_prov_prod_up = [
+            "nit_proveedor" => $nit,
+            "cod_producto" => $productoVinculado,
+        ];
+
         if (proveedorModelo::actualizar_proveedor_modelo($datos_ins_up)) {
             $alerta = [
                 "Alerta" => "recargar",
@@ -512,6 +519,8 @@ class proveedorControlador extends proveedorModelo
                 "Tipo" => "error"
             ];
         }
+        
+
         echo json_encode($alerta);
         exit();
     }/*------------------ FIN ACTUALIZAR PROVEEDOR -----------------------*/

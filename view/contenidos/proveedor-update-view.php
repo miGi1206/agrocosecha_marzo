@@ -84,15 +84,17 @@ $productoVinculado = $ins_sexo_usuario->listar_producto();
                                     </div>
 
                                     <div class="form-group col-md-4 mt-3">
-                                        <label class="control-label">Sexo <span style="color:red;">*</span></label>
+                                        <label class="control-label">Producto <span style="color:red;">*</span></label>
                                         <div class="dropdown bootstrap-select form-control"
                                             style="border: 1px solid #ced4da !important; border-radius: 4px !important;">
-                                            <select class="form-control selectpicker" data-live-search="true"
-                                                id="input-select-producto" name="updateProductoVinculado" required>
+                                            <select class="form-control selectpicker" data-live-search="true" id="input-select-producto" name="updateProductoVinculado" required>
                                                 <?php foreach ($productoVinculado as $filaP) :
-                                                    echo '<option value="' . $filaP['codigo_producto'] . '">' . $filaP['codigo_producto'] . ' - '. $filaP['nombre'] . '</option>';
+                                                    // Verificar si el producto actual es el mismo que el producto vinculado en la base de datos
+                                                    $selected = ($filaP['codigo_producto'] == $campos['cod_producto']) ? 'selected' : '';
+                                                    echo '<option value="' . $filaP['codigo_producto'] . '" ' . $selected . '>' . $filaP['codigo_producto'] . ' - ' . $filaP['nombre'] . '</option>';
                                                 endforeach; ?>
                                             </select>
+
                                         </div>
 
                                     </div>

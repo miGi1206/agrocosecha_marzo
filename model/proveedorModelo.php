@@ -94,15 +94,15 @@ class proveedorModelo extends mainModel
         return $sql;
     }
 
-    // protected static function actualizar_prov_prod($datos_prov_prod)
-    // {
-    //     $sql = mainModel::conectar()->prepare("UPDATE tbl_prov_prod SET nit_proveedor=:nit_proveedor,cod_producto=:cod_producto 
-    //     WHERE nit=:nit");
-    //     $sql->bindParam(":nit_proveedor",$datos_prov_prod['nit_proveedor']);
-    //     $sql->bindParam(":cod_producto",$datos_prov_prod['cod_producto']);
-    //     $sql->execute();
-    //     return $sql;
-    // }
+    protected static function actualizar_prov_prod($datos_prov_prod)
+    {
+        $sql = mainModel::conectar()->prepare("UPDATE tbl_prov_prod SET nit_proveedor=:nit_proveedor,cod_producto=:cod_producto 
+        WHERE nit=:nit");
+        $sql->bindParam(":nit_proveedor",$datos_prov_prod['nit_proveedor']);
+        $sql->bindParam(":cod_producto",$datos_prov_prod['cod_producto']);
+        $sql->execute();
+        return $sql;
+    }
     
     
 }
