@@ -26,9 +26,8 @@
 </head>
 
 <body>
-    <?php include "config\coneccion_tabla.php";?>
-    <?php include "funciones\carrito.php";?>
-    <?php include "funciones\generar_pdf.php";?>
+    <?php include_once "config\coneccion_tabla.php";?>
+    <?php include_once "funciones\carrito.php";?>
     <style>
         .contenido-fijo {
             position: fixed;
@@ -63,11 +62,9 @@
         <!-- Header -->
         <?php include "view/inc/navbar-superior.php";?>
         <?php include "view/inc/navbar_menu.php";?>
-        <?php include "funciones\carrito.php";?>
-        <?php include "funciones\generar_pdf.php";?>
+        <?php include "funciones\correo_venta.php";?>
         <!-- Close Header -->
     </div>
-    <?php ob_start();?>
     <body>
     <div class="super_container mt-5 pt-5">
         <div class="container mt-5 pt-5">
@@ -91,12 +88,12 @@
                         <td><strong>Productos comprados:</strong></td>
                         <td>
                             <?php foreach ($_SESSION['productos_comprados'] as $producto) : ?>
-                                <p><?php echo $producto['nombre']; ?> - Cantidad: <?php echo $producto['cantidad']; ?></p>
+                                <p><?php echo $producto['nombre']; ?> - Cantidad: <?php echo $producto['cantidad']; ?> - Precio: <?php echo $producto['precio']; ?></p>
                             <?php endforeach; ?>
                         </td>
                     </tr>
                     <tr>
-                        <td><strong>Total de la venta:</strong></td>
+                        <td><strong>Total de la venta(IVA):</strong></td>
                         <td>$<?php echo $_SESSION['total_venta']; ?></td>
                     </tr>
                 </tbody>
@@ -105,9 +102,9 @@
             <!-- Botón para descargar el PDF -->
             <!-- <a href="generar_pdf.php" class="btn btn-primary">Descargar PDF</a> -->
             <form action="" method="post">
-                <button class="btn btn-danger" 
+                <button class="btn btn-success" 
                     type="submit"
-                    name="btnPdf">Descargar PDF
+                    name="btnPdf">Validar compra
                 </button>
             </form>
         </div>
@@ -116,11 +113,5 @@
     <!-- Pie de página -->
     <?php include "view/inc/foother_home.php";?>
 </body>
-<?php 
-    $body=ob_get_clean();
-    echo $body;
-?>
-
-
 
 </html>

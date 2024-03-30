@@ -375,27 +375,6 @@ elseif (isset($_GET['busqueda3'])) {
     <script src="view/js/custom.js"></script>
     <!-- End Script -->
 
-    <!-- //TODO: Agregar al carrito -->
-    <script>
-    function addProducto(id, token) {
-        let url = 'carrito/carrito.php';
-        let formData = new FormData();
-        formData.append('busqueda', id);
-        formData.append('token', token);
-
-        fetch(url, {
-                method: 'POST',
-                body: formData,
-                mode: 'cors'
-            }).then(response => response.json())
-            .then(data => {
-                if (data.ok) {
-                    let elemento = document.getElementById("num_cart")
-                    elemento.innerHTML = data.numero
-                }
-            })
-    }
-    </script>
 </body>
 
 </html>

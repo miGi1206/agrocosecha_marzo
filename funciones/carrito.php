@@ -11,24 +11,25 @@ if(isset($_POST['btnAccion'])){
             if(is_numeric($_POST['codigo_producto'])){
                 $codigo_producto=($_POST['codigo_producto']);
             }else{
-                $mensaje.= "Ups, codigo incorrecto".$codigo_producto;
+                $mensaje.= "Ups, código incorrecto: ".$codigo_producto;
+                break;
             }
             if(is_string($_POST['nombre'])){
                 $nombre=($_POST['nombre']);
             }else{
-                $mensaje.= "Ups, nombre incorrecto".$nombre;
+                $mensaje.= "Ups, nombre incorrecto: ".$nombre;
                 break;
             }
             if(is_numeric($_POST['precio'])){
                 $precio=($_POST['precio']);
             }else{
-                $mensaje.= "Ups, precio incorrecto".$precio;
+                $mensaje.= "Ups, precio incorrecto: ".$precio;
                 break;
             }
             if(is_numeric($_POST['cantidad'])){
                 $cantidad=($_POST['cantidad']);
             }else{
-                $mensaje.= "Ups, cantidad incorrecto".$cantidad;
+                $mensaje.= "Ups, cantidad incorrecto: ".$cantidad;
                 break;
             }
 
@@ -36,53 +37,79 @@ if(isset($_POST['btnAccion'])){
             $encontrado = false;
             foreach ($_SESSION['CARRITO'] as $indice => $productoCarrito) {
                 if ($productoCarrito['codigo_producto'] == $codigo_producto) {
-                    // Si el producto está en el carrito, incrementamos la cantidad
-                    $_SESSION['CARRITO'][$indice]['cantidad'] += $cantidad;
-                    $encontrado = true;
+                    // Verificar si la cantidad en el carrito más la cantidad a agregar supera el stock disponible
+                    $stockDisponible = obtenerStockDisponible($codigo_producto);
+                    if ($stockDisponible !== false && ($productoCarrito['cantidad'] + $cantidad) > $stockDisponible) {
+                        // Mostrar mensaje de error
+                        $mensaje .= "La cantidad seleccionada supera el stock disponible para este producto.";
+                    } else {
+                        // Si el producto está en el carrito y la cantidad no supera el stock disponible, incrementamos la cantidad
+                        $_SESSION['CARRITO'][$indice]['cantidad'] += $cantidad;
+                        $encontrado = true;
+                    }
                     break;
                 }
             }
 
-            // Si el producto no está en el carrito, lo agregamos
-            if (!$encontrado) {
-                $productoCarrito = array(
-                    'codigo_producto' => $codigo_producto,
-                    'nombre' => $nombre,
-                    'precio' => $precio,
-                    'cantidad' => $cantidad
-                );
-                $_SESSION['CARRITO'][] = $productoCarrito;
+            // Si el producto no está en el carrito y la cantidad no supera el stock disponible, lo agregamos
+            if (!$encontrado && empty($mensaje)) {
+                $stockDisponible = obtenerStockDisponible($codigo_producto);
+                if ($stockDisponible !== false && $cantidad > $stockDisponible) {
+                    // Mostrar mensaje de error
+                    $mensaje .= "La cantidad seleccionada supera el stock disponible para este producto.";
+                } else {
+                    $productoCarrito = array(
+                        'codigo_producto' => $codigo_producto,
+                        'nombre' => $nombre,
+                        'precio' => $precio,
+                        'cantidad' => $cantidad
+                    );
+                    $_SESSION['CARRITO'][] = $productoCarrito;
+                }
             }
 
-            $mensaje= print_r($_SESSION,true);
+            // Si hay algún mensaje de error, mostrarlo
+            if (!empty($mensaje)) {
+                echo '<script>
+                    Swal.fire({
+                        title: "Error al agregar producto al carrito",
+                        text: "'.$mensaje.'",
+                        icon: "error",
+                        timer: 3000,
+                        timerProgressBar: true,
+                        backdrop: false
+                    });
+                </script>';
+            }
             break;
-            case 'SumarCantidad':
-                if(is_numeric($_POST['codigo_producto'])){
-                    $codigo_producto=($_POST['codigo_producto']);
-                    // Encontrar el producto en el carrito y aumentar la cantidad
-                    foreach($_SESSION['CARRITO'] as $indice=>$productoCarrito){
-                        if($productoCarrito['codigo_producto']==$codigo_producto){
-                            $_SESSION['CARRITO'][$indice]['cantidad']++;
-                            break;
-                        }
-                    }
-                }
-                break;
-
+        
             case 'RestarCantidad':
                 if(is_numeric($_POST['codigo_producto'])){
                     $codigo_producto=($_POST['codigo_producto']);
-                    // Encontrar el producto en el carrito y disminuir la cantidad
                     foreach($_SESSION['CARRITO'] as $indice=>$productoCarrito){
                         if($productoCarrito['codigo_producto']==$codigo_producto){
-                            if($_SESSION['CARRITO'][$indice]['cantidad'] > 1){
-                                $_SESSION['CARRITO'][$indice]['cantidad']--;
+                            $_SESSION['CARRITO'][$indice]['cantidad'] -= 1;
+                            if($_SESSION['CARRITO'][$indice]['cantidad'] <= 0){
+                                unset($_SESSION['CARRITO'][$indice]);
                             }
                             break;
                         }
                     }
                 }
                 break;
+            
+            case 'SumarCantidad':
+                if(is_numeric($_POST['codigo_producto'])){
+                    $codigo_producto=($_POST['codigo_producto']);
+                    foreach($_SESSION['CARRITO'] as $indice=>$productoCarrito){
+                        if($productoCarrito['codigo_producto']==$codigo_producto){
+                            $_SESSION['CARRITO'][$indice]['cantidad'] += 1;
+                            break;
+                        }
+                    }
+                }
+                break;            
+
 
 
         case 'Eliminar':
@@ -120,7 +147,7 @@ if(isset($_POST['btnAccion'])){
             foreach ($_SESSION['CARRITO'] as $productoCarrito) {
                 $subtotal += $productoCarrito['precio'] * $productoCarrito['cantidad'];
             }
-            $iva = $subtotal * 0.12;
+            $iva = $subtotal * 0.19;
             $total = $subtotal + $iva;
             $num_ticket = rand(10000, 99999);
             // Insertar la venta en la base de datos
@@ -150,26 +177,45 @@ if(isset($_POST['btnAccion'])){
                     $_SESSION['direccion'] = $direccion; // Guarda la dirección de envío
                     $_SESSION['productos_comprados'] = $_SESSION['CARRITO']; // Guarda los productos comprados
                     $_SESSION['total_venta'] = $total; // Guarda el total de la venta
-                unset($_SESSION['CARRITO']);
-                echo '<script>
-                    Swal.fire({
-                        title: "La compra ha sido realizada",
-                        text: "",
-                        icon: "info",
-                        timer: 8000,
-                        timerProgressBar: true,
-                        backdrop: false
-                    }).then(function() {
-                        setTimeout(function() {
-                            window.location.href = "' . SERVERURL . 'ticket/";
-                        }, 1000); // Espera 3 segundos antes de redireccionar
-                    });
-                </script>';
+                    unset($_SESSION['CARRITO']);
+                    echo '<script>
+                        Swal.fire({
+                            title: "Datos del carrito enviados",
+                            text: "",
+                            icon: "success",
+                            timer: 8000,
+                            timerProgressBar: true,
+                            backdrop: false
+                        }).then(function() {
+                            setTimeout(function() {
+                                window.location.href = "' . SERVERURL . 'ticket/";
+                            }, 100);
+                        });
+                    </script>';
             } else {
                 $mensaje = "<script>alert('Algo ha salido mal');</script>";
             }
         break;
         
+    }
+
+
+}
+
+function obtenerStockDisponible($codigo_producto) {
+    include "config/coneccion_tabla.php";
+    $sql = "SELECT stock FROM tbl_producto WHERE codigo_producto = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $codigo_producto);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['stock'];
+    } else {
+
+        return false;
     }
 }
 ?>
