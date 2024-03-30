@@ -147,7 +147,7 @@ if(isset($_POST['btnAccion'])){
             foreach ($_SESSION['CARRITO'] as $productoCarrito) {
                 $subtotal += $productoCarrito['precio'] * $productoCarrito['cantidad'];
             }
-            $iva = $subtotal * 0.12;
+            $iva = $subtotal * 0.19;
             $total = $subtotal + $iva;
             $num_ticket = rand(10000, 99999);
             // Insertar la venta en la base de datos

@@ -113,7 +113,7 @@ function enviarCorreoVenta($numTicket, $fechaVenta, $direccionEnvio, $productosC
         }
 
         $mensaje .= '</ul>
-                    <p><strong>Total de la venta:</strong> $' . $totalVenta . '</p>
+                    <p><strong>Total de la venta(IVA):</strong> $' . $totalVenta . '</p>
                     <div class="confirmacion">
                         <p>Su compra ha sido confirmada. Gracias por su compra.</p>
                     </div>

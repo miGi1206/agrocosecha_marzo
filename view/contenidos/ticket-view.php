@@ -93,7 +93,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><strong>Total de la venta:</strong></td>
+                        <td><strong>Total de la venta(IVA):</strong></td>
                         <td>$<?php echo $_SESSION['total_venta']; ?></td>
                     </tr>
                 </tbody>
