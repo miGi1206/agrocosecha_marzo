@@ -34,6 +34,7 @@
                 $_SESSION['segundo_apellido_spm'] = $row['segundo_apellido'];
                 $_SESSION['telefono_spm'] = $row['telefono'];
                 $_SESSION['correo_spm'] = $row['correo'];
+                $correoCliente = $_SESSION['correo_spm'];
                 $_SESSION['sexo_spm'] = $row['cod_sexo'];
                 $_SESSION['fecha_nacimiento_spm'] = $row['fecha_nacimiento'];
                 $_SESSION['direccion_spm'] = $row['direccion'];
@@ -50,7 +51,7 @@
                 $_SESSION['nit_spm'] = $row['nit'];
                 $_SESSION['nombre_razonsocial_spm'] = $row['nombre_razonsocial'];
                 $_SESSION['telefono_spm'] = $row['telefono'];
-                $_SESSION['correo_spm'] = $row['correo'];
+                $_SESSION['correoProveedor_spm'] = $row['correo'];
                 $_SESSION['nombre_contacto_spm'] = $row['nom_per_contacto'];
                 $_SESSION['telefono_contacto_spm'] = $row['tel_contacto'];
                 $_SESSION['correo_contacto_spm'] = $row['correo_contacto'];

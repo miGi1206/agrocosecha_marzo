@@ -177,21 +177,21 @@ if(isset($_POST['btnAccion'])){
                     $_SESSION['direccion'] = $direccion; // Guarda la dirección de envío
                     $_SESSION['productos_comprados'] = $_SESSION['CARRITO']; // Guarda los productos comprados
                     $_SESSION['total_venta'] = $total; // Guarda el total de la venta
-                unset($_SESSION['CARRITO']);
-                echo '<script>
-                    Swal.fire({
-                        title: "La compra ha sido realizada",
-                        text: "",
-                        icon: "info",
-                        timer: 8000,
-                        timerProgressBar: true,
-                        backdrop: false
-                    }).then(function() {
-                        setTimeout(function() {
-                            window.location.href = "' . SERVERURL . 'ticket/";
-                        }, 100);
-                    });
-                </script>';
+                    unset($_SESSION['CARRITO']);
+                    echo '<script>
+                        Swal.fire({
+                            title: "Datos del carrito enviados",
+                            text: "",
+                            icon: "success",
+                            timer: 8000,
+                            timerProgressBar: true,
+                            backdrop: false
+                        }).then(function() {
+                            setTimeout(function() {
+                                window.location.href = "' . SERVERURL . 'ticket/";
+                            }, 100);
+                        });
+                    </script>';
             } else {
                 $mensaje = "<script>alert('Algo ha salido mal');</script>";
             }
