@@ -3,6 +3,10 @@
 <?php
 $mensaje="";
 
+if (!isset($_SESSION['CARRITO'])) {
+    $_SESSION['CARRITO'] = array();
+}
+
 if(isset($_POST['btnAccion'])){
 
     switch($_POST['btnAccion']){
