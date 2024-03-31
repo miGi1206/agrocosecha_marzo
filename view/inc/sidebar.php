@@ -104,6 +104,20 @@
           </li>
         </ul>
       </li>
+      <li class="nav-item nav-item-has-children">
+        <a href="" class="collapsed dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#ddmenu_51" aria-controls="ddmenu_51" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="bi bi-currency-dollar px-2 iconos-color"></i>
+          <span class="text">Ventas</span>
+        </a>
+        <ul id="ddmenu_51" class="collapse dropdown-nav">
+          <li>
+            <a href="<?php echo SERVERURL;?>detalles/">Lista de detalles</a>
+          </li>
+          <li>
+            <a href="<?php echo SERVERURL;?>ventas/">lista de ventas</a>
+          </li>
+        </ul>
+      </li>
       <li class="nav-item">
           <a href="<?php echo SERVERURL;?>correos/" >
             <i class="bi bi-envelope-fill px-2 iconos-color"></i>

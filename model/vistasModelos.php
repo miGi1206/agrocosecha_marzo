@@ -9,7 +9,8 @@ class vistasModelos
             "usuario","usuario-list","usuario-update","usuario-search",
             "producto","producto-list","producto-update","producto-search",
             "proveedor", "proveedor-list","proveedor-search","proveedor-update",
-            "servicio","servicio-list","servicio-update","servicio-search","ver-fotos","imagenes-servicios","correos"];
+            "servicio","servicio-list","servicio-update","servicio-search","ver-fotos",
+            "imagenes-servicios","correos","detalles","ventas"];
         if (in_array($vistas, $listaPermitida)) {
             if (is_file("./view/contenidos/" . $vistas . "-view.php")) {
                 $contenido = "./view/contenidos/" . $vistas . "-view.php";
