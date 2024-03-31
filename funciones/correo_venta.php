@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Comprobar si el botón de PDF ha sido presionado
     if (isset($_POST['btnPdf'])) {
 
-        $nombreCliente = $_SESSION['primer_nombre_spm'];
+        // $nombreCliente = $_SESSION['primer_nombre_spm'];
         $correoCliente = $_SESSION['correo_spm'];
         // Almacenar los datos de la venta en variables
         $numTicket = $_SESSION['num_ticket'];
@@ -44,7 +44,7 @@ function enviarCorreoVenta($numTicket, $fechaVenta, $direccionEnvio, $productosC
 
         // Configuración del remitente y destinatario
         $mail->setFrom('trabajadoragrocosecha@gmail.com', 'trabajadoragrocosecha');
-        $mail->addAddress($_SESSION['correo_spm'], $nombreCliente); // Agrega la dirección de correo electrónico del cliente
+        $mail->addAddress($_SESSION['correo_spm'],$_SESSION['primer_nombre_spm']); // Agrega la dirección de correo electrónico del cliente
 
         // Construir el cuerpo del mensaje del correo electrónico
         $mensaje = '
