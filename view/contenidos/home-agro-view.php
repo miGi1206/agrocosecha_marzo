@@ -129,7 +129,15 @@
         </a>
     </div>
     <!-- Fin carrusel -->
-
+    <?php
+        $sql_producto_foother = "SELECT tbl_producto.codigo_producto, tbl_producto.nombre, tbl_imagen.foto AS foto
+        FROM tbl_producto
+        INNER JOIN tbl_imagen ON tbl_producto.codigo_producto = tbl_imagen.cod_producto
+        GROUP BY tbl_producto.codigo_producto
+        ORDER BY tbl_producto.codigo_producto
+        LIMIT 4";
+        $result_producto_foother = mysqli_query($conn,$sql_producto_foother);
+    ?>
     <!-- Nuestros productos -->
     <section class="container py-5">
         <div class="row text-center pt-3">
@@ -138,26 +146,18 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-6 col-md-3 p-5 mt-3">
-                <a href=""><img src="<?php echo SERVERURL; ?>view/img/arrozcirculo.png"
-                        class="rounded-circle img-fluid border"></a>
-                <h5 class="text-center mt-3 mb-3">Arroz</h5>
-            </div>
-            <div class="col-6 col-md-3 p-5 mt-3">
-                <a href=""><img src="<?php echo SERVERURL; ?>/view/img/gallinacircular.jpg"
-                        class="rounded-circle img-fluid border"></a>
-                <h2 class="h5 text-center mt-3 mb-3">Gallina</h2>
-            </div>
-            <div class="col-6 col-md-3 p-5 mt-3">
-                <a href=""><img src="<?php echo SERVERURL; ?>view/img/pesecircular.webp"
-                        class="rounded-circle img-fluid border"></a>
-                <h2 class="h5 text-center mt-3 mb-3">Peces</h2>
-            </div>
-            <div class="col-6 col-md-3 p-5 mt-3">
-                <a href=""><img src="<?php echo SERVERURL; ?>view/img/yucacircular.webp"
-                        class="rounded-circle img-fluid border"></a>
-                <h2 class="h5 text-center mt-3 mb-3">Yuca</h2>
-            </div>
+            <?php
+            while ($row_producto_foother = mysqli_fetch_assoc($result_producto_foother)){
+                echo '<div class="col-6 col-md-3 p-5 mt-3">
+                    <img src="'. SERVERURL .'view/img/img_productos/'. $row_producto_foother['foto'] .'"
+                        style="width: 170px; height: 170px; object-fit: cover; border-radius: 50%;"
+                        class="border" alt="'. $row_producto_foother['nombre'] .'">
+                    <h5 class="text-center mt-3 mb-1">'. $row_producto_foother['nombre'] .'</h5>
+                </div>';
+
+            }
+            ?>
+            
         </div>
     </section>
     <!-- Fin de nuestros productos -->
