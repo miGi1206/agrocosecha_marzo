@@ -111,7 +111,6 @@
     </div>
     
     <!-- Pie de página -->
-    <?php include "view/inc/foother_home.php";?>
 </body>
 
 </html>

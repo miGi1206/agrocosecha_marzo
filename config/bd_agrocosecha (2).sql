@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-03-2024 a las 03:38:55
+-- Tiempo de generación: 01-04-2024 a las 05:50:40
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -42,10 +42,25 @@ CREATE TABLE `tbl_detalle` (
 
 INSERT INTO `tbl_detalle` (`codigo_detalle`, `precio_unitario`, `cantidad`, `subtotal`, `cod_producto`, `cod_venta`) VALUES
 (12344, 5654, 10, 55676, 1, 12),
-(12345, 5000, 5, 25000, 1, 29443),
-(12346, 5000, 4, 20000, 1, 43973),
-(12347, 6700, 1, 6700, 879, 43973),
-(12348, 5000, 2, 10000, 2231, 43973);
+(12374, 5000, 1, 5000, 1, 18883),
+(12375, 5000, 2, 10000, 2231, 18883),
+(12376, 1000, 1, 1000, 4432, 18883),
+(12377, 5000, 3, 15000, 2231, 59174),
+(12378, 5000, 10, 50000, 1, 59174),
+(12379, 5000, 2, 10000, 1, 56877),
+(12380, 5000, 2, 10000, 2231, 56877),
+(12381, 5000, 3, 15000, 1, 69456),
+(12382, 5000, 2, 10000, 2231, 69456),
+(12383, 5000, 3, 15000, 1, 58042),
+(12384, 1000, 2, 2000, 4432, 58042),
+(12385, 2500, 3, 7500, 9876, 76704),
+(12386, 3000, 2, 6000, 5678, 76704),
+(12387, 1000, 2, 2000, 4432, 76704),
+(12388, 8000, 2, 16000, 321, 76704),
+(12389, 5000000, 2, 10000000, 45675, 50704),
+(12390, 8000, 1, 8000, 321, 50704),
+(12391, 5000, 1, 5000, 1, 45357),
+(12392, 5000, 1, 5000, 2231, 45357);
 
 --
 -- Disparadores `tbl_detalle`
@@ -136,7 +151,9 @@ INSERT INTO `tbl_imagen` (`codigo_imagen`, `foto`, `cod_servicio`, `cod_producto
 (287, 'be80e03a7cfec5098422045895914193_Asesorias.webp', 2345, NULL),
 (288, 'd23bae7f3d4e277e10a8a4018f4be99c_Preparación de tierras.webp', 9983, NULL),
 (289, 'e37a6fd36c0201e47c1d99309218328e_Preparación de tierras.webp', 9983, NULL),
-(290, 'f5b2a19c0e0df6dfa6439302a07b13ba_Preparación de tierras.webp', 9983, NULL);
+(290, 'f5b2a19c0e0df6dfa6439302a07b13ba_Preparación de tierras.webp', 9983, NULL),
+(292, '98085410bef4fc03f9cd4ee845b87180_Arroz.jpg', NULL, 1),
+(293, 'a64fdbfa60a3907a07c9d86568f2cf3e_Arroz.jpg', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -146,13 +163,13 @@ INSERT INTO `tbl_imagen` (`codigo_imagen`, `foto`, `cod_servicio`, `cod_producto
 
 CREATE TABLE `tbl_persona` (
   `codigo_persona` int(11) NOT NULL,
-  `identificacion` int(11) NOT NULL,
+  `identificacion` varchar(11) DEFAULT NULL,
   `primer_nombre` varchar(50) NOT NULL,
   `segundo_nombre` varchar(50) NOT NULL,
   `primer_apellido` varchar(50) NOT NULL,
   `segundo_apellido` varchar(50) NOT NULL,
   `telefono` varchar(15) NOT NULL,
-  `correo` varchar(30) NOT NULL,
+  `correo` varchar(50) NOT NULL,
   `cod_sexo` int(11) NOT NULL,
   `fecha_nacimiento` date NOT NULL,
   `direccion` varchar(50) NOT NULL,
@@ -164,9 +181,10 @@ CREATE TABLE `tbl_persona` (
 --
 
 INSERT INTO `tbl_persona` (`codigo_persona`, `identificacion`, `primer_nombre`, `segundo_nombre`, `primer_apellido`, `segundo_apellido`, `telefono`, `correo`, `cod_sexo`, `fecha_nacimiento`, `direccion`, `fecha_creacion`) VALUES
-(1, 1001030201, 'harold', 'andres', 'ortega', 'teheran', '3205113702', 'harold@gmail.com', 1, '2003-06-12', 'fundadores', '2024-02-13'),
-(225151063, 2147483647, 'juan', 'jose', 'piedrahita', 'parra', '3138608432', 'denyamanx133@gmail.com', 1, '2003-02-11', 'asadwadawd', '2024-03-27'),
-(272384277, 2147483647, 'jose', '', 'parra', 'parra', '324234242323', 'jfkefioee@fg.com', 1, '2000-02-11', 'awdwd', '2024-03-27');
+(1, '2332434', 'harolda', 'andres', 'ortega', 'teheran', '3205113702', 'andresteheran360@gmail.com', 1, '2003-06-12', 'fundadores', '2024-02-13'),
+(103262475, '12453748484', 'juan', '', 'piedrahita', 'parra', '3138608446', 'denyamanx133@gmail.com', 1, '2000-02-11', 'calle 96 #96-73', '2024-03-31'),
+(237107215, '3233453', 'Braider', '', 'Urango', 'Cabrera', '3116973424', 'braider200329@gmail.com', 1, '2003-07-29', 'Rio grande', '2024-03-29'),
+(549181900, '231224', 'maria', '', 'parra', '', '13452365432', 'maria@gmail.com', 2, '2003-02-11', 'adw', '2024-03-31');
 
 -- --------------------------------------------------------
 
@@ -213,15 +231,15 @@ CREATE TABLE `tbl_producto` (
 --
 
 INSERT INTO `tbl_producto` (`codigo_producto`, `nombre`, `descripcion`, `precio`, `stock`, `video`, `fecha_registro`) VALUES
-(1, 'Arroz', 'Nos enorgullece presentar nuestro arroz, cultivado con cuidado y dedicación en los fértiles campos de la región del Darién. Nuestro arroz es el resultado de prácticas agrícolas sostenibles, garantizando no solo un producto de alta calidad sino también el respeto por el medio ambiente.', 5000, 691, 'f54d4227b8354a7ec7a919984ba0082d_Arroz.mp4', '2024-02-13'),
-(321, 'Pollos', 'Nos enorgullece presentar nuestro pollo, criado con esmero y dedicación en los amplios campos de nuestra región. Nuestro pollo es el resultado de prácticas avícolas sostenibles, garantizando no solo un producto de alta calidad, sino también el respeto por el bienestar de las aves y el cuidado del medio ambiente. Con orgullo, ofrecemos a su mesa pollo fresco y sabroso, criados de manera responsable y comprometida con la excelencia y la sostenibilidad.', 8000, 30, '8e585d9f300ba9220372f4b586c3aaed_Pollos.mp4', '2024-03-27'),
-(879, 'Cerdos', 'Con satisfacción, introducimos nuestro cerdo, criado con esmero y dedicación en los prósperos terrenos de nuestra región. Nuestro cerdo es el producto de prácticas porcinas sostenibles, asegurando no solo una carne de alta calidad, sino también el respeto por el bienestar animal y la preservación del entorno. Con orgullo, ofrecemos a su mesa carne de cerdo fresca y sabrosa, criada de manera responsable y comprometida con la excelencia y la sostenibilidad.', 6700, 12, '', '2024-03-27'),
-(2231, 'Platano', 'Con entusiasmo, les presentamos nuestros plátanos, cultivados con esmero y dedicación en los prósperos campos de nuestra región. Nuestros plátanos son el resultado de prácticas agrícolas sostenibles, garantizando no solo un fruto de alta calidad, sino también el respeto por el medio ambiente. Con orgullo, ofrecemos a su mesa plátanos frescos y deliciosos, cultivados de manera responsable y comprometida con la excelencia y la sostenibilidad en la producción de esta fruta versátil y nutritiva.', 5000, 38, '', '2024-03-27'),
-(4432, 'Yuca', 'Con satisfacción, presentamos nuestra yuca, cultivada con esmero y dedicación en los fértiles suelos de nuestra región. Nuestra yuca es el fruto de prácticas agrícolas sostenibles, garantizando no solo un tubérculo de alta calidad, sino también el respeto por el medio ambiente. Con orgullo, ofrecemos a su mesa yuca fresca y nutritiva, cultivada de manera responsable y comprometida con la excelencia y la sostenibilidad en la agricultura.', 1000, 100, '', '2024-03-27'),
-(5678, 'Gallinas criollas', 'Nos complace introducir nuestros huevos de gallinas criollas, cuidadosamente producidos con dedicación en los prósperos corrales de nuestra región. Nuestros huevos son el fruto de prácticas avícolas sostenibles, asegurando no solo un producto de excelente calidad, sino también el respeto por el bienestar de las aves y la preservación del entorno. Con orgullo, traemos a su mesa huevos frescos y nutritivos, cultivados en armonía con la naturaleza y comprometidos con la calidad y sostenibilidad.', 3000, 45, '87f309c20e6e36de6d3523a94e4fcb20_Gallinas criollas.mp4', '2024-03-27'),
-(9876, 'Ponedoras', 'Nos complace presentar nuestros huevos de gallinas ponedoras, producidos con cuidado y dedicación en los espacios amplios de nuestra región. Nuestros huevos son el resultado de prácticas avícolas sostenibles, garantizando no solo un producto de alta calidad, sino también el respeto por el bienestar de las aves y la preservación del entorno. Con orgullo, ofrecemos a su mesa huevos frescos y nutritivos, cultivados de manera responsable y comprometida con la excelencia y la sostenibilidad.', 2500, 60, '', '2024-03-27'),
+(1, 'Arroz', 'Nos enorgullece presentar nuestro arroz, cultivado con cuidado y dedicación en los fértiles campos de la región del Darién. Nuestro arroz es el resultado de prácticas agrícolas sostenibles, garantizando no solo un producto de alta calidad sino también el respeto por el medio ambiente.', 5000, 655, 'f54d4227b8354a7ec7a919984ba0082d_Arroz.mp4', '2024-02-13'),
+(321, 'Pollos', 'Nos enorgullece presentar nuestro pollo, criado con esmero y dedicación en los amplios campos de nuestra región. Nuestro pollo es el resultado de prácticas avícolas sostenibles, garantizando no solo un producto de alta calidad, sino también el respeto por el bienestar de las aves y el cuidado del medio ambiente. Con orgullo, ofrecemos a su mesa pollo fresco y sabroso, criados de manera responsable y comprometida con la excelencia y la sostenibilidad.', 8000, 17, '8e585d9f300ba9220372f4b586c3aaed_Pollos.mp4', '2024-03-27'),
+(879, 'Cerdos', 'Con satisfacción, introducimos nuestro cerdo, criado con esmero y dedicación en los prósperos terrenos de nuestra región. Nuestro cerdo es el producto de prácticas porcinas sostenibles, asegurando no solo una carne de alta calidad, sino también el respeto por el bienestar animal y la preservación del entorno. Con orgullo, ofrecemos a su mesa carne de cerdo fresca y sabrosa, criada de manera responsable y comprometida con la excelencia y la sostenibilidad.', 6700, 0, '', '2024-03-27'),
+(2231, 'Platano', 'Con entusiasmo, les presentamos nuestros plátanos, cultivados con esmero y dedicación en los prósperos campos de nuestra región. Nuestros plátanos son el resultado de prácticas agrícolas sostenibles, garantizando no solo un fruto de alta calidad, sino también el respeto por el medio ambiente. Con orgullo, ofrecemos a su mesa plátanos frescos y deliciosos, cultivados de manera responsable y comprometida con la excelencia y la sostenibilidad en la producción de esta fruta versátil y nutritiva.', 5000, 24, '', '2024-03-27'),
+(4432, 'Yuca', 'Con satisfacción, presentamos nuestra yuca, cultivada con esmero y dedicación en los fértiles suelos de nuestra región. Nuestra yuca es el fruto de prácticas agrícolas sostenibles, garantizando no solo un tubérculo de alta calidad, sino también el respeto por el medio ambiente. Con orgullo, ofrecemos a su mesa yuca fresca y nutritiva, cultivada de manera responsable y comprometida con la excelencia y la sostenibilidad en la agricultura.', 1000, 78, '', '2024-03-27'),
+(5678, 'Gallinas criollas', 'Nos complace introducir nuestros huevos de gallinas criollas, cuidadosamente producidos con dedicación en los prósperos corrales de nuestra región. Nuestros huevos son el fruto de prácticas avícolas sostenibles, asegurando no solo un producto de excelente calidad, sino también el respeto por el bienestar de las aves y la preservación del entorno. Con orgullo, traemos a su mesa huevos frescos y nutritivos, cultivados en armonía con la naturaleza y comprometidos con la calidad y sostenibilidad.', 3000, 38, '87f309c20e6e36de6d3523a94e4fcb20_Gallinas criollas.mp4', '2024-03-27'),
+(9876, 'Ponedoras', 'Nos complace presentar nuestros huevos de gallinas ponedoras, producidos con cuidado y dedicación en los espacios amplios de nuestra región. Nuestros huevos son el resultado de prácticas avícolas sostenibles, garantizando no solo un producto de alta calidad, sino también el respeto por el bienestar de las aves y la preservación del entorno. Con orgullo, ofrecemos a su mesa huevos frescos y nutritivos, cultivados de manera responsable y comprometida con la excelencia y la sostenibilidad.', 2500, 57, '', '2024-03-27'),
 (9987, 'Peces', 'Nos complace presentar nuestros peces, criados con cuidado y dedicación en las aguas prístinas de nuestra región. Nuestros peces son el resultado de prácticas acuícolas sostenibles, garantizando no solo productos pesqueros de alta calidad, sino también el respeto por la salud de los ecosistemas acuáticos. Con orgullo, ofrecemos a su mesa pescado fresco y nutritivo, cultivado de manera responsable y comprometida con la excelencia y la sostenibilidad en la pesca.', 4000, 150, '', '2024-03-27'),
-(45675, 'Ganado', 'Nos enorgullece presentar nuestro ganado , criado con esmero y dedicación en los extensos pastizales de nuestra región. Nuestro ganado es el resultado de prácticas ganaderas sostenibles, garantizando no solo productos cárnicos de alta calidad, sino también el respeto por el bienestar de los animales y la preservación del entorno. Con orgullo, ofrecemos a su mesa carne fresca y sabrosa, Criado de manera responsable y comprometida con la excelencia y la sostenibilidad en la producción ganadera.', 5000000, 10, '', '2024-03-27');
+(45675, 'Ganado', 'Nos enorgullece presentar nuestro ganado , criado con esmero y dedicación en los extensos pastizales de nuestra región. Nuestro ganado es el resultado de prácticas ganaderas sostenibles, garantizando no solo productos cárnicos de alta calidad, sino también el respeto por el bienestar de los animales y la preservación del entorno. Con orgullo, ofrecemos a su mesa carne fresca y sabrosa, Criado de manera responsable y comprometida con la excelencia y la sostenibilidad en la producción ganadera.', 5000000, 0, '', '2024-03-27');
 
 -- --------------------------------------------------------
 
@@ -244,7 +262,9 @@ CREATE TABLE `tbl_proveedor` (
 --
 
 INSERT INTO `tbl_proveedor` (`nit`, `nombre_razonsocial`, `telefono`, `correo`, `nom_per_contacto`, `tel_contacto`, `correo_contacto`) VALUES
-('12643-6', 'agro', '3242342343', 'juan@gmail.com', 'jjpp', '1233124234', 'jjawdwd@g.com');
+('12643-6', 'agro', '3242342343', 'juan@gmail.com', 'jjpp', '1233124234', 'jjawdwd@g.com'),
+('35432455-6', 'piedraDH', '6542673853', 'piedra@gmail.com', 'juan', '2345345423', 'piedra@gmail.com'),
+('788888-5', 'Pasteleria', '3123126677', 'daniel@gmail.com', 'Danieel', '5557777878', 'danielsss@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -263,7 +283,9 @@ CREATE TABLE `tbl_prov_prod` (
 --
 
 INSERT INTO `tbl_prov_prod` (`codigo`, `nit_proveedor`, `cod_producto`) VALUES
-(11, '12643-6', 5678);
+(11, '12643-6', 5678),
+(12, '788888-5', 2231),
+(13, '35432455-6', 5678);
 
 -- --------------------------------------------------------
 
@@ -373,9 +395,13 @@ CREATE TABLE `tbl_usuario` (
 
 INSERT INTO `tbl_usuario` (`codigo_usuario`, `usuario`, `contrasena`, `cod_persona`, `cod_tipo_usuario`, `nit_proveedor`) VALUES
 (5, 'Harold', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 1, NULL),
-(129, 'cliente', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 225151063, 2, NULL),
 (130, 'proveedor', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', NULL, 3, '12643-6'),
-(131, 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 272384277, 1, NULL);
+(132, 'der', '7d44c33cf9a82ab9bd5300d266784504e9772177', 237107215, 2, NULL),
+(137, 'pasteleria', 'b8754cdf6e134961c719d2741295719057f7c4ec', NULL, 3, '788888-5'),
+(138, 'maria', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 549181900, 2, NULL),
+(151, 'prove', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', NULL, 3, '35432455-6'),
+(152, 'juan', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 103262475, 2, NULL),
+(153, 'haroldcli', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 1, 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -399,9 +425,14 @@ CREATE TABLE `tbl_venta` (
 
 INSERT INTO `tbl_venta` (`ticket`, `fecha_venta`, `direccion`, `sub_total`, `total_venta`, `iva`, `cod_persona`) VALUES
 (12, '2024-02-13', 'carepa', 0, 0, 0, 1),
-(29443, '2024-03-28', 'asadwadawd', 25000, 28000, 3000, 225151063),
-(43973, '2024-03-28', 'asadwadawd', 36700, 41104, 4404, 225151063),
-(45916, '2024-03-28', 'asadwadawd', 25000, 28000, 3000, 225151063);
+(18883, '2024-03-29', 'Rio grande', 16000, 17920, 1920, 237107215),
+(45357, '2024-03-31', 'calle 96 #96-73', 10000, 11900, 1900, 103262475),
+(50704, '2024-03-31', 'calle 96 #96-73', 10008000, 11909500, 1901520, 103262475),
+(56877, '2024-03-29', 'Rio grande', 20000, 22400, 2400, 237107215),
+(58042, '2024-03-29', 'Rio grande', 17000, 19040, 2040, 237107215),
+(59174, '2024-03-29', 'Rio grande', 65000, 72800, 7800, 237107215),
+(69456, '2024-03-29', 'Rio grande', 25000, 28000, 3000, 237107215),
+(76704, '2024-03-29', 'Rio grande', 31500, 35280, 3780, 237107215);
 
 --
 -- Índices para tablas volcadas
@@ -515,13 +546,13 @@ ALTER TABLE `tbl_venta`
 -- AUTO_INCREMENT de la tabla `tbl_detalle`
 --
 ALTER TABLE `tbl_detalle`
-  MODIFY `codigo_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12349;
+  MODIFY `codigo_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12393;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_imagen`
 --
 ALTER TABLE `tbl_imagen`
-  MODIFY `codigo_imagen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=291;
+  MODIFY `codigo_imagen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=294;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_persona`
@@ -551,7 +582,7 @@ ALTER TABLE `tbl_producto`
 -- AUTO_INCREMENT de la tabla `tbl_prov_prod`
 --
 ALTER TABLE `tbl_prov_prod`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_servicio`
@@ -581,13 +612,13 @@ ALTER TABLE `tbl_tipo_usuario`
 -- AUTO_INCREMENT de la tabla `tbl_usuario`
 --
 ALTER TABLE `tbl_usuario`
-  MODIFY `codigo_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
+  MODIFY `codigo_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_venta`
 --
 ALTER TABLE `tbl_venta`
-  MODIFY `ticket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45917;
+  MODIFY `ticket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96512;
 
 --
 -- Restricciones para tablas volcadas

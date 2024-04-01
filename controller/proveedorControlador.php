@@ -402,7 +402,7 @@ class proveedorControlador extends proveedorModelo
         $personaContacto = mainModel::limpiar_cadena($_POST['updatePersonaContacto']);
         $telefonoContacto = mainModel::limpiar_cadena($_POST['updateTelefonoContacto']);
         $emailContacto = mainModel::limpiar_cadena($_POST['updateCorreoContacto']);
-        $productoVinculado = mainModel::limpiar_cadena($_POST['updateProductoVinculado']);
+        // $productoVinculado = mainModel::limpiar_cadena($_POST['updateProductoVinculado']);
 
         /* Verificando integridad de los datos */
         if ($nit == "" || $razonsocial == "" || $telefono == "" || $email == ""  || $personaContacto == ""
@@ -499,10 +499,10 @@ class proveedorControlador extends proveedorModelo
             "ID"            => $nit_primary,
         ];
 
-        $datos_prov_prod_up = [
-            "nit_proveedor" => $nit,
-            "cod_producto" => $productoVinculado,
-        ];
+        // $datos_prov_prod_up = [
+        //     "nit_proveedor" => $nit,
+        //     "cod_producto" => $productoVinculado,
+        // ];
 
         if (proveedorModelo::actualizar_proveedor_modelo($datos_ins_up)) {
             $alerta = [

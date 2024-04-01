@@ -135,9 +135,6 @@
         </div>
     </div>
     
-    <!-- Start Footer -->
-    <?php include "view/inc/foother_home.php";?>
-    <!-- End Footer -->
     </div>
     
     
