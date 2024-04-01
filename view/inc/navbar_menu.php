@@ -49,7 +49,9 @@
             <?php if (isset($_SESSION['tipo_usuario_spm']) && $_SESSION['tipo_usuario_spm'] == "2"): ?>
                 <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo SERVERURL;?>checkout/">Carrito (<?php echo (empty($_SESSION['CARRITO']))?0:count($_SESSION['CARRITO']);?>)</a>
+                        <a class="nav-link" href="<?php echo SERVERURL;?>checkout/">
+                            <i class="bi bi-cart"></i>(<?php echo (empty($_SESSION['CARRITO'])) ? 0 : count($_SESSION['CARRITO']); ?>)
+                        </a>
                     </li>
                 </ul>
             <?php endif; ?>
