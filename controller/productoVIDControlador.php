@@ -49,7 +49,7 @@ class productoVIDControlador extends productoVIDModelo
         if ($agregar_productoVID->rowCount() == 1) {
             $alerta = [
                 "Alerta" => "limpiarTime",
-                "Titulo" => "Video guardadas",
+                "Titulo" => "Video guardado",
                 "Texto" => "El video se han guardado exitosamente",
                 "Tipo" => "success"
             ];
