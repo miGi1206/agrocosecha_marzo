@@ -194,8 +194,8 @@ class personasControlador extends personasModelo
         if ($agregar_personas->rowCount() == 1) {
             $alerta = [
                 "Alerta" => "limpiarTime",
-                "Titulo" => "Persona Registrado",
-                "Texto" => "La persona se ha sido registrado exitosamente.",
+                "Titulo" => "Persona Registrada",
+                "Texto" => "La persona se ha sido registrada exitosamente.",
                 "Tipo" => "success"
             ];
         }else {

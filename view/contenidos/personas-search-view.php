@@ -49,11 +49,13 @@
                                         <button type="submit" class="main-btn danger-btn-outline rounded-full btn-hover mb-3 mt-4">Eliminar</button>
                                     </form>
                                 </div>
-                                <?php
-                                require_once  "./controller/personasControlador.php";
-                                $ins_personas = new personasControlador();
-                                echo $ins_personas->paginador_personas_controlador($pagina[1], 5, "", $pagina[0], $_SESSION['busqueda_personas']);
-                                ?>
+                                <div class="table-responsive text-center">
+                                    <?php
+                                    require_once  "./controller/personasControlador.php";
+                                    $ins_personas = new personasControlador();
+                                    echo $ins_personas->paginador_personas_controlador($pagina[1], 5, "", $pagina[0], $_SESSION['busqueda_personas']);
+                                    ?>
+                                </div>
                             <?php } ?>
                         </div>
                     </div>
