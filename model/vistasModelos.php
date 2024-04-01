@@ -1,16 +1,21 @@
 <?php
 class vistasModelos
 {
+    
     protected static function obtener_vistas_modelos($vistas)
-    {
-        $listaPermitida = [
-            "votacion", "home",
-            "personas", "personas-list", "personas-update","personas-search",
-            "usuario","usuario-list","usuario-update","usuario-search",
-            "producto","producto-list","producto-update","producto-search",
-            "proveedor", "proveedor-list","proveedor-search","proveedor-update",
-            "servicio","servicio-list","servicio-update","servicio-search","ver-fotos",
-            "imagenes-servicios","correos","detalles","ventas"];
+    {   
+        $listaPermitida = [];
+        if (isset($_SESSION['tipo_usuario_spm']) && $_SESSION['tipo_usuario_spm'] == "1"){
+            $listaPermitida = [
+                "votacion", "home",
+                "personas", "personas-list", "personas-update","personas-search",
+                "usuario","usuario-list","usuario-update","usuario-search",
+                "producto","producto-list","producto-update","producto-search",
+                "proveedor", "proveedor-list","proveedor-search","proveedor-update",
+                "servicio","servicio-list","servicio-update","servicio-search","ver-fotos",
+                "imagenes-servicios","correos","detalles","ventas"];
+        }
+        
         if (in_array($vistas, $listaPermitida)) {
             if (is_file("./view/contenidos/" . $vistas . "-view.php")) {
                 $contenido = "./view/contenidos/" . $vistas . "-view.php";

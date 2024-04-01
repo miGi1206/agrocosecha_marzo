@@ -195,7 +195,7 @@ class personasControlador extends personasModelo
             $alerta = [
                 "Alerta" => "limpiarTime",
                 "Titulo" => "Persona Registrada",
-                "Texto" => "La persona se ha sido registrada exitosamente.",
+                "Texto" => "La persona ha sido registrada exitosamente.",
                 "Tipo" => "success"
             ];
         }else {
