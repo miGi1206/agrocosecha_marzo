@@ -62,3 +62,4 @@
         </div>
     </div>
 </section>
+<?php include 'vista_corp\leer+-producto.php';?>

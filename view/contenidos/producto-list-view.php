@@ -44,4 +44,4 @@
         </div>
     </div>
 </section>
-<?php include 'vista_corp\leer+-.php';?>
+<?php include 'vista_corp\leer+-producto.php';?>

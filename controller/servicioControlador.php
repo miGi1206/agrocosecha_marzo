@@ -169,36 +169,75 @@ class servicioControlador extends servicioModelo
                 $contador = $inicio + 1;
                 $reg_inicio = $inicio + 1;
                 foreach ($datos as $rows) {
-                        $tabla .=
-                            '<tr class="p">
-                            <td class="min-width">' . $contador . '</td>
-                            <td class="min-width">' . $rows['codigo_servicio'] . '</td>
-                            <td class="min-width">' . $rows['nombre'] . '</td>  
-                            <td class="min-width">' . $rows['descripcion'] . '</td>  
-                            <td class="min-width">'. MONEDA . number_format($rows['precio'],0,',','.') . '</td>  
-                            <td class="min-width">' . $rows['duracion'] . 'h</td> 
-                            <td class="min-width">' . $rows['fecha_registro'] . '</td>  
-                            <td class="min-width"><a href="' . SERVERURL . 'imagenes-servicios?id=' . $rows['codigo_servicio'] . '">Ver</a></td>
-                            <td class="min-width">' . $rows['tipo_servicio'] . '</td>
-
-                            <td class="stat"><a href="' . SERVERURL . 'servicio-update/' . mainModel::encryption($rows['codigo_servicio']) . '/"</input>
+                    $descripcion = $rows["descripcion"];
+                    $descripcion_corta = substr($descripcion, 0, 100);
+                    $descripcion_larga = substr($descripcion, 100);
+                    $tabla .= '<tr class="p">
+                                    <td class="min-width">' . $contador . '</td>
+                                    <td class="min-width">' . $rows['codigo_servicio'] . '</td>
+                                    <td class="min-width">' . $rows['nombre'] . '</td>  
+                                    <td>';
+                
+                    $tabla .= "<span codigo_servicio='resumen" . $rows['codigo_servicio'] . "'>" . $descripcion_corta . "</span>";
+                    if (strlen($descripcion) > 100) {
+                        $tabla .= "<span codigo_servicio='detalle" . $rows['codigo_servicio'] . "' style='display:none;'>" . $descripcion_larga . "</span>";
+                        $tabla .= "<button onclick='leerMas(" . $rows['codigo_servicio'] . ")' style='background-color: transparent; border:none; color:blue;'> Leer más</button>";
+                        $tabla .= "<button onclick='leerMenos(" . $rows['codigo_servicio'] . ")' style='display:none; background-color: transparent; border:none; color:blue;'> Leer menos</button>";
+                    }
+                    $tabla .= '</td> 
+                                <td class="min-width">'. MONEDA . number_format($rows['precio'],0,',','.') . '</td>  
+                                <td class="min-width">' . $rows['duracion'] . '</td>  
+                                <td class="min-width">' . $rows['fecha_registro'] . '</td>  
+                                <td class="min-width"><a href="' . SERVERURL . 'imagenes-servicios?id=' . $rows['codigo_servicio'] . '">Ver</a></td>
+                                <td class="min-width">' . $rows['tipo_servicio'] . '</td>
+                                <td class="stat"><a href="' . SERVERURL . 'servicio-update/' . mainModel::encryption($rows['codigo_servicio']) . '/"</input>
                                 <button type="submit" class="btn warnign-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     <i class="bi bi-pencil-square lead"></i>
                                 </button>
-                            </td>  
-                            <td>
-                                <form class="FormularioAjax" action="' . SERVERURL . 'ajax/servicioAjax.php" 
-                                    method="post" data-form="delete" autocomplete="off"> 		
-                                    <input type="hidden" name="idcodigo_del" value="' . mainModel::encryption($rows['codigo_servicio']) . '"></input>
-                                    <button type="submit" class="btn danger-btn">
-                                        <i class="bi bi-trash3 lead"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>';
-                    
+                                </td>  
+                                <td>
+                                    <form class="FormularioAjax" action="' . SERVERURL . 'ajax/servicioAjax.php" 
+                                        method="post" data-form="delete" autocomplete="off"> 		
+                                        <input type="hidden" name="idcodigo_del" value="' . mainModel::encryption($rows['codigo_servicio']) . '"></input>
+                                        <button type="submit" class="btn danger-btn">
+                                            <i class="bi bi-trash3 lead"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>';
                     $contador++;
                 }
+                // foreach ($datos as $rows) {
+                //         $tabla .=
+                //             '<tr class="p">
+                //             <td class="min-width">' . $contador . '</td>
+                //             <td class="min-width">' . $rows['codigo_servicio'] . '</td>
+                //             <td class="min-width">' . $rows['nombre'] . '</td>  
+                //             <td class="min-width">' . $rows['descripcion'] . '</td>  
+                //             <td class="min-width">'. MONEDA . number_format($rows['precio'],0,',','.') . '</td>  
+                //             <td class="min-width">' . $rows['duracion'] . 'h</td> 
+                //             <td class="min-width">' . $rows['fecha_registro'] . '</td>  
+                //             <td class="min-width"><a href="' . SERVERURL . 'imagenes-servicios?id=' . $rows['codigo_servicio'] . '">Ver</a></td>
+                //             <td class="min-width">' . $rows['tipo_servicio'] . '</td>
+
+                //             <td class="stat"><a href="' . SERVERURL . 'servicio-update/' . mainModel::encryption($rows['codigo_servicio']) . '/"</input>
+                //                 <button type="submit" class="btn warnign-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                //                     <i class="bi bi-pencil-square lead"></i>
+                //                 </button>
+                //             </td>  
+                //             <td>
+                //                 <form class="FormularioAjax" action="' . SERVERURL . 'ajax/servicioAjax.php" 
+                //                     method="post" data-form="delete" autocomplete="off"> 		
+                //                     <input type="hidden" name="idcodigo_del" value="' . mainModel::encryption($rows['codigo_servicio']) . '"></input>
+                //                     <button type="submit" class="btn danger-btn">
+                //                         <i class="bi bi-trash3 lead"></i>
+                //                     </button>
+                //                 </form>
+                //             </td>
+                //         </tr>';
+                    
+                //     $contador++;
+                // }
                 $reg_final = $contador - 1;
             } else {
                 if ($total >= 1) {
