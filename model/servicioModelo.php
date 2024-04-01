@@ -78,7 +78,7 @@ class servicioModelo extends mainModel
     }
     /*------------- MODELO ACTUALIZAR SERVICIO -----------------------*/
     protected static function datos_servicio_modelo($id){
-        $sql=mainModel::conectar()->prepare("SELECT * FROM tbl_servicio WHERE codigo_servicio =:id");
+        $sql=mainModel::conectar()->prepare("SELECT * FROM tbl_servicio,tbl_tipo_servicio WHERE codigo_servicio =:id AND codigo_tipo_servicio =cod_tipo_servicio");
 
         $sql->bindParam(":id",$id);
         $sql->execute();

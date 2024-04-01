@@ -38,7 +38,7 @@
                 </div>
 
                 <?php
-                $sql_servicio_foother = "SELECT tipo_servicio FROM tbl_tipo_servicio";
+                $sql_servicio_foother = "SELECT nombre FROM tbl_servicio";
                 $result_servicio_foother = mysqli_query($conn,$sql_servicio_foother);
                 ?>
                 <div class="col-md-4 pt-5">
@@ -46,7 +46,7 @@
                     <ul class="list-unstyled text-light footer-link-list">
                         <?php
                         while ($row_servicio_foother = mysqli_fetch_assoc($result_servicio_foother)){
-                            echo "<li>".$row_servicio_foother['tipo_servicio']."</li>";
+                            echo "<li>".$row_servicio_foother['nombre']."</li>";
                         }
                         ?>
                         
@@ -87,7 +87,7 @@
             </div>
         </div>
 
-        <div class="w-100 bg-black py-3">
+        <div class="w-100 bg-black " >
             <div class="container">
                 <div class="row pt-2">
                     <div class="col-12">

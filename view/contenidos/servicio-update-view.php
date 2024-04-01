@@ -83,13 +83,18 @@ $servicio = $ins_servicio->listar_servicio();
                                     <div class="form-group col-md-4 mt-3">
                                         <label class="control-label">Servicio<span style="color:red;">*</span></label>
                                         <select class="form-control" id="input-select-servicio" name="updateservicio">
-                                            <?php foreach ($servicio as $fila) : ?>
-                                            <?php $selected = ($campos['tipo_servicio'] == $fila['codigo_tipo_servicio ']) ? 'selected' : ''; ?>
-                                            <option value="<?php echo $fila['codigo_tipo_servicio']; ?>"    
-                                                <?php echo $selected; ?>>
-                                                <?php echo $fila['tipo_servicio']; ?>
-                                            </option>
-                                            <?php endforeach; ?>
+                                        <?php
+                                            $valorActual = $campos['codigo_tipo_servicio'];
+                                            $valorActual2 = $campos['tipo_servicio'];
+
+                                            // Muestra el valor actual como la primera opción
+                                            echo "<option value='$valorActual'>$valorActual2</option>";
+                                            foreach ($servicio as $fila) :
+                                            if ($fila['codigo_tipo_servicio'] != $valorActual) {
+                                                    echo "<option value='" . $fila['codigo_tipo_servicio'] . "'>" . $fila['tipo_servicio'] . "</option>";
+                                                }
+                                            endforeach; ?>
+
                                         </select>
                                     </div>
                             </div>
