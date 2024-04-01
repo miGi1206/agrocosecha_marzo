@@ -211,7 +211,7 @@ class registrarseControlador extends registrarseModelo
                 $alerta = [
                     "Alerta" => "limpiarTime",
                     "Titulo" => "Persona Registrado",
-                    "Texto" => "te has registrado exitosamente.",
+                    "Texto" => "Te has registrado exitosamente.",
                     "Tipo" => "success"
                 ];
             }else {
