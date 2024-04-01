@@ -275,37 +275,59 @@ class productoControlador extends productoModelo
     /*------------- CONTROLADOR ELIMINAR PRODUCTO --------------------*/
     public function eliminar_producto_controlador()
     {
-        $id = mainModel::decryption($_POST['idcodigo_del']);
-        $id = mainModel::limpiar_cadena($id);
+        try {
+            $id = mainModel::decryption($_POST['idcodigo_del']);
+            $id = mainModel::limpiar_cadena($id);
 
-        $check_producto = mainModel::ejecutar_consulta_simple("SELECT codigo_producto  FROM tbl_producto WHERE codigo_producto='$id'");
-        if ($check_producto->rowCount() <= 0) {
-            $alerta = [
-                "Alerta" => "simple",
-                "Titulo" => "Ocurrio un error inesperado",
-                "Texto" => "El producto que intenta eliminar no existe en el sistema",
-                "Tipo" => "error"
-            ];
+            $check_producto = mainModel::ejecutar_consulta_simple("SELECT codigo_producto  FROM tbl_producto WHERE codigo_producto='$id'");
+            if ($check_producto->rowCount() <= 0) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ocurrio un error inesperado",
+                    "Texto" => "El producto que intenta eliminar no existe en el sistema",
+                    "Tipo" => "error"
+                ];
+                echo json_encode($alerta);
+                exit();
+            }
+            $eliminar_producto = productoModelo::eliminar_producto_modelo($id);
+
+            if ($eliminar_producto->rowCount() == 1) {
+                $alerta = [
+                    "Alerta" => "limpiarTime",
+                    "Titulo" => "Eliminado",
+                    "Texto" => "Se ha eliminado el producto exitosamente.",
+                    "Tipo" => "success"
+                ];
+            } else {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Ocurrió un error inesperado.",
+                    "Texto" => "No hemos podido eliminar el producto",
+                    "Tipo" => "error"
+                ];
+            }
             echo json_encode($alerta);
-            exit();
-        }
-        $eliminar_producto = productoModelo::eliminar_producto_modelo($id);
+        } catch (PDOException $e) {
+            $errorInfo = $e->errorInfo;
 
-        if ($eliminar_producto->rowCount() == 1) {
-            $alerta = [
-                "Alerta" => "limpiarTime",
-                "Titulo" => "Eliminado",
-                "Texto" => "Se ha eliminado el producto exitosamente.",
-                "Tipo" => "success"
-            ];
-        } else {
-            $alerta = [
-                "Alerta" => "simple",
-                "Titulo" => "Ocurrió un error inesperado.",
-                "Texto" => "No hemos podido eliminar el producto",
-                "Tipo" => "error"
-            ];
+            if ($errorInfo[0] === '23000' && $errorInfo[1] === 1451) {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Error al eliminar",
+                    "Texto" => "No se puede eliminar esta producto porque tiene ventas relacionados.",
+                    "Tipo" => "error"
+                ];
+            } else {
+                $alerta = [
+                    "Alerta" => "simple",
+                    "Titulo" => "Error en la base de datos",
+                    "Texto" => "Error: " . $e->getMessage(),
+                    "Tipo" => "error"
+                ];
+            }
+
+            echo json_encode($alerta);
         }
-        echo json_encode($alerta);
     }
 }

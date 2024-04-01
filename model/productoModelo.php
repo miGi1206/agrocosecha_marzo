@@ -103,10 +103,13 @@ class productoModelo extends mainModel
         // Iterar sobre cada imagen y eliminarla de la carpeta
         foreach ($video as $vid) {
             $ruta_video = "../view/img/vid_productos/{$vid['video']}";
-            if (file_exists($ruta_video)) {
+            if (is_file($ruta_video) && file_exists($ruta_video)) {
                 unlink($ruta_video);
+            } else {
+                // El archivo no existe o es un directorio
             }
         }
+
 
         $sql = mainModel::conectar()->prepare("DELETE FROM tbl_producto WHERE codigo_producto=:ID");
         $sql->bindParam(":ID", $id);
