@@ -107,7 +107,18 @@ if(isset($_POST['btnAccion'])){
                     $codigo_producto=($_POST['codigo_producto']);
                     foreach($_SESSION['CARRITO'] as $indice=>$productoCarrito){
                         if($productoCarrito['codigo_producto']==$codigo_producto){
-                            $_SESSION['CARRITO'][$indice]['cantidad'] += 1;
+                            $stockDisponible = obtenerStockDisponible($codigo_producto);
+                            if ($stockDisponible !== false && ($productoCarrito['cantidad']) >= $stockDisponible) {
+                                echo '<script>
+                                        Swal.fire({
+                                            title: "¡Limite exedido!",
+                                            text: "¡No puedes hacer la compra superior al stock!",
+                                            icon: "info"
+                                        });
+                                    </script>';
+                            }else{
+                                $_SESSION['CARRITO'][$indice]['cantidad'] += 1;
+                            }
                             break;
                         }
                     }
@@ -206,19 +217,35 @@ if(isset($_POST['btnAccion'])){
 
 }
 
+// Función para obtener el stock disponible de un producto
 function obtenerStockDisponible($codigo_producto) {
+    // Incluir el archivo de conexión a la base de datos
     include "config/coneccion_tabla.php";
-    $sql = "SELECT stock FROM tbl_producto WHERE codigo_producto = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $codigo_producto);
-    $stmt->execute();
-    $result = $stmt->get_result();
 
+    // Consulta SQL para obtener el stock del producto con el código especificado
+    $sql = "SELECT stock FROM tbl_producto WHERE codigo_producto = ?";
+    
+    // Preparar la consulta
+    $stmt = $conn->prepare($sql);
+    
+    // Vincular el parámetro con el valor del código del producto
+    $stmt->bind_param("i", $codigo_producto);
+    
+    // Ejecutar la consulta
+    $stmt->execute();
+    
+    // Obtener el resultado de la consulta
+    $result = $stmt->get_result();
+    
+    // Verificar si se encontraron resultados
     if ($result->num_rows > 0) {
+        // Obtener el registro de la consulta
         $row = $result->fetch_assoc();
+        
+        // Devolver el valor del stock disponible
         return $row['stock'];
     } else {
-
+        // Si no se encontraron resultados, devolver false
         return false;
     }
 }
